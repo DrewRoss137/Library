@@ -1,15 +1,18 @@
 html {
-  color: rgba(255, 255, 255, 1);
   font-family: "Roboto", Arial, Helvetica, sans-serif;
   scroll-behavior: smooth;
 }
 
 html,
+header,
+.header-buttons-container,
 footer {
   display: flex;
 }
 
 html,
+header,
+.header-buttons-container,
 footer {
   align-items: center;
 }
@@ -26,7 +29,8 @@ main {
 
 html,
 body,
-main {
+main,
+h1 {
   padding: 0;
 }
 
@@ -38,21 +42,92 @@ main {
 
 html,
 body,
-footer,
-main {
+main,
+footer {
   width: 100%;
 }
 
-body {
-  background-attachment: fixed;
+html,
+a {
+  color: rgba(255, 255, 255, 1);
+}
+
+body,
+header {
   background-image: radial-gradient(
     circle at center,
-    rgba(50, 50, 50, 1),
-    rgba(0, 0, 0, 1)
+    rgba(57, 62, 70, 1),
+    rgba(34, 40, 49, 1)
   );
+}
+
+body,
+header {
+  background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+header {
+  border-bottom-color: rgba(0, 0, 0, 1);
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
+  height: 50px;
+  justify-content: space-around;
+  padding: 16px;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 1);
+}
+
+a {
+  text-decoration: none;
+}
+
+h1 {
+  font-size: 36px;
+}
+
+h1,
+.header-buttons {
+  transition: transform 1s ease;
+}
+
+h1:hover,
+.header-buttons:hover {
+  transform: scale(1.03);
+}
+
+.header-buttons-container {
+  gap: 6px;
+}
+
+img {
+  cursor: pointer;
+}
+
+.header-buttons {
+  width: 36px;
+}
+
+.header-buttons:not(#github) {
+  height: 36px;
+}
+
+.header-buttons,
+.github-logo {
+  filter: brightness(0) invert(1);
+}
+
+#settings {
+  margin-right: -4px;
+}
+
+#github {
+  height: 36.5px;
 }
 
 footer {
@@ -63,7 +138,6 @@ footer {
 }
 
 .github-logo {
-  filter: invert(100%);
   height: 24.5px;
   opacity: 7%;
   padding-bottom: 3px;
@@ -71,4 +145,12 @@ footer {
   padding-right: 3px;
   padding-top: 0px;
   width: 24px;
+}
+
+#colors {
+  color: rgba(34, 40, 49, 1);
+  color: rgba(57, 62, 70, 1);
+  color: rgba(249, 109, 0, 1);
+  color: rgba(242, 242, 242, 1);
+  color: #ffffff;
 }
