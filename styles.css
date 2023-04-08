@@ -23,14 +23,14 @@ html {
 
 html,
 body,
-main {
+main,
+h1 {
   margin: 0;
 }
 
 html,
 body,
-main,
-h1 {
+main {
   padding: 0;
 }
 
@@ -52,12 +52,11 @@ a {
   color: rgba(255, 255, 255, 1);
 }
 
-body,
-header {
+body {
   background-image: radial-gradient(
     circle at center,
-    rgba(57, 62, 70, 1),
-    rgba(34, 40, 49, 1)
+    rgb(30, 41, 59, 1),
+    rgb(15, 23, 42, 1)
   );
 }
 
@@ -70,6 +69,11 @@ header {
 }
 
 header {
+  background-image: radial-gradient(
+    circle at center,
+    rgb(51, 65, 85, 1),
+    rgb(30, 41, 59, 1)
+  );
   border-bottom-color: rgba(0, 0, 0, 1);
   border-bottom-style: solid;
   border-bottom-width: 2px;
@@ -147,10 +151,16 @@ footer {
   width: 24px;
 }
 
-#colors {
-  color: rgba(34, 40, 49, 1);
-  color: rgba(57, 62, 70, 1);
-  color: rgba(249, 109, 0, 1);
-  color: rgba(242, 242, 242, 1);
-  color: #ffffff;
+#colours {
+  color: rgb(248, 250, 252, 1);
+  color: rgb(241, 245, 249, 1);
+  color: rgb(227, 232, 240, 1);
+  color: rgb(203, 213, 225, 1);
+  color: rgb(148, 163, 184, 1);
+  color: rgb(100, 116, 139, 1);
+  color: rgb(71, 85, 105, 1);
+  color: rgb(51, 65, 85, 1);
+  color: rgb(30, 41, 59, 1);
+  color: rgb(15, 23, 42, 1);
+  color: rgb(2, 6, 23, 1);
 }
