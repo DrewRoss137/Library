@@ -5,7 +5,11 @@ html {
 
 html,
 header,
+main,
 .header-buttons-container,
+content,
+.information,
+.information-box,
 footer {
   display: flex;
 }
@@ -13,11 +17,17 @@ footer {
 html,
 header,
 .header-buttons-container,
+content,
+.information,
+.information-box,
 footer {
   align-items: center;
 }
 
-html {
+html,
+content,
+.information,
+.information-box {
   justify-content: center;
 }
 
@@ -43,6 +53,7 @@ main {
 html,
 body,
 main,
+.information-box,
 footer {
   width: 100%;
 }
@@ -55,8 +66,8 @@ a {
 body {
   background-image: radial-gradient(
     circle at center,
-    rgb(30, 41, 59, 1),
-    rgb(15, 23, 42, 1)
+    rgba(0, 63, 122, 1),
+    rgba(0, 53, 102, 1)
   );
 }
 
@@ -68,11 +79,23 @@ header {
   background-size: cover;
 }
 
+main,
+content,
+.information {
+  gap: 16px;
+}
+
+main,
+content,
+table {
+  flex-direction: column;
+}
+
 header {
   background-image: radial-gradient(
     circle at center,
-    rgb(51, 65, 85, 1),
-    rgb(30, 41, 59, 1)
+    rgba(0, 84, 163, 1),
+    rgba(0, 74, 143, 1)
   );
   border-bottom-color: rgba(0, 0, 0, 1);
   border-bottom-style: solid;
@@ -121,8 +144,7 @@ img {
   height: 36px;
 }
 
-.header-buttons,
-.github-logo {
+.header-buttons {
   filter: brightness(0) invert(1);
 }
 
@@ -132,6 +154,46 @@ img {
 
 #github {
   height: 36.5px;
+  width: 36px;
+}
+
+table {
+  background-color: black;
+  width: 1500px;
+}
+
+table,
+.information-box {
+  text-align: center;
+}
+
+thead,
+.information-box {
+  background-color: rgba(0, 63, 122, 1);
+}
+
+th,
+td,
+.information-box {
+  padding: 8px;
+}
+
+.table-body-row {
+  background-color: rgba(0, 74, 143, 1);
+}
+
+.book-alter-icon {
+  height: 24px;
+  width: 24px;
+}
+
+.information {
+  width: 1500px;
+}
+
+.information-box {
+  height: 50px;
+  font-size: 20px;
 }
 
 footer {
@@ -152,15 +214,10 @@ footer {
 }
 
 #colours {
-  color: rgb(248, 250, 252, 1);
-  color: rgb(241, 245, 249, 1);
-  color: rgb(227, 232, 240, 1);
-  color: rgb(203, 213, 225, 1);
-  color: rgb(148, 163, 184, 1);
-  color: rgb(100, 116, 139, 1);
-  color: rgb(71, 85, 105, 1);
-  color: rgb(51, 65, 85, 1);
-  color: rgb(30, 41, 59, 1);
-  color: rgb(15, 23, 42, 1);
-  color: rgb(2, 6, 23, 1);
+  color: rgba(0, 84, 163, 1);
+  color: rgba(0, 74, 143, 1);
+  color: rgba(0, 63, 122, 1);
+  color: rgba(0, 53, 102, 1);
+  color: rgba(255, 195, 0, 1);
+  color: rgba(255, 214, 10, 1);
 }
