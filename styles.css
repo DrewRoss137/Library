@@ -7,7 +7,8 @@ html,
 header,
 main,
 .header-buttons-container,
-content,
+.content,
+#deleted-selected-book-button,
 .information,
 .information-box,
 footer {
@@ -17,7 +18,7 @@ footer {
 html,
 header,
 .header-buttons-container,
-content,
+.content,
 .information,
 .information-box,
 footer {
@@ -25,7 +26,7 @@ footer {
 }
 
 html,
-content,
+.content,
 .information,
 .information-box {
   justify-content: center;
@@ -34,7 +35,8 @@ content,
 html,
 body,
 main,
-h1 {
+h1,
+input {
   margin: 0;
 }
 
@@ -59,15 +61,18 @@ footer {
 }
 
 html,
-a {
+a,
+h1 {
   color: rgba(255, 255, 255, 1);
 }
 
-body {
+body,
+thead,
+tfoot {
   background-image: radial-gradient(
     circle at center,
-    rgba(0, 63, 122, 1),
-    rgba(0, 53, 102, 1)
+    rgba(79, 69, 87, 1),
+    rgba(57, 54, 70, 1)
   );
 }
 
@@ -80,23 +85,19 @@ header {
 }
 
 main,
-content,
+.content,
 .information {
   gap: 16px;
 }
 
 main,
-content,
-table {
+.content,
+table,
+.information-box {
   flex-direction: column;
 }
 
 header {
-  background-image: radial-gradient(
-    circle at center,
-    rgba(0, 84, 163, 1),
-    rgba(0, 74, 143, 1)
-  );
   border-bottom-color: rgba(0, 0, 0, 1);
   border-bottom-style: solid;
   border-bottom-width: 2px;
@@ -106,8 +107,22 @@ header {
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
   height: 50px;
   justify-content: space-around;
+}
+
+header,
+.table-body-row,
+.information-box {
+  background-image: radial-gradient(
+    circle at center,
+    rgba(109, 93, 110, 1),
+    rgba(79, 69, 87, 1)
+  );
+}
+
+header,
+.information-box {
   padding: 16px;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 1);
+  text-shadow: 0px 2px 2px rgba(0, 0, 0, 1);
 }
 
 a {
@@ -123,6 +138,11 @@ h1,
   transition: transform 1s ease;
 }
 
+h1,
+.information-box {
+  font-weight: 900;
+}
+
 h1:hover,
 .header-buttons:hover {
   transform: scale(1.03);
@@ -132,33 +152,38 @@ h1:hover,
   gap: 6px;
 }
 
-img {
+.header-buttons {
+  fill: rgba(255, 255, 255, 1);
+  width: 36px;
+}
+
+.header-buttons,
+input[type="checkbox"],
+.book-alter-buttons,
+.footer-buttons {
   cursor: pointer;
 }
 
-.header-buttons {
-  width: 36px;
+.header-buttons:not(.github-button),
+.book-alter,
+.footer-buttons {
+  filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.5));
 }
 
-.header-buttons:not(#github) {
+.header-buttons:not(.github-button) {
   height: 36px;
 }
 
-.header-buttons {
-  filter: brightness(0) invert(1);
-}
-
-#settings {
-  margin-right: -4px;
-}
-
-#github {
+.github-button-container,
+.github-button {
   height: 36.5px;
-  width: 36px;
 }
 
 table {
-  background-color: black;
+  background-color: rgba(0, 0, 0, 1);
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
+  font-size: 16px;
+  text-shadow: 0px 2px 2px rgba(0, 0, 0, 1);
   width: 1500px;
 }
 
@@ -167,24 +192,36 @@ table,
   text-align: center;
 }
 
-thead,
-.information-box {
-  background-color: rgba(0, 63, 122, 1);
-}
-
 th,
 td,
 .information-box {
   padding: 8px;
 }
 
-.table-body-row {
-  background-color: rgba(0, 74, 143, 1);
+input[type="checkbox"] {
+  accent-color: rgba(0, 0, 0, 1);
+  height: 14px;
+  width: 14px;
 }
 
-.book-alter-icon {
-  height: 24px;
+.book-alter-buttons,
+.footer-buttons,
+.github-logo {
   width: 24px;
+}
+
+.book-alter-buttons,
+.footer-buttons {
+  height: 24px;
+}
+
+.book-alter-buttons,
+.footer-buttons {
+  fill: rgba(109, 93, 110, 1);
+}
+
+.github-button {
+  filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.2));
 }
 
 .information {
@@ -192,7 +229,17 @@ td,
 }
 
 .information-box {
+  border-color: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  border-style: solid;
+  border-width: 2px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.5);
+  font-size: 16px;
+  gap: 8px;
   height: 50px;
+}
+
+.tracker {
   font-size: 20px;
 }
 
@@ -210,14 +257,10 @@ footer {
   padding-left: 0px;
   padding-right: 3px;
   padding-top: 0px;
-  width: 24px;
 }
 
 #colours {
-  color: rgba(0, 84, 163, 1);
-  color: rgba(0, 74, 143, 1);
-  color: rgba(0, 63, 122, 1);
-  color: rgba(0, 53, 102, 1);
-  color: rgba(255, 195, 0, 1);
-  color: rgba(255, 214, 10, 1);
+  color: rgba(109, 93, 110, 1);
+  color: rgba(79, 69, 87, 1);
+  color: rgba(57, 54, 70, 1);
 }
