@@ -288,13 +288,17 @@
           </div>
         </div>
         <div class="menu" id="restore-menu">
-          <span class="" id="">Restore Default Settings</span>
-          <span class="" id=""
-            >This will erase all user created data and restore the books and
-            settings data to their original default values.</span
+          <span class="menu-title" id="restore-title"
+            >Restore Default Settings</span
           >
-          <span class="" id=""><i>This action cannot be undone!</i></span>
-          <div class="restore-buttons" id="restore-buttons">
+          <span class="menu-text" id="restore-text"
+            >This will erase all user-created data, restoring the user's books,
+            and settings, data to their original, default, values.</span
+          >
+          <span class="menu-text" id="restore-warning"
+            >This action <i>cannot</i> be undone!</span
+          >
+          <div class="menu-button-container" id="restore-buttons">
             <button class="restore-button" id="cancel-button">Cancel</button>
             <button class="restore-button" id="continue-button">
               Continue
@@ -302,79 +306,62 @@
           </div>
         </div>
         <div class="menu" id="deleted-books-menu">
-          <span class="" id="">Deleted Books</span>
-          <select class="" id=""></select>
-          <div class="deleted-books-buttons" id="deleted-books-buttons">
-            <button class="deleted-books-button" id="delete-button">
-              Cancel
-            </button>
-            <button class="deleted-books-button" id="restore-button">
-              Continue
-            </button>
+          <span class="menu-title" id="delete-title">Deleted Books</span>
+          <select class="delete-select" id="delete-select"></select>
+          <div class="menu-button-container" id="deleted-books-buttons">
+            <button class="menu-button" id="delete-button">Delete</button>
+            <button class="menu-button" id="restore-button">Restore</button>
           </div>
         </div>
         <div class="menu" id="add-book-menu">
-          <span class="" id="">New Book</span>
-          <div class="new-book-title" id="new-book-title">
-            <span class="new-book-title-text" id="new-book-title-text"
-              >Title</span
-            >
+          <span class="menu-title" id="add-book-title">Add Book</span>
+          <div class="add-book-input-container" id="add-book-title">
+            <span class="input-text" id="add-book-title-text">Title</span>
             <input
-              class="new-book-title-input"
-              id="new-book-title-input"
+              class="add-book-input"
+              id="add-book-title-input"
               type="text"
             />
           </div>
-          <div class="new-book-author" id="new-book-author">
-            <span class="new-book-author-text" id="new-book-author-text"
-              >Author</span
-            >
+          <div class="add-book-input-container" id="add-book-author">
+            <span class="input-text" id="add-book-author-text">Author</span>
             <input
-              class="new-book-author-input"
-              id="new-book-author-input"
+              class="add-book-input"
+              id="add-book-author-input"
               type="text"
             />
           </div>
-          <div class="new-book-pages" id="new-book-pages">
-            <span class="new-book-pages-text" id="new-book-pages-text"
-              >Pages</span
-            >
+          <div class="add-book-input-container" id="add-book-pages">
+            <span class="input-text" id="add-book-pages-text">Pages</span>
             <input
-              class="new-book-pages-input"
-              id="new-book-pages-input"
+              class="add-book-input"
+              id="add-book-pages-input"
               type="number"
             />
           </div>
-          <div class="new-book-published-date" id="new-book-published-date">
-            <span
-              class="new-book-published-date-text"
-              id="new-book-published-date-text"
+          <div class="add-book-input-container" id="add-book-published-date">
+            <span class="input-text" id="add-book-published-date-text"
               >Publish Date</span
             >
             <input
-              class="new-book-published-date-input"
+              class="add-book-input"
               id="new-book-published-date-input"
               type="date"
             />
           </div>
-          <div class="new-book-acquired-date" id="new-book-acquired-date">
-            <span
-              class="new-book-acquired-date-text"
-              id="new-book-acquired-date-text"
+          <div class="add-book-input-container" id="new-book-acquired-date">
+            <span class="input-text" id="new-book-acquired-date-text"
               >Acquired Date</span
             >
             <input
-              class="new-book-acquired-date-input"
+              class="add-book-input"
               id="new-book-acquired-date-input"
               type="date"
             />
           </div>
-          <div class="new-book-status" id="new-book-status">
-            <span class="new-book-status" id="new-book-status">Status</span>
-            <select
-              class="new-book-status-select"
-              id="new-book-status-select"
-            />
+          <div class="add-book-input-container" id="new-book-status">
+            <span class="input-text" id="new-book-status">Status</span>
+            <select class="add-book-input" id="new-book-status-select" />
           </div>
         </div>
       </div>
