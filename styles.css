@@ -158,7 +158,6 @@ table,
 }
 
 header,
-.menu,
 button,
 .information-box {
   padding: 16px;
@@ -174,6 +173,7 @@ h1 {
 
 h1,
 .header-buttons,
+input[type="color"],
 button,
 .book-alter-buttons,
 .footer-buttons {
@@ -181,13 +181,16 @@ button,
 }
 
 h1,
+.menu-title,
 #settings-menu,
+#restore-warning,
 button,
 .information-box {
   font-weight: 900;
 }
 
 h1:hover,
+input[type="color"]:hover,
 button:hover,
 .header-title-text:hover {
   transform: scale(1.05);
@@ -246,6 +249,7 @@ input[type="checkbox"],
 .menu {
   border-radius: 20px;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
+  padding: 24px;
 }
 
 .menu,
@@ -257,13 +261,8 @@ input[type="checkbox"],
   font-size: 20px;
 }
 
-#settings-menu {
-  height: 400px;
-  width: 250px;
-}
-
 .colour-input-container {
-  gap: 20px;
+  gap: 32px;
 }
 
 input[type="color"] {
@@ -297,9 +296,16 @@ button {
 
 button,
 table,
-.menu table,
+.menu,
+#restore-menu,
+table,
 .information-box {
   text-align: center;
+}
+
+#restore-title,
+#restore-text {
+  max-width: 300px;
 }
 
 button,
@@ -314,6 +320,10 @@ button:hover {
   border-style: solid;
   border-width: 2.5px;
   filter: drop-shadow(0px 0px 2px rgba(109, 93, 110, 1));
+}
+
+.github-button {
+  filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.2));
 }
 
 .github-button-container,
@@ -377,10 +387,6 @@ input[type="checkbox"] {
 .book-alter-buttons,
 .footer-buttons {
   height: 24px;
-}
-
-.github-button {
-  filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.2));
 }
 
 .information {
