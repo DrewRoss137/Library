@@ -1,5 +1,4 @@
 html {
-  font-family: "Roboto", Arial, Helvetica, sans-serif;
   scroll-behavior: smooth;
 }
 
@@ -7,6 +6,11 @@ html,
 header,
 main,
 .header-buttons-container,
+.menu,
+.settings-container,
+.colour-input-container,
+.menu-button-container,
+button,
 .content,
 #deleted-selected-book-button,
 .information,
@@ -18,6 +22,9 @@ footer {
 html,
 header,
 .header-buttons-container,
+.menu,
+.colour-input-container,
+button,
 .content,
 .information,
 .information-box,
@@ -26,6 +33,9 @@ footer {
 }
 
 html,
+.menu,
+.menu-button-container,
+button,
 .content,
 .information,
 .information-box {
@@ -36,13 +46,16 @@ html,
 body,
 main,
 h1,
-input {
+input,
+input[type="color"] {
   margin: 0;
 }
 
 html,
 body,
-main {
+main,
+input[type="color"],
+input[type="color"]::-webkit-color-swatch-wrapper {
   padding: 0;
 }
 
@@ -62,8 +75,14 @@ footer {
 
 html,
 a,
-h1 {
+h1,
+button {
   color: rgba(255, 255, 255, 1);
+}
+
+html,
+button {
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
 }
 
 body,
@@ -89,6 +108,8 @@ header,
 }
 
 main,
+.menu,
+.settings-container,
 .content,
 .information {
   gap: 16px;
@@ -96,6 +117,8 @@ main,
 
 main,
 .content,
+.menu,
+.settings-container,
 table,
 .information-box {
   flex-direction: column;
@@ -123,18 +146,22 @@ header,
   );
 }
 
-header,
-.settings-menu,
-.restore-menu,
-.deleted-books-menu,
-.add-book-menu {
+header {
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
 }
 
 header,
+.menu,
+table,
+.information-box {
+  text-shadow: 0px 2px 2px rgba(0, 0, 0, 1);
+}
+
+header,
+.menu,
+button,
 .information-box {
   padding: 16px;
-  text-shadow: 0px 2px 2px rgba(0, 0, 0, 1);
 }
 
 a {
@@ -147,23 +174,29 @@ h1 {
 
 h1,
 .header-buttons,
+button,
 .book-alter-buttons,
 .footer-buttons {
   transition: all 0.75s ease;
 }
 
 h1,
+#settings-menu,
+button,
 .information-box {
   font-weight: 900;
 }
 
 h1:hover,
+button:hover,
 .header-title-text:hover {
   transform: scale(1.05);
 }
 
-.header-buttons-container {
-  gap: 6px;
+.header-buttons-container,
+.menu-button-container,
+.information-box {
+  gap: 8px;
 }
 
 .header-buttons {
@@ -186,8 +219,10 @@ h1:hover,
 }
 
 .header-buttons,
-.header-title-text:hover,
-.book-status:hover,
+.header-title-text,
+input[type="color"],
+button,
+.book-status,
 input[type="checkbox"],
 .book-alter-buttons,
 .footer-buttons {
@@ -208,6 +243,79 @@ input[type="checkbox"],
   margin-right: -4px;
 }
 
+.menu {
+  border-radius: 20px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
+}
+
+.menu,
+.colour-input-container {
+  justify-content: space-between;
+}
+
+.menu-title {
+  font-size: 20px;
+}
+
+#settings-menu {
+  height: 400px;
+  width: 250px;
+}
+
+.colour-input-container {
+  gap: 20px;
+}
+
+input[type="color"] {
+  background: none;
+  border-radius: 50%;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 1);
+  height: 35px;
+  width: 35px;
+}
+
+input[type="color"],
+input[type="color"]::-webkit-color-swatch,
+button,
+th,
+td {
+  border: none;
+}
+
+input[type="color"]::-webkit-color-swatch {
+  border-radius: 50%;
+}
+
+button {
+  background-color: rgba(57, 54, 70, 1);
+  border-radius: 5px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 1);
+  height: 20px;
+  width: 100px;
+  text-shadow: 0px 1.5px 1.5px rgba(0, 0, 0, 1);
+}
+
+button,
+table,
+.menu table,
+.information-box {
+  text-align: center;
+}
+
+button,
+table,
+.information-box {
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: rgba(79, 69, 87, 1);
+  border-color: rgba(109, 93, 110, 1);
+  border-style: solid;
+  border-width: 2.5px;
+  filter: drop-shadow(0px 0px 2px rgba(109, 93, 110, 1));
+}
+
 .github-button-container,
 .github-button {
   height: 36.5px;
@@ -218,14 +326,7 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 1);
-  font-size: 16px;
-  text-shadow: 0px 2px 2px rgba(0, 0, 0, 1);
   width: 1500px;
-}
-
-table,
-.information-box {
-  text-align: center;
 }
 
 .table-body-row {
@@ -247,11 +348,6 @@ td,
 .deleted-books-menu,
 .add-book-menu {
   padding: 8px;
-}
-
-th,
-td {
-  border: none;
 }
 
 .header-text,
@@ -297,8 +393,6 @@ input[type="checkbox"] {
   border-style: solid;
   border-width: 2px;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.5);
-  font-size: 16px;
-  gap: 8px;
   height: 50px;
 }
 
@@ -333,13 +427,4 @@ footer {
   display: flex;
   gap: 24px;
   justify-content: center;
-}
-
-.menu {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  height: 350px;
-  padding: 16px;
-  width: 350px;
 }
