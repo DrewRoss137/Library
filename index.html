@@ -307,7 +307,23 @@
         </div>
         <div class="menu" id="deleted-books-menu">
           <span class="menu-title" id="delete-title">Deleted Books</span>
-          <select class="delete-select" id="delete-select"></select>
+          <select
+            class="deleted-books-select"
+            id="deleted-books-select"
+            multiple
+            size="3"
+          >
+            <option class="deleted-books-option" id="deleted-books-option">
+              A Common-Sense Guide to Data Structures and Algorithms - Jay
+              Wengrow
+            </option>
+            <option class="deleted-books-option" id="deleted-books-option">
+              Effective TypeScript - Dan Vanderkam
+            </option>
+            <option class="deleted-books-option" id="deleted-books-option">
+              Python 3 Object-Oriented Programming - Dusty Phillips
+            </option>
+          </select>
           <div class="menu-button-container" id="deleted-books-buttons">
             <button class="menu-button" id="delete-button">Delete</button>
             <button class="menu-button" id="restore-button">Restore</button>
