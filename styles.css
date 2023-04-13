@@ -14,6 +14,8 @@ button,
 .content,
 #deleted-selected-book-button,
 .deleted-books-option,
+.add-book-container,
+.add-book-input-container,
 .information,
 .information-box,
 footer {
@@ -28,6 +30,7 @@ header,
 button,
 .content,
 .deleted-books-option,
+.add-book-input-container,
 .information,
 .information-box,
 footer {
@@ -37,9 +40,11 @@ footer {
 html,
 .menu,
 .menu-button-container,
+.settings-container,
 button,
 .content,
 .deleted-books-option,
+.add-book-container,
 .information,
 .information-box {
   justify-content: center;
@@ -79,12 +84,14 @@ footer {
 html,
 a,
 button,
-option {
+option,
+.add-book-input,
+.add-book-status-select {
   color: rgba(255, 255, 255, 1);
 }
 
 html,
-button,
+input button,
 option {
   font-family: "Roboto", Arial, Helvetica, sans-serif;
 }
@@ -92,7 +99,10 @@ option {
 body,
 thead,
 tfoot,
-.deleted-books-select {
+.deleted-books-select,
+.add-book-input,
+.add-book-status-select,
+.add-book-status-option {
   background-image: radial-gradient(
     circle at center,
     rgba(79, 69, 87, 1),
@@ -116,6 +126,7 @@ main,
 .menu,
 .settings-container,
 .content,
+.add-book-container,
 .information {
   gap: 16px;
 }
@@ -124,6 +135,7 @@ main,
 .content,
 .menu,
 .settings-container,
+.add-book-container,
 table,
 .information-box {
   flex-direction: column;
@@ -159,14 +171,15 @@ header,
 .menu,
 table,
 option,
+input,
+.add-book-status-select,
 .information-box {
   text-shadow: 0px 2px 2px rgba(0, 0, 0, 1);
 }
 
 header,
 button,
-.information-box,
-.deleted-books-select {
+.information-box {
   padding: 16px;
 }
 
@@ -192,7 +205,10 @@ h1,
 #settings-menu,
 #restore-warning,
 button,
+select,
 option,
+#add-book-menu,
+input,
 .information-box {
   font-weight: 900;
 }
@@ -204,7 +220,7 @@ button:hover,
   transform: scale(1.05);
 }
 
-h1,
+#settings-button h1,
 .header-title-text,
 .book-status {
   color: rgba(227, 180, 100, 1);
@@ -263,20 +279,20 @@ option {
   margin-right: -4px;
 }
 
-.menu,
-.deleted-books-select {
+.menu {
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
   padding: 24px;
 }
 
 .menu,
-select,
+.deleted-books-select,
 .information-box {
   border-radius: 20px;
 }
 
 .menu,
-.colour-input-container {
+.colour-input-container,
+.add-book-input-container {
   justify-content: space-between;
 }
 
@@ -284,7 +300,8 @@ select,
   font-size: 20px;
 }
 
-.colour-input-container {
+.colour-input-container,
+.add-book-input-container {
   gap: 32px;
 }
 
@@ -310,12 +327,19 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 button {
-  background-color: rgba(57, 54, 70, 1);
   border-radius: 5px;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 1);
-  height: 20px;
-  width: 100px;
+  height: 10px;
+  width: 120px;
   text-shadow: 0px 1.5px 1.5px rgba(0, 0, 0, 1);
+}
+
+button:hover {
+  background-color: rgba(79, 69, 87, 1);
+  border-color: rgba(109, 93, 110, 1);
+  border-style: solid;
+  border-width: 2.5px;
+  filter: drop-shadow(0px 0px 2px rgba(109, 93, 110, 1));
 }
 
 button,
@@ -328,24 +352,20 @@ option,
   text-align: center;
 }
 
-#restore-title,
-#restore-text {
-  max-width: 300px;
-}
-
 button,
 table,
-option,
 .information-box {
   font-size: 16px;
 }
 
-button:hover {
-  background-color: rgba(79, 69, 87, 1);
-  border-color: rgba(109, 93, 110, 1);
-  border-style: solid;
-  border-width: 2.5px;
-  filter: drop-shadow(0px 0px 2px rgba(109, 93, 110, 1));
+button,
+.add-book-status-option {
+  background-color: rgba(57, 54, 70, 1);
+}
+
+#restore-title,
+#restore-text {
+  max-width: 300px;
 }
 
 .github-button {
@@ -382,6 +402,7 @@ td,
 .settings-menu,
 .restore-menu,
 .deleted-books-menu,
+.deleted-books-select,
 .deleted-books-option,
 .add-book-menu {
   padding: 8px;
@@ -407,13 +428,34 @@ input[type="checkbox"] {
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
-  height: 600px;
+  font-size: 14px;
+  height: auto;
   overflow: hidden;
-  width: 600px;
+  padding: 8px;
+  width: auto;
+}
+
+.deleted-books-select:focus {
+  outline: none;
 }
 
 .deleted-books-option {
   border-radius: 10px;
+}
+
+.add-book-input,
+.add-book-status-select {
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 1);
+  box-sizing: border-box;
+  height: 30px;
+  padding: 8px;
+  width: 200px;
+}
+
+input[type="date"] {
+  cursor: text;
 }
 
 .book-alter-buttons,
