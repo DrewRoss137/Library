@@ -298,9 +298,11 @@
           <span class="menu-text" id="restore-warning"
             >This action <i>cannot</i> be undone!</span
           >
-          <div class="menu-button-container" id="restore-buttons">
-            <button class="restore-button" id="cancel-button">Cancel</button>
-            <button class="restore-button" id="continue-button">
+          <div class="menu-button-container" id="restore-menu-buttons">
+            <button class="restore-menu-button" id="cancel-button">
+              Cancel
+            </button>
+            <button class="restore-menu-button" id="continue-button">
               Continue
             </button>
           </div>
@@ -326,59 +328,98 @@
           </select>
           <div class="menu-button-container" id="deleted-books-buttons">
             <button class="menu-button" id="delete-button">Delete</button>
-            <button class="menu-button" id="restore-button">Restore</button>
+            <button class="menu-button" id="restore-books-button">
+              Restore
+            </button>
           </div>
         </div>
         <div class="menu" id="add-book-menu">
           <span class="menu-title" id="add-book-title">Add Book</span>
-          <div class="add-book-input-container" id="add-book-title">
-            <span class="input-text" id="add-book-title-text">Title</span>
-            <input
-              class="add-book-input"
-              id="add-book-title-input"
-              type="text"
-            />
-          </div>
-          <div class="add-book-input-container" id="add-book-author">
-            <span class="input-text" id="add-book-author-text">Author</span>
-            <input
-              class="add-book-input"
-              id="add-book-author-input"
-              type="text"
-            />
-          </div>
-          <div class="add-book-input-container" id="add-book-pages">
-            <span class="input-text" id="add-book-pages-text">Pages</span>
-            <input
-              class="add-book-input"
-              id="add-book-pages-input"
-              type="number"
-            />
-          </div>
-          <div class="add-book-input-container" id="add-book-published-date">
-            <span class="input-text" id="add-book-published-date-text"
-              >Publish Date</span
+          <div class="add-book-container" id="add-book-container">
+            <div
+              class="add-book-input-container"
+              id="add-book-input-title-container"
             >
-            <input
-              class="add-book-input"
-              id="new-book-published-date-input"
-              type="date"
-            />
-          </div>
-          <div class="add-book-input-container" id="new-book-acquired-date">
-            <span class="input-text" id="new-book-acquired-date-text"
-              >Acquired Date</span
+              <span class="input-text" id="add-book-title-text">Title</span>
+              <input
+                class="add-book-input"
+                id="add-book-title-input"
+                type="text"
+              />
+            </div>
+            <div
+              class="add-book-input-container"
+              id="add-book-input-author-container"
             >
-            <input
-              class="add-book-input"
-              id="new-book-acquired-date-input"
-              type="date"
-            />
+              <span class="input-text" id="add-book-author-text">Author</span>
+              <input
+                class="add-book-input"
+                id="add-book-author-input"
+                type="text"
+              />
+            </div>
+            <div
+              class="add-book-input-container"
+              id="add-book-input-pages-container"
+            >
+              <span class="input-text" id="add-book-pages-text">Pages</span>
+              <input
+                class="add-book-input"
+                id="add-book-pages-input"
+                type="number"
+              />
+            </div>
+            <div
+              class="add-book-input-container"
+              id="add-book-input-publish-date-container"
+            >
+              <span class="input-text" id="add-book-publish-date-text"
+                >Publish Date</span
+              >
+              <input
+                class="add-book-input"
+                id="add-book-publish-date-input"
+                type="date"
+              />
+            </div>
+            <div
+              class="add-book-input-container"
+              id="add-book-input-acquisition-date-container"
+            >
+              <span class="input-text" id="add-book-acquisition-date-text"
+                >Acquisition Date</span
+              >
+              <input
+                class="add-book-input"
+                id="add-book-acquisition-date-input"
+                type="date"
+              />
+            </div>
+            <div
+              class="add-book-input-container"
+              id="add-book-input-status-container"
+            >
+              <span class="input-text" id="add-book-status-text">Status</span>
+              <select
+                class="add-book-status-select"
+                id="add-book-status-select"
+              >
+                <option
+                  class="add-book-status-option"
+                  id="add-book-status-read-option"
+                >
+                  Read
+                </option>
+                <option
+                  class="add-book-status-option"
+                  id="add-book-status-unread-option"
+                >
+                  Unread
+                </option>
+              </select>
+            </div>
           </div>
-          <div class="add-book-input-container" id="new-book-status">
-            <span class="input-text" id="new-book-status">Status</span>
-            <select class="add-book-input" id="new-book-status-select" />
-          </div>
+          <button class="add-book-button" id="add-book-button">Add Book</button>
         </div>
       </div>
       <footer class="footer" id="footer">
