@@ -92,7 +92,8 @@ option,
 }
 
 html,
-input button,
+button,
+input,
 option {
   font-family: "Roboto", Arial, Helvetica, sans-serif;
 }
