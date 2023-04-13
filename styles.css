@@ -13,6 +13,7 @@ main,
 button,
 .content,
 #deleted-selected-book-button,
+.deleted-books-option,
 .information,
 .information-box,
 footer {
@@ -26,6 +27,7 @@ header,
 .colour-input-container,
 button,
 .content,
+.deleted-books-option,
 .information,
 .information-box,
 footer {
@@ -37,6 +39,7 @@ html,
 .menu-button-container,
 button,
 .content,
+.deleted-books-option,
 .information,
 .information-box {
   justify-content: center;
@@ -75,19 +78,21 @@ footer {
 
 html,
 a,
-h1,
-button {
+button,
+option {
   color: rgba(255, 255, 255, 1);
 }
 
 html,
-button {
+button,
+option {
   font-family: "Roboto", Arial, Helvetica, sans-serif;
 }
 
 body,
 thead,
-tfoot {
+tfoot,
+.deleted-books-select {
   background-image: radial-gradient(
     circle at center,
     rgba(79, 69, 87, 1),
@@ -153,13 +158,15 @@ header {
 header,
 .menu,
 table,
+option,
 .information-box {
   text-shadow: 0px 2px 2px rgba(0, 0, 0, 1);
 }
 
 header,
 button,
-.information-box {
+.information-box,
+.deleted-books-select {
   padding: 16px;
 }
 
@@ -185,6 +192,7 @@ h1,
 #settings-menu,
 #restore-warning,
 button,
+option,
 .information-box {
   font-weight: 900;
 }
@@ -194,6 +202,12 @@ input[type="color"]:hover,
 button:hover,
 .header-title-text:hover {
   transform: scale(1.05);
+}
+
+h1,
+.header-title-text,
+.book-status {
+  color: rgba(227, 180, 100, 1);
 }
 
 .header-buttons-container,
@@ -212,6 +226,7 @@ button:hover,
   fill: rgba(227, 180, 100, 1);
 }
 
+h1:hover,
 #settings-button:hover,
 #restore-button:hover,
 #github-button:hover,
@@ -228,7 +243,9 @@ button,
 .book-status,
 input[type="checkbox"],
 .book-alter-buttons,
-.footer-buttons {
+.footer-buttons,
+select,
+option {
   cursor: pointer;
 }
 
@@ -246,10 +263,16 @@ input[type="checkbox"],
   margin-right: -4px;
 }
 
-.menu {
-  border-radius: 20px;
+.menu,
+.deleted-books-select {
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
   padding: 24px;
+}
+
+.menu,
+select,
+.information-box {
+  border-radius: 20px;
 }
 
 .menu,
@@ -277,7 +300,8 @@ input[type="color"],
 input[type="color"]::-webkit-color-swatch,
 button,
 th,
-td {
+td,
+.deleted-books-select {
   border: none;
 }
 
@@ -299,6 +323,7 @@ table,
 .menu,
 #restore-menu,
 table,
+option,
 .information-box {
   text-align: center;
 }
@@ -310,6 +335,7 @@ table,
 
 button,
 table,
+option,
 .information-box {
   font-size: 16px;
 }
@@ -356,14 +382,13 @@ td,
 .settings-menu,
 .restore-menu,
 .deleted-books-menu,
+.deleted-books-option,
 .add-book-menu {
   padding: 8px;
 }
 
-.header-text,
 .header-title-text,
 .book-status {
-  color: rgba(227, 180, 100, 1);
   transition: all 0.2s ease;
 }
 
@@ -379,33 +404,16 @@ input[type="checkbox"] {
 }
 
 .deleted-books-select {
-  background-color: aqua;
-  height: 500px;
-  padding: 16px;
-  width: 500px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 50px;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 600px;
+  overflow: hidden;
+  width: 600px;
 }
 
 .deleted-books-option {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px;
-}
-
-.deleted-books-select {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  border: 1px solid #000000;
-}
-
-.deleted-books-select::-ms-expand {
-  display: none;
+  border-radius: 10px;
 }
 
 .book-alter-buttons,
@@ -425,7 +433,6 @@ input[type="checkbox"] {
 
 .information-box {
   border-color: rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
   border-style: solid;
   border-width: 2px;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.5);
