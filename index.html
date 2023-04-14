@@ -155,8 +155,8 @@
                 <svg
                   class="footer-buttons"
                   id="add-book-button"
-                  xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
                     d="M14,14H16L12,10L8,14H10V18H14V14M6,7H18V19C18,19.5 17.8,20 17.39,20.39C17,20.8 16.5,21 16,21H8C7.5,21 7,20.8 6.61,20.39C6.2,20 6,19.5 6,19V7M19,4V6H5V4H8.5L9.5,3H14.5L15.5,4H19Z"
@@ -165,8 +165,8 @@
                 <svg
                   class="footer-buttons"
                   id="deleted-books-button"
-                  xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
                     d="M13 19C13 20.1 13.3 21.12 13.81 22H6C4.89 22 4 21.11 4 20V4C4 2.9 4.89 2 6 2H7V9L9.5 7.5L12 9V2H18C19.1 2 20 2.89 20 4V13.09C19.67 13.04 19.34 13 19 13C15.69 13 13 15.69 13 19M20 18V15H18V18H15V20H18V23H20V20H23V18H20Z"
@@ -205,7 +205,19 @@
       </div>
       <div class="test" id="test">
         <div class="menu" id="settings-menu">
-          <span class="menu-title" id="settings-title">Settings</span>
+          <div class="menu-header" id="settings-header">
+            <svg
+              class="menu-icon"
+              id="close-icon"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91Z"
+              />
+            </svg>
+            <span class="menu-title" id="settings-title">Settings</span>
+          </div>
           <div class="settings-container" id="settings-container">
             <div
               class="colour-input-container"
@@ -288,9 +300,21 @@
           </div>
         </div>
         <div class="menu" id="restore-menu">
-          <span class="menu-title" id="restore-title"
-            >Restore Default Settings</span
-          >
+          <div class="menu-header" id="restore-header">
+            <svg
+              class="menu-icon"
+              id="close-icon"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91Z"
+              />
+            </svg>
+            <span class="menu-title" id="restore-title"
+              >Restore Default Settings</span
+            >
+          </div>
           <span class="menu-text" id="restore-text"
             >This will erase all user-created data, restoring the user's books,
             and settings, data to their original, default, values.</span
@@ -308,7 +332,19 @@
           </div>
         </div>
         <div class="menu" id="deleted-books-menu">
-          <span class="menu-title" id="delete-title">Deleted Books</span>
+          <div class="menu-header" id="deeted-books-header">
+            <svg
+              class="menu-icon"
+              id="close-icon"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91Z"
+              />
+            </svg>
+            <span class="menu-title" id="delete-title">Deleted Books</span>
+          </div>
           <select
             class="deleted-books-select"
             id="deleted-books-select"
@@ -334,7 +370,19 @@
           </div>
         </div>
         <div class="menu" id="add-book-menu">
-          <span class="menu-title" id="add-book-title">Add Book</span>
+          <div class="menu-header" id="add-book-header">
+            <svg
+              class="menu-icon"
+              id="close-icon"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91Z"
+              />
+            </svg>
+            <span class="menu-title" id="add-book-title">Add Book</span>
+          </div>
           <div class="add-book-container" id="add-book-container">
             <div
               class="add-book-input-container"
