@@ -7,6 +7,8 @@ header,
 main,
 .header-buttons-container,
 .menu,
+.menu-header,
+.menu-icon,
 .settings-container,
 .colour-input-container,
 .menu-button-container,
@@ -39,6 +41,7 @@ footer {
 
 html,
 .menu,
+.menu-icon,
 .menu-button-container,
 .settings-container,
 button,
@@ -94,7 +97,8 @@ option,
 html,
 button,
 input,
-option {
+option,
+.add-book-status-select {
   font-family: "Roboto", Arial, Helvetica, sans-serif;
 }
 
@@ -125,9 +129,9 @@ header,
 }
 
 main,
-.menu,
 .settings-container,
 .content,
+.menu,
 .add-book-container,
 .information {
   gap: 16px;
@@ -136,6 +140,7 @@ main,
 main,
 .content,
 .menu,
+.menu-header,
 .settings-container,
 .add-book-container,
 table,
@@ -165,7 +170,8 @@ header,
   );
 }
 
-header {
+header,
+.menu {
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
 }
 
@@ -195,6 +201,7 @@ h1 {
 
 h1,
 .header-buttons,
+.menu-icon,
 input[type="color"],
 button,
 input,
@@ -238,18 +245,21 @@ h1,
   gap: 8px;
 }
 
-.header-buttons {
+.header-buttons,
+.menu-icon {
   width: 36px;
 }
 
 .header-buttons,
 .book-alter-buttons,
-.footer-buttons {
+.footer-buttons,
+.menu-icon {
   fill: rgba(227, 180, 100, 1);
 }
 
 h1:hover,
 #settings-button:hover,
+.menu-icon:hover,
 #restore-button:hover,
 #github-button:hover,
 input:focus,
@@ -268,6 +278,7 @@ button,
 input[type="checkbox"],
 .book-alter-buttons,
 .footer-buttons,
+.menu-icon,
 select,
 option {
   cursor: pointer;
@@ -279,7 +290,8 @@ option {
   filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.5));
 }
 
-.header-buttons:not(.github-button) {
+.header-buttons:not(.github-button),
+.menu-icon {
   height: 36px;
 }
 
@@ -288,8 +300,10 @@ option {
 }
 
 .menu {
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
-  padding: 24px;
+  padding-bottom: 24px;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-top: 6px;
 }
 
 .menu,
@@ -302,6 +316,14 @@ option {
 .colour-input-container,
 .add-book-input-container {
   justify-content: space-between;
+}
+
+.menu-header {
+  width: 100%;
+}
+
+.menu-icon {
+  align-self: flex-end;
 }
 
 .menu-title {
