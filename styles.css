@@ -300,10 +300,7 @@ option {
 }
 
 .menu {
-  padding-bottom: 24px;
-  padding-left: 24px;
-  padding-right: 24px;
-  padding-top: 6px;
+  padding: 12px;
 }
 
 .menu,
@@ -553,7 +550,7 @@ input[type="date"] {
 }
 
 #deleted-selected-book-button {
-  padding-left: 16px;
+  padding-left: 18px;
 }
 
 .information {
