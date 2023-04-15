@@ -469,7 +469,7 @@ input[type="checkbox"] {
 
 .header-title-text,
 .book-status {
-  transition: all 0.2s ease ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 .header-title-text:hover,
@@ -535,6 +535,12 @@ input[type="date"] {
   cursor: text;
 }
 
+.select-checkbox {
+  border: white;
+  border-style: solid;
+  border-width: 5px;
+}
+
 .book-alter-buttons,
 .footer-buttons,
 .github-logo {
@@ -544,6 +550,10 @@ input[type="date"] {
 .book-alter-buttons,
 .footer-buttons {
   height: 24px;
+}
+
+#deleted-selected-book-button {
+  padding-left: 16px;
 }
 
 .information {
