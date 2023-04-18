@@ -376,12 +376,12 @@ button:hover {
 }
 
 button:hover,
-.table-body-row,
-.deleted-books-select,
-.information-box,
-.table-body-row:hover,
 input:focus,
-select:focus {
+table,
+.table-body-row,
+.select-checkbox,
+.deleted-books-select,
+select:focus .information-box {
   border-style: solid;
 }
 
@@ -428,19 +428,26 @@ table {
   width: 1500px;
 }
 
+table,
 .table-body-row {
   border-color: rgba(0, 0, 0, 1);
 }
 
-.table-body-row,
+table,
+tr,
 .deleted-books-select {
   border-width: 1px;
+}
+
+.table-body-row:hover {
+  outline-color: rgba(227, 180, 100, 1);
+  outline-style: solid;
+  outline-width: 1px;
 }
 
 .table-body-row:hover,
 input:focus,
 select:focus {
-  border-color: rgba(227, 180, 100, 1);
   filter: drop-shadow(0px 0px 2px rgba(227, 180, 100, 1));
 }
 
@@ -525,6 +532,7 @@ select:focus,
 
 input:focus,
 select:focus {
+  border-color: rgba(227, 180, 100, 1);
   box-shadow: 0px 0px 3px rgba(227, 180, 100, 1);
 }
 
@@ -534,7 +542,6 @@ input[type="date"] {
 
 .select-checkbox {
   border: white;
-  border-style: solid;
   border-width: 5px;
 }
 
