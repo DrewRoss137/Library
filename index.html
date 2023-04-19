@@ -155,7 +155,7 @@
               <td class="book-pages" id="book-pages">706</td>
               <td class="book-published" id="book-published">01/07/2015</td>
               <td class="book-acquired" id="book-acquired">07/12/2023</td>
-              <td class="book-status" id="book-status">Unread</td>
+              <td class="book-status" id="book-status">Read</td>
               <td class="book-alter" id="book-alter">
                 <svg
                   class="book-alter-buttons"
@@ -182,8 +182,8 @@
             <tr class="table-body-row" id="table-body-row">
               <td class="book-select" id="book-select">
                 <input
-                  class="select-checkbox"
-                  id="select-checkbox"
+                  class="select-all-checkbox"
+                  id="select-all-checkbox"
                   type="checkbox"
                 />
               </td>
@@ -196,7 +196,7 @@
               <td class="book-pages" id="book-pages">416</td>
               <td class="book-published" id="book-published">14/03/1995</td>
               <td class="book-acquired" id="book-acquired">17/08/2023</td>
-              <td class="book-status" id="book-status">Unread</td>
+              <td class="book-status" id="book-status">Read</td>
               <td class="book-alter" id="book-alter">
                 <svg
                   class="book-alter-buttons"
@@ -235,7 +235,7 @@
               <td class="book-pages" id="book-pages">456</td>
               <td class="book-published" id="book-published">22/09/2004</td>
               <td class="book-acquired" id="book-acquired">27/07/2023</td>
-              <td class="book-status" id="book-status">Unread</td>
+              <td class="book-status" id="book-status">Read</td>
               <td class="book-alter" id="book-alter">
                 <svg
                   class="book-alter-buttons"
@@ -353,7 +353,7 @@
               <td class="book-pages" id="book-pages">448</td>
               <td class="book-published" id="book-published">02/01/2019</td>
               <td class="book-acquired" id="book-acquired">19/03/2023</td>
-              <td class="book-status" id="book-status">Unread</td>
+              <td class="book-status" id="book-status">Read</td>
               <td class="book-alter" id="book-alter">
                 <svg
                   class="book-alter-buttons"
@@ -472,7 +472,7 @@
               <td class="book-pages" id="book-pages">352</td>
               <td class="book-published" id="book-published">02/12/2019</td>
               <td class="book-acquired" id="book-acquired">23/01/2023</td>
-              <td class="book-status" id="book-status">Unread</td>
+              <td class="book-status" id="book-status">Read</td>
               <td class="book-alter" id="book-alter">
                 <svg
                   class="book-alter-buttons"
@@ -712,14 +712,15 @@
             size="3"
           >
             <option class="deleted-books-option" id="deleted-books-option">
-              A Common-Sense Guide to Data Structures and Algorithms - Jay
-              Wengrow
+              Peopleware: Productive Projects and Teams - Tom DeMarco, Tim
+              Lister
             </option>
             <option class="deleted-books-option" id="deleted-books-option">
-              Effective TypeScript - Dan Vanderkam
+              Grokking Algorithms: An illustrated guide for programmers and
+              other curious people - Aditya Bhargava
             </option>
             <option class="deleted-books-option" id="deleted-books-option">
-              Python 3 Object-Oriented Programming - Dusty Phillips
+              Algorithms - Robert Sedgewick, Kevin Wayne
             </option>
           </select>
           <div class="menu-button-container" id="deleted-books-buttons">
@@ -743,7 +744,7 @@
             </svg>
             <span class="menu-title" id="add-book-title">Add Book</span>
           </div>
-          <div class="add-book-container" id="add-book-container">
+          <form class="add-book-container" id="add-book-container">
             <div
               class="add-book-input-container"
               id="add-book-input-title-container"
@@ -774,6 +775,7 @@
               <input
                 class="add-book-input"
                 id="add-book-pages-input"
+                min="1"
                 type="number"
               />
             </div>
@@ -826,7 +828,7 @@
                 </option>
               </select>
             </div>
-          </div>
+          </form>
           <button class="add-book-button" id="add-book-button">Add Book</button>
         </div>
       </div>
