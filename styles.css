@@ -210,7 +210,7 @@ input:focus,
 select:focus,
 .book-alter-buttons,
 .footer-buttons {
-  transition: all 0.75s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 
 h1,
@@ -263,7 +263,6 @@ h1:hover,
 #restore-button:hover,
 #github-button:hover,
 input:focus,
-select:focus,
 .book-alter-buttons:hover,
 .footer-buttons:hover {
   filter: drop-shadow(0px 0px 1.6px rgba(227, 180, 100, 1));
@@ -448,7 +447,7 @@ tr,
 .table-body-row:hover,
 input:focus,
 select:focus {
-  filter: drop-shadow(0px 0px 2px rgba(227, 180, 100, 1));
+  filter: drop-shadow(0px 0px 5px rgba(227, 180, 100, 1));
 }
 
 th,
@@ -460,9 +459,8 @@ td,
 .deleted-books-select,
 .deleted-books-option,
 .add-book-menu,
-.add-book-input,
-.add-book-status-select {
-  padding: 8px;
+.add-book-input {
+  padding: 12px;
 }
 
 input[type="checkbox"] {
@@ -478,7 +476,7 @@ input[type="checkbox"] {
 
 .header-title-text:hover,
 .book-status:hover {
-  filter: drop-shadow(0px 0px 2px rgba(227, 180, 100, 1));
+  filter: drop-shadow(0px 0px 1px rgba(227, 180, 100, 1));
 }
 
 .book-status {
