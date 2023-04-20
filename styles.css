@@ -8,13 +8,14 @@ main,
 .header-buttons-container,
 .menu,
 .menu-header,
-.menu-icon,
+.close-button-container,
+.menu-button,
 .settings-container,
 .colour-input-container,
 .menu-button-container,
 button,
 .content,
-#deleted-selected-book-button,
+#delete-selected-book-button,
 .deleted-books-option,
 .add-book-container,
 .add-book-input-container,
@@ -28,6 +29,7 @@ html,
 header,
 .header-buttons-container,
 .menu,
+.close-button-container,
 .colour-input-container,
 button,
 .content,
@@ -41,7 +43,7 @@ footer {
 
 html,
 .menu,
-.menu-icon,
+.menu-button,
 .menu-button-container,
 .settings-container,
 button,
@@ -201,7 +203,7 @@ h1 {
 
 h1,
 .header-buttons,
-.menu-icon,
+.menu-button,
 input[type="color"],
 button,
 input,
@@ -246,20 +248,20 @@ h1,
 }
 
 .header-buttons,
-.menu-icon {
+.menu-button {
   width: 36px;
 }
 
 .header-buttons,
 .book-alter-buttons,
 .footer-buttons,
-.menu-icon {
+.menu-button {
   fill: rgba(227, 180, 100, 1);
 }
 
 h1:hover,
 #settings-button:hover,
-.menu-icon:hover,
+.menu-button:hover,
 #restore-button:hover,
 #github-button:hover,
 input:focus,
@@ -277,7 +279,7 @@ button,
 input[type="checkbox"],
 .book-alter-buttons,
 .footer-buttons,
-.menu-icon,
+.menu-button,
 select,
 option {
   cursor: pointer;
@@ -290,7 +292,10 @@ option {
 }
 
 .header-buttons:not(.github-button),
-.menu-icon {
+.menu-button,
+.close-button-container,
+#settings-button-container,
+#restore-button-container {
   height: 36px;
 }
 
@@ -318,7 +323,7 @@ option {
   width: 100%;
 }
 
-.menu-icon {
+.menu-button {
   align-self: flex-end;
 }
 
@@ -414,7 +419,7 @@ button,
   filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.2));
 }
 
-.github-button-container,
+#github-button-container,
 .github-button {
   height: 36.5px;
 }
@@ -543,13 +548,17 @@ input[type="date"] {
   border-width: 5px;
 }
 
+.book-alter-button-container,
 .book-alter-buttons,
+.footer-button-container,
 .footer-buttons,
 .github-logo {
   width: 24px;
 }
 
+.book-alter-button-container,
 .book-alter-buttons,
+.footer-button-container,
 .footer-buttons {
   height: 24px;
 }
@@ -569,11 +578,15 @@ input[type="date"] {
   font-size: 24px;
 }
 
+.close-button-container,
+footer {
+  justify-content: flex-end;
+}
+
 footer {
   bottom: 0;
   left: 0;
   position: fixed;
-  justify-content: flex-end;
 }
 
 .github-logo {
