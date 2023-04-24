@@ -15,6 +15,267 @@
     <title>Library</title>
   </head>
   <body class="body" id="body">
+    <div class="overlay inactive" id="overlay">
+      <div class="menu inactive" id="settings-menu">
+        <div class="menu-header" id="settings-header">
+          <a class="close-button-container" id="close-button-container">
+            <svg
+              class="close-button"
+              id="close-button"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91Z"
+              />
+            </svg>
+          </a>
+          <span class="menu-title" id="settings-title">Settings</span>
+        </div>
+        <div class="settings-container" id="settings-container">
+          <div
+            class="colour-input-container"
+            id="accent-colour-input-container"
+          >
+            <span class="input-text" id="accent-colour-input-text"
+              >Accent Colour</span
+            >
+            <input class="colour-input" id="accent-colour-input" type="color" />
+          </div>
+          <div
+            class="colour-input-container"
+            id="background-colour-input-container"
+          >
+            <span class="input-text" id="background-colour-input-text"
+              >Background Colour</span
+            >
+            <input
+              class="colour-input"
+              id="background-colour-input"
+              type="color"
+            />
+          </div>
+          <div
+            class="colour-input-container"
+            id="header-colour-input-container"
+          >
+            <span class="input-text" id="header-colour-input-text"
+              >Header Colour</span
+            >
+            <input class="colour-input" id="header-colour-input" type="color" />
+          </div>
+          <div
+            class="colour-input-container"
+            id="table-primary-colour-input-container"
+          >
+            <span class="input-text" id="table-primary-colour-input-text"
+              >Table Primary Colour</span
+            >
+            <input
+              class="colour-input"
+              id="table-primary-colour-input"
+              type="color"
+            />
+          </div>
+          <div
+            class="colour-input-container"
+            id="table-secondary-colour-input-container"
+          >
+            <span class="input-text" id="table-secondary-colour-input-text"
+              >Table Secondary Colour</span
+            >
+            <input
+              class="colour-input"
+              id="table-secondary-colour-input"
+              type="color"
+            />
+          </div>
+          <div class="colour-input-container" id="text-colour-input-container">
+            <span class="input-text" id="text-colour-input-text"
+              >Text Colour</span
+            >
+            <input class="colour-input" id="text-colour-input" type="color" />
+          </div>
+        </div>
+        <div class="menu-button-container" id="settings-button-container">
+          <button class="menu-buttons" id="reset-button">Reset</button>
+          <button class="menu-buttons" id="save-button">Save</button>
+        </div>
+      </div>
+      <div class="menu inactive" id="restore-menu">
+        <div class="menu-header" id="restore-header">
+          <a class="close-button-container" id="close-button-container">
+            <svg
+              class="close-button"
+              id="close-button"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91Z"
+              />
+            </svg>
+          </a>
+          <span class="menu-title" id="restore-title"
+            >Restore Default Settings</span
+          >
+        </div>
+        <span class="menu-text" id="restore-text"
+          >This will erase all user-created data, restoring the user's books and
+          settings data to their default values.</span
+        >
+        <span class="menu-text" id="restore-warning"
+          >This action <i>cannot</i> be undone!</span
+        >
+        <div class="menu-button-container" id="restore-menu-buttons">
+          <button class="restore-menu-button" id="cancel-button">Cancel</button>
+          <button class="restore-menu-button" id="continue-button">
+            Continue
+          </button>
+        </div>
+      </div>
+      <div class="menu inactive" id="deleted-books-menu">
+        <div class="menu-header" id="deleted-books-header">
+          <a class="close-button-container" id="close-button-container">
+            <svg
+              class="close-button"
+              id="close-button"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91Z"
+              />
+            </svg>
+          </a>
+          <span class="menu-title" id="delete-title">Deleted Books</span>
+        </div>
+        <select
+          class="deleted-books-select"
+          id="deleted-books-select"
+          multiple
+          size="3"
+        >
+          <option class="deleted-books-option" id="deleted-books-option">
+            Peopleware: Productive Projects and Teams - Tom DeMarco, Tim Lister
+          </option>
+          <option class="deleted-books-option" id="deleted-books-option">
+            Grokking Algorithms: An illustrated guide for programmers and other
+            curious people - Aditya Bhargava
+          </option>
+          <option class="deleted-books-option" id="deleted-books-option">
+            Algorithms - Robert Sedgewick, Kevin Wayne
+          </option>
+        </select>
+        <div class="menu-button-container" id="deleted-books-buttons">
+          <button class="menu-buttons" id="delete-button">Delete</button>
+          <button class="menu-buttons" id="restore-books-button">
+            Restore
+          </button>
+        </div>
+      </div>
+      <div class="menu inactive" id="add-book-menu">
+        <div class="menu-header" id="add-book-header">
+          <a class="close-button-container" id="close-button-container">
+            <svg
+              class="close-button"
+              id="close-button"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91Z"
+              />
+            </svg>
+          </a>
+
+          <span class="menu-title" id="add-book-title">Add Book</span>
+        </div>
+        <form class="add-book-container" id="add-book-container">
+          <div
+            class="add-book-input-container"
+            id="add-book-input-title-container"
+          >
+            <span class="input-text" id="add-book-title-text">Title</span>
+            <input
+              class="add-book-input"
+              id="add-book-title-input"
+              type="text"
+            />
+          </div>
+          <div
+            class="add-book-input-container"
+            id="add-book-input-author-container"
+          >
+            <span class="input-text" id="add-book-author-text">Author</span>
+            <input
+              class="add-book-input"
+              id="add-book-author-input"
+              type="text"
+            />
+          </div>
+          <div
+            class="add-book-input-container"
+            id="add-book-input-pages-container"
+          >
+            <span class="input-text" id="add-book-pages-text">Pages</span>
+            <input
+              class="add-book-input"
+              id="add-book-pages-input"
+              min="1"
+              type="number"
+            />
+          </div>
+          <div
+            class="add-book-input-container"
+            id="add-book-input-publish-date-container"
+          >
+            <span class="input-text" id="add-book-publish-date-text"
+              >Publish Date</span
+            >
+            <input
+              class="add-book-input"
+              id="add-book-publish-date-input"
+              type="date"
+            />
+          </div>
+          <div
+            class="add-book-input-container"
+            id="add-book-input-acquisition-date-container"
+          >
+            <span class="input-text" id="add-book-acquisition-date-text"
+              >Acquisition Date</span
+            >
+            <input
+              class="add-book-input"
+              id="add-book-acquisition-date-input"
+              type="date"
+            />
+          </div>
+          <div
+            class="add-book-input-container"
+            id="add-book-input-status-container"
+          >
+            <span class="input-text" id="add-book-status-text">Status</span>
+            <select class="add-book-status-select" id="add-book-status-select">
+              <option
+                class="add-book-status-option"
+                id="add-book-status-read-option"
+              >
+                Read
+              </option>
+              <option
+                class="add-book-status-option"
+                id="add-book-status-unread-option"
+              >
+                Unread
+              </option>
+            </select>
+          </div>
+        </form>
+        <button class="add-books-button" id="add-books-button">Add Book</button>
+      </div>
+    </div>
     <main class="main" id="main">
       <header class="header" id="header">
         <a
@@ -664,309 +925,31 @@
             </tr>
           </tfoot>
         </table>
-        <div class="information" id="information">
-          <div class="information-box" id="total-books">
+        <div class="tracker-container" id="tracker-container">
+          <div class="tracker-box" id="total-books-box">
             Total Books
-            <span class="tracker" id="total-books-tracker">1</span>
+            <span class="tracker-value" id="total-books-value">1</span>
           </div>
-          <div class="information-box" id="total-pages">
+          <div class="tracker-box" id="total-pages-box">
             Total Pages
-            <span class="tracker" id="total-pages-tracker">2</span>
+            <span class="tracker-value" id="total-pages-value">2</span>
           </div>
-          <div class="information-box" id="authors">
+          <div class="tracker-box" id="authors-box">
             Unique Authors
-            <span class="tracker" id="authors-tracker">3</span>
+            <span class="tracker-value" id="authors-value">3</span>
           </div>
-          <div class="information-box" id="read-books">
+          <div class="tracker-box" id="read-books-box">
             Read Books
-            <span class="tracker" id="read-books-tracker">4</span>
+            <span class="tracker-value" id="read-books-value">4</span>
           </div>
-          <div class="information-box" id="unread-books">
+          <div class="tracker-box" id="unread-books-box">
             Unread Books
-            <span class="tracker" id="unread-books-tracker">5</span>
+            <span class="tracker-value" id="unread-books-value">5</span>
           </div>
-          <div class="information-box" id="deleted-books">
+          <div class="tracker-box" id="deleted-books-box">
             Deleted Books
-            <span class="tracker" id="deleted-books-tracker">6</span>
+            <span class="tracker-value" id="deleted-books-value">6</span>
           </div>
-        </div>
-      </div>
-      <div class="test" id="test">
-        <div class="menu" id="settings-menu">
-          <div class="menu-header" id="settings-header">
-            <a class="close-button-container" id="close-button-container">
-              <svg
-                class="menu-button"
-                id="close-button"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91Z"
-                />
-              </svg>
-            </a>
-            <span class="menu-title" id="settings-title">Settings</span>
-          </div>
-          <div class="settings-container" id="settings-container">
-            <div
-              class="colour-input-container"
-              id="accent-colour-input-container"
-            >
-              <span class="input-text" id="accent-colour-input-text"
-                >Accent Colour</span
-              >
-              <input
-                class="colour-input"
-                id="accent-colour-input"
-                type="color"
-              />
-            </div>
-            <div
-              class="colour-input-container"
-              id="background-colour-input-container"
-            >
-              <span class="input-text" id="background-colour-input-text"
-                >Background Colour</span
-              >
-              <input
-                class="colour-input"
-                id="background-colour-input"
-                type="color"
-              />
-            </div>
-            <div
-              class="colour-input-container"
-              id="header-colour-input-container"
-            >
-              <span class="input-text" id="header-colour-input-text"
-                >Header Colour</span
-              >
-              <input
-                class="colour-input"
-                id="header-colour-input"
-                type="color"
-              />
-            </div>
-            <div
-              class="colour-input-container"
-              id="table-primary-colour-input-container"
-            >
-              <span class="input-text" id="table-primary-colour-input-text"
-                >Table Primary Colour</span
-              >
-              <input
-                class="colour-input"
-                id="table-primary-colour-input"
-                type="color"
-              />
-            </div>
-            <div
-              class="colour-input-container"
-              id="table-secondary-colour-input-container"
-            >
-              <span class="input-text" id="table-secondary-colour-input-text"
-                >Table Secondary Colour</span
-              >
-              <input
-                class="colour-input"
-                id="table-secondary-colour-input"
-                type="color"
-              />
-            </div>
-            <div
-              class="colour-input-container"
-              id="text-colour-input-container"
-            >
-              <span class="input-text" id="text-colour-input-text"
-                >Text Colour</span
-              >
-              <input class="colour-input" id="text-colour-input" type="color" />
-            </div>
-          </div>
-          <div class="menu-button-container" id="settings-button-container">
-            <button class="menu-buttons" id="reset-button">Reset</button>
-            <button class="menu-buttons" id="save-button">Save</button>
-          </div>
-        </div>
-        <div class="menu" id="restore-menu">
-          <div class="menu-header" id="restore-header">
-            <a class="close-button-container" id="close-button-container">
-              <svg
-                class="menu-button"
-                id="close-button"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91Z"
-                />
-              </svg>
-            </a>
-            <span class="menu-title" id="restore-title"
-              >Restore Default Settings</span
-            >
-          </div>
-          <span class="menu-text" id="restore-text"
-            >This will erase all user-created data, restoring the user's books
-            and settings data to their default values.</span
-          >
-          <span class="menu-text" id="restore-warning"
-            >This action <i>cannot</i> be undone!</span
-          >
-          <div class="menu-button-container" id="restore-menu-buttons">
-            <button class="restore-menu-button" id="cancel-button">
-              Cancel
-            </button>
-            <button class="restore-menu-button" id="continue-button">
-              Continue
-            </button>
-          </div>
-        </div>
-        <div class="menu" id="deleted-books-menu">
-          <div class="menu-header" id="deleted-books-header">
-            <a class="close-button-container" id="close-button-container">
-              <svg
-                class="menu-button"
-                id="close-button"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91Z"
-                />
-              </svg>
-            </a>
-            <span class="menu-title" id="delete-title">Deleted Books</span>
-          </div>
-          <select
-            class="deleted-books-select"
-            id="deleted-books-select"
-            multiple
-            size="3"
-          >
-            <option class="deleted-books-option" id="deleted-books-option">
-              Peopleware: Productive Projects and Teams - Tom DeMarco, Tim
-              Lister
-            </option>
-            <option class="deleted-books-option" id="deleted-books-option">
-              Grokking Algorithms: An illustrated guide for programmers and
-              other curious people - Aditya Bhargava
-            </option>
-            <option class="deleted-books-option" id="deleted-books-option">
-              Algorithms - Robert Sedgewick, Kevin Wayne
-            </option>
-          </select>
-          <div class="menu-button-container" id="deleted-books-buttons">
-            <button class="menu-buttons" id="delete-button">Delete</button>
-            <button class="menu-buttons" id="restore-books-button">
-              Restore
-            </button>
-          </div>
-        </div>
-        <div class="menu" id="add-book-menu">
-          <div class="menu-header" id="add-book-header">
-            <a class="close-button-container" id="close-button-container">
-              <svg
-                class="menu-button"
-                id="close-button"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91Z"
-                />
-              </svg>
-            </a>
-
-            <span class="menu-title" id="add-book-title">Add Book</span>
-          </div>
-          <form class="add-book-container" id="add-book-container">
-            <div
-              class="add-book-input-container"
-              id="add-book-input-title-container"
-            >
-              <span class="input-text" id="add-book-title-text">Title</span>
-              <input
-                class="add-book-input"
-                id="add-book-title-input"
-                type="text"
-              />
-            </div>
-            <div
-              class="add-book-input-container"
-              id="add-book-input-author-container"
-            >
-              <span class="input-text" id="add-book-author-text">Author</span>
-              <input
-                class="add-book-input"
-                id="add-book-author-input"
-                type="text"
-              />
-            </div>
-            <div
-              class="add-book-input-container"
-              id="add-book-input-pages-container"
-            >
-              <span class="input-text" id="add-book-pages-text">Pages</span>
-              <input
-                class="add-book-input"
-                id="add-book-pages-input"
-                min="1"
-                type="number"
-              />
-            </div>
-            <div
-              class="add-book-input-container"
-              id="add-book-input-publish-date-container"
-            >
-              <span class="input-text" id="add-book-publish-date-text"
-                >Publish Date</span
-              >
-              <input
-                class="add-book-input"
-                id="add-book-publish-date-input"
-                type="date"
-              />
-            </div>
-            <div
-              class="add-book-input-container"
-              id="add-book-input-acquisition-date-container"
-            >
-              <span class="input-text" id="add-book-acquisition-date-text"
-                >Acquisition Date</span
-              >
-              <input
-                class="add-book-input"
-                id="add-book-acquisition-date-input"
-                type="date"
-              />
-            </div>
-            <div
-              class="add-book-input-container"
-              id="add-book-input-status-container"
-            >
-              <span class="input-text" id="add-book-status-text">Status</span>
-              <select
-                class="add-book-status-select"
-                id="add-book-status-select"
-              >
-                <option
-                  class="add-book-status-option"
-                  id="add-book-status-read-option"
-                >
-                  Read
-                </option>
-                <option
-                  class="add-book-status-option"
-                  id="add-book-status-unread-option"
-                >
-                  Unread
-                </option>
-              </select>
-            </div>
-          </form>
-          <button class="add-book-button" id="add-book-button">Add Book</button>
         </div>
       </div>
       <footer class="footer" id="footer">
