@@ -3,96 +3,81 @@ html {
 }
 
 html,
-header,
-main,
-.header-buttons-container,
 .menu,
 .menu-header,
 .close-button-container,
-.menu-button,
-.settings-container,
-.colour-input-container,
+.close-button,
 .menu-button-container,
+.settings-container,
 button,
-.content,
-#delete-selected-book-button,
+.colour-input-container,
 .deleted-books-option,
 .add-book-container,
 .add-book-input-container,
-.information,
-.information-box,
+main,
+header,
+.header-buttons-container,
+.content,
+#delete-selected-book-button,
+.tracker-container,
+.tracker-box,
 footer {
   display: flex;
 }
 
 html,
-header,
-.header-buttons-container,
 .menu,
 .close-button-container,
-.colour-input-container,
 button,
-.content,
+.colour-input-container,
 .deleted-books-option,
 .add-book-input-container,
-.information,
-.information-box,
+header,
+.header-buttons-container,
+.content,
+.tracker-container,
+.tracker-box,
 footer {
   align-items: center;
 }
 
 html,
 .menu,
-.menu-button,
+.close-button,
 .menu-button-container,
 .settings-container,
 button,
 .content,
 .deleted-books-option,
 .add-book-container,
-.information,
-.information-box {
+.tracker-container,
+.tracker-box {
   justify-content: center;
 }
 
 html,
 body,
-main,
-h1,
-input,
-input[type="color"] {
-  margin: 0;
-}
-
-html,
-body,
-main,
 input[type="color"],
 input[type="color"]::-webkit-color-swatch-wrapper,
+main,
 .book-status-container {
   padding: 0;
 }
 
 html,
 body,
-main {
-  height: 100%;
+input,
+input[type="color"] main,
+h1 {
+  margin: 0;
 }
 
 html,
-body,
-main,
-.information-box,
-footer {
-  width: 100%;
-}
-
-html,
-a,
 button,
 option,
 .add-book-input,
-.add-book-status-select {
+.add-book-status-select,
+a {
   color: rgba(255, 255, 255, 1);
 }
 
@@ -104,13 +89,30 @@ option,
   font-family: "Roboto", Arial, Helvetica, sans-serif;
 }
 
+html,
 body,
-thead,
-tfoot,
+.overlay.active,
+.menu-header,
+main,
+.tracker-box,
+footer {
+  width: 100%;
+}
+
+html,
+body,
+.overlay.active,
+main {
+  height: 100%;
+}
+
+body,
 .deleted-books-select,
 .add-book-input,
 .add-book-status-select,
-.add-book-status-option {
+.add-book-status-option,
+thead,
+tfoot {
   background-image: radial-gradient(
     circle at center,
     rgba(79, 69, 87, 1),
@@ -119,52 +121,78 @@ tfoot,
 }
 
 body,
-header,
 .settings-menu,
 .restore-menu,
 .deleted-books-menu,
-.add-book-menu {
+.add-book-menu,
+header {
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-main,
-.settings-container,
-.content,
-.menu,
-.add-book-container,
-.information {
-  gap: 16px;
+.overlay .inactive,
+.menu .inactive {
+  display: none;
 }
 
-main,
-.content,
+.overlay.active {
+  display: block;
+  backdrop-filter: blur(5px);
+  right: 0;
+  top: 0;
+  z-index: 9999;
+}
+
+.overlay.active,
+footer {
+  bottom: 0;
+  left: 0;
+  position: fixed;
+}
+
+.menu {
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  transform: translate(-50%, 50%);
+}
+
 .menu,
 .menu-header,
 .settings-container,
 .add-book-container,
+main,
+.content,
 table,
-.information-box {
+.tracker-box {
   flex-direction: column;
 }
 
-header {
-  border-bottom-color: rgba(0, 0, 0, 1);
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-left: none;
-  border-right: none;
-  border-top: none;
-  height: 50px;
-  justify-content: space-around;
+.menu,
+option,
+input,
+.add-book-status-select,
+header,
+table,
+.tracker-box {
+  text-shadow: 0px 2px 2px rgba(0, 0, 0, 1);
 }
 
+.menu,
+.settings-container,
+.add-book-container,
+main,
+.content,
+.tracker-container {
+  gap: 16px;
+}
+
+.menu,
 header,
 .table-body-row,
-.information-box,
-.menu {
+.tracker-box {
   background-image: radial-gradient(
     circle at center,
     rgba(109, 93, 110, 1),
@@ -172,144 +200,15 @@ header,
   );
 }
 
-header,
-.menu {
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
-}
-
-header,
 .menu,
-table,
-option,
-input,
-.add-book-status-select,
-.information-box {
-  text-shadow: 0px 2px 2px rgba(0, 0, 0, 1);
-}
-
-header,
 button,
-.information-box {
-  padding: 16px;
-}
-
-a {
-  text-decoration: none;
-}
-
-h1 {
-  font-size: 36px;
-}
-
-h1,
-.header-buttons,
-.menu-button,
-input[type="color"],
-button,
-input,
-select,
-input:focus,
-select:focus,
-.book-alter-buttons,
-.footer-buttons {
-  transition: all 0.5s ease-in-out;
-}
-
-h1,
-.menu-title,
-#settings-menu,
-#restore-warning,
-button,
-select,
-option,
-#add-book-menu,
-input,
-.information-box {
-  font-weight: 900;
-}
-
-h1:hover,
-input[type="color"]:hover,
-button:hover,
-.header-title-text:hover {
-  transform: scale(1.05);
-}
-
-h1,
-.header-title-text,
-.book-status-container {
-  color: rgba(227, 180, 100, 1);
-}
-
-.header-buttons-container,
-.menu-button-container,
-.information-box {
-  gap: 8px;
-}
-
-.header-buttons,
-.menu-button {
-  width: 36px;
-}
-
-.header-buttons,
-.book-alter-buttons,
-.footer-buttons,
-.menu-button {
-  fill: rgba(227, 180, 100, 1);
-}
-
-h1:hover,
-#settings-button:hover,
-.menu-button:hover,
-#restore-button:hover,
-#github-button:hover,
-input:focus,
-.book-alter-buttons:hover,
-.footer-buttons:hover {
-  filter: drop-shadow(0px 0px 1.6px rgba(227, 180, 100, 1));
-  transform: scale(1.05);
-}
-
-.header-buttons,
-.header-title-text,
-input[type="color"],
-button,
-.book-status-container,
-input[type="checkbox"],
-.book-alter-buttons,
-.footer-buttons,
-.menu-button,
-select,
-option {
-  cursor: pointer;
-}
-
-.header-buttons:not(.github-button),
-.book-alter,
-.footer-buttons {
-  filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.5));
-}
-
-.header-buttons:not(.github-button),
-.menu-button,
-.close-button-container,
-#settings-button-container,
-#restore-button-container {
-  height: 36px;
-}
-
-#settings-button {
-  margin-right: -4px;
-}
-
-.menu {
+header {
   padding: 16px;
 }
 
 .menu,
 .deleted-books-select,
-.information-box {
+.tracker-box {
   border-radius: 20px;
 }
 
@@ -319,16 +218,104 @@ option {
   justify-content: space-between;
 }
 
-.menu-header {
-  width: 100%;
+.menu,
+header {
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
 }
 
-.menu-button {
-  align-self: flex-end;
+.menu-header,
+button,
+#restore-text,
+option,
+table,
+.tracker-box {
+  text-align: center;
 }
 
 .menu-title {
   font-size: 20px;
+}
+
+.menu-title,
+#settings-menu,
+#restore-warning,
+button,
+select,
+option,
+#add-book-menu,
+input,
+h1,
+.tracker-box {
+  font-weight: 900;
+}
+
+a {
+  text-decoration: none;
+}
+
+.close-button-container,
+.close-button,
+input[type="color"],
+#settings-button-container,
+#restore-button-container,
+.header-buttons:not(.github-button) {
+  height: 36px;
+}
+
+.close-button-container,
+footer {
+  justify-content: flex-end;
+}
+
+.close-button {
+  align-self: flex-end;
+}
+
+.close-button,
+input[type="color"],
+button,
+.book-status-container,
+.header-buttons,
+.header-title-text,
+input[type="checkbox"],
+.book-alter-buttons,
+.footer-buttons,
+select,
+option {
+  cursor: pointer;
+}
+
+.close-button,
+input[type="color"],
+button,
+input,
+select,
+input:focus,
+select:focus,
+h1,
+.header-buttons,
+.book-alter-buttons,
+.footer-buttons {
+  transition: all 0.5s ease-in-out;
+}
+
+.close-button,
+.header-buttons,
+.book-alter-buttons,
+.footer-buttons {
+  fill: rgba(227, 180, 100, 1);
+}
+
+.close-button:hover,
+input:focus,
+#settings-button:hover,
+#restore-button:hover,
+#github-button:hover,
+h1:hover,
+.book-alter-buttons:hover,
+.footer-buttons:hover {
+  filter: drop-shadow(0px 0px 1.6px rgba(227, 180, 100, 1));
+  transform: scale(1.05);
 }
 
 .colour-input-container,
@@ -336,27 +323,79 @@ option {
   gap: 32px;
 }
 
+input .deleted-books-select {
+  font-size: 14px;
+}
+
+input:focus,
+select:focus,
+.add-book-input,
+.add-book-status-select {
+  box-sizing: border-box;
+}
+
+input:focus,
+select:focus,
+.tracker-box {
+  border-width: 2px;
+}
+
+input:focus,
+select:focus,
+.table-body-row:hover {
+  filter: drop-shadow(0px 0px 5px rgba(227, 180, 100, 1));
+}
+
+input:focus,
+select:focus,
+.deleted-books-select:focus {
+  outline: none;
+}
+
+input:focus,
+select:focus {
+  border-color: rgba(227, 180, 100, 1);
+  box-shadow: 0px 0px 3px rgba(227, 180, 100, 1);
+}
+
 input[type="color"] {
   background: none;
   border-radius: 50%;
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 1);
-  height: 35px;
-  width: 35px;
 }
 
 input[type="color"],
 input[type="color"]::-webkit-color-swatch,
 button,
-th,
-td,
 .deleted-books-select,
 .add-book-input,
-.add-book-status-select {
+.add-book-status-select,
+th,
+td {
   border: none;
+}
+
+input[type="color"]:hover,
+button:hover,
+h1:hover,
+.header-title-text:hover {
+  transform: scale(1.05);
+}
+
+input[type="color"],
+.menu-button,
+.header-buttons {
+  width: 36px;
 }
 
 input[type="color"]::-webkit-color-swatch {
   border-radius: 50%;
+}
+
+.menu-button-container,
+.header-buttons-container,
+.tracker-box {
+  gap: 8px;
 }
 
 button {
@@ -366,10 +405,21 @@ button {
 }
 
 button,
+table,
+.tracker-box {
+  font-size: 16px;
+}
+
+button,
 .add-book-input,
 .add-book-status-select {
   border-radius: 5px;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 1);
+}
+
+button,
+.add-book-status-option {
+  background-color: rgba(57, 54, 70, 1);
 }
 
 button:hover {
@@ -381,33 +431,49 @@ button:hover {
 
 button:hover,
 input:focus,
-table,
-.table-body-row,
 .select-checkbox,
 .deleted-books-select,
-select:focus .information-box {
+.table-body-row {
   border-style: solid;
 }
 
-button,
-table,
-.menu,
-#restore-menu,
-table,
-option,
-.information-box {
-  text-align: center;
+.deleted-books-select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border-color: transparent;
+  height: auto;
+  overflow: hidden;
+  width: auto;
 }
 
-button,
-table,
-.information-box {
-  font-size: 16px;
+.deleted-books-select,
+.deleted-books-option,
+.add-book-input,
+th,
+td,
+.tracker-box {
+  padding: 12px;
 }
 
-button,
-.add-book-status-option {
-  background-color: rgba(57, 54, 70, 1);
+.deleted-books-select,
+table,
+tr {
+  border-width: 1px;
+}
+
+.deleted-books-option {
+  border-radius: 10px;
+}
+
+.add-book-input,
+.add-book-status-select {
+  height: 35px;
+  width: 200px;
+}
+
+input[type="date"] {
+  cursor: text;
 }
 
 #restore-title,
@@ -415,13 +481,48 @@ button,
   max-width: 300px;
 }
 
-.github-button {
-  filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.2));
+header {
+  border-bottom-color: rgba(0, 0, 0, 1);
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  justify-content: space-around;
+}
+
+header,
+.tracker-box {
+  height: 50px;
+}
+
+h1 {
+  font-size: 36px;
+}
+
+h1,
+.book-status-container,
+.header-title-text {
+  color: rgba(227, 180, 100, 1);
+}
+
+.header-buttons:not(.github-button),
+.book-alter,
+.footer-buttons {
+  filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.5));
+}
+
+#settings-button {
+  margin-right: -4px;
 }
 
 #github-button-container,
 .github-button {
   height: 36.5px;
+}
+
+.github-button {
+  filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.2));
 }
 
 table {
@@ -437,35 +538,10 @@ table,
   border-color: rgba(0, 0, 0, 1);
 }
 
-table,
-tr,
-.deleted-books-select {
-  border-width: 1px;
-}
-
 .table-body-row:hover {
   outline-color: rgba(227, 180, 100, 1);
   outline-style: solid;
   outline-width: 1px;
-}
-
-.table-body-row:hover,
-input:focus,
-select:focus {
-  filter: drop-shadow(0px 0px 5px rgba(227, 180, 100, 1));
-}
-
-th,
-td,
-.information-box,
-.settings-menu,
-.restore-menu,
-.deleted-books-menu,
-.deleted-books-select,
-.deleted-books-option,
-.add-book-menu,
-.add-book-input {
-  padding: 12px;
 }
 
 input[type="checkbox"] {
@@ -489,65 +565,6 @@ input[type="checkbox"] {
   width: 0;
 }
 
-.deleted-books-select {
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  appearance: none;
-  border-color: transparent;
-  height: auto;
-  overflow: hidden;
-  width: auto;
-}
-
-.deleted-books-select:focus,
-input:focus,
-select:focus {
-  outline: none;
-}
-
-.deleted-books-select,
-input {
-  font-size: 14px;
-}
-
-.deleted-books-option {
-  border-radius: 10px;
-}
-
-.add-book-input,
-.add-book-status-select {
-  height: 35px;
-  width: 200px;
-}
-
-.add-book-input,
-.add-book-status-select,
-input:focus,
-select:focus {
-  box-sizing: border-box;
-}
-
-input:focus,
-select:focus,
-.information box {
-  border-width: 2px;
-}
-
-input:focus,
-select:focus {
-  border-color: rgba(227, 180, 100, 1);
-  box-shadow: 0px 0px 3px rgba(227, 180, 100, 1);
-}
-
-input[type="date"] {
-  cursor: text;
-}
-
-.select-checkbox {
-  border: white;
-  border-width: 5px;
-}
-
 .book-alter-button-container,
 .book-alter-buttons,
 .footer-button-container,
@@ -563,30 +580,18 @@ input[type="date"] {
   height: 24px;
 }
 
-.information {
+.tracker-container {
   width: 1500px;
 }
 
-.information-box {
+.tracker-box {
   border-color: rgba(255, 255, 255, 0.1);
   border-width: 2px;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.5);
-  height: 50px;
 }
 
-.tracker {
+.tracker-value {
   font-size: 24px;
-}
-
-.close-button-container,
-footer {
-  justify-content: flex-end;
-}
-
-footer {
-  bottom: 0;
-  left: 0;
-  position: fixed;
 }
 
 .github-logo {
@@ -602,11 +607,4 @@ footer {
   color: rgba(109, 93, 110, 1);
   color: rgba(79, 69, 87, 1);
   color: rgba(57, 54, 70, 1);
-}
-
-.test {
-  align-items: center;
-  display: flex;
-  gap: 24px;
-  justify-content: center;
 }
