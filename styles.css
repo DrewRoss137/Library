@@ -11,6 +11,8 @@ html,
 .settings-container,
 button,
 .colour-input-container,
+.edit-book-container,
+.edit-book-input-container,
 .deleted-books-option,
 .add-book-container,
 .add-book-input-container,
@@ -18,7 +20,7 @@ main,
 header,
 .header-buttons-container,
 .content,
-#delete-selected-book-button,
+#delete-selected-books-button,
 .tracker-container,
 .tracker-box,
 footer {
@@ -30,6 +32,7 @@ html,
 .close-button-container,
 button,
 .colour-input-container,
+.edit-book-input-container,
 .deleted-books-option,
 .add-book-input-container,
 header,
@@ -48,6 +51,7 @@ html,
 .settings-container,
 button,
 .content,
+.edit-book-container,
 .deleted-books-option,
 .add-book-container,
 .tracker-container,
@@ -75,6 +79,8 @@ h1 {
 html,
 button,
 option,
+.edit-book-input,
+.edit-book-status-select,
 .add-book-input,
 .add-book-status-select,
 a {
@@ -85,6 +91,7 @@ html,
 button,
 input,
 option,
+.edit-book-status-select,
 .add-book-status-select {
   font-family: "Roboto", Arial, Helvetica, sans-serif;
 }
@@ -107,6 +114,9 @@ main {
 }
 
 body,
+.edit-book-input,
+.edit-book-status-select,
+.edit-book-status-option,
 .deleted-books-select,
 .add-book-input,
 .add-book-status-select,
@@ -123,6 +133,8 @@ tfoot {
 body,
 .settings-menu,
 .restore-menu,
+.edit-book-menu,
+.delete-book-menu,
 .deleted-books-menu,
 .add-book-menu,
 header {
@@ -138,8 +150,8 @@ header {
 }
 
 .overlay.active {
-  display: block;
   backdrop-filter: blur(5px);
+  display: block;
   right: 0;
   top: 0;
   z-index: 9999;
@@ -162,6 +174,7 @@ footer {
 .menu,
 .menu-header,
 .settings-container,
+.edit-book-container,
 .add-book-container,
 main,
 .content,
@@ -173,6 +186,7 @@ table,
 .menu,
 option,
 input,
+.edit-book-status-select,
 .add-book-status-select,
 header,
 table,
@@ -182,6 +196,7 @@ table,
 
 .menu,
 .settings-container,
+.edit-book-container,
 .add-book-container,
 main,
 .content,
@@ -214,6 +229,7 @@ header {
 
 .menu,
 .colour-input-container,
+.edit-book-input-container,
 .add-book-input-container {
   justify-content: space-between;
 }
@@ -226,6 +242,9 @@ header {
 .menu-header,
 button,
 #restore-text,
+#restore-warning,
+#delete-book-text,
+#delete-book-warning,
 option,
 table,
 .tracker-box {
@@ -239,9 +258,12 @@ table,
 .menu-title,
 #settings-menu,
 #restore-warning,
+#delete-book-warning,
 button,
 select,
 option,
+#edit-book-menu,
+.book-data-text,
 #add-book-menu,
 input,
 h1,
@@ -278,7 +300,8 @@ button,
 .header-buttons,
 .header-title-text,
 input[type="checkbox"],
-.book-alter-buttons,
+.edit-book-button,
+.delete-book-button,
 .footer-buttons,
 select,
 option {
@@ -294,14 +317,16 @@ input:focus,
 select:focus,
 h1,
 .header-buttons,
-.book-alter-buttons,
+.edit-book-button,
+.delete-book-button,
 .footer-buttons {
   transition: all 0.5s ease-in-out;
 }
 
 .close-button,
 .header-buttons,
-.book-alter-buttons,
+.edit-book-button,
+.delete-book-button,
 .footer-buttons {
   fill: rgba(227, 180, 100, 1);
 }
@@ -312,13 +337,15 @@ input:focus,
 #restore-button:hover,
 #github-button:hover,
 h1:hover,
-.book-alter-buttons:hover,
+.edit-book-button:hover,
+.delete-book-button:hover,
 .footer-buttons:hover {
   filter: drop-shadow(0px 0px 1.6px rgba(227, 180, 100, 1));
   transform: scale(1.05);
 }
 
 .colour-input-container,
+.edit-book-input-container,
 .add-book-input-container {
   gap: 32px;
 }
@@ -329,6 +356,8 @@ input .deleted-books-select {
 
 input:focus,
 select:focus,
+.edit-book-input,
+.edit-book-status-select,
 .add-book-input,
 .add-book-status-select {
   box-sizing: border-box;
@@ -367,6 +396,8 @@ input[type="color"] {
 input[type="color"],
 input[type="color"]::-webkit-color-swatch,
 button,
+.edit-book-input,
+.edit-book-status-select,
 .deleted-books-select,
 .add-book-input,
 .add-book-status-select,
@@ -411,6 +442,8 @@ table,
 }
 
 button,
+.edit-book-input,
+.edit-book-status-select,
 .add-book-input,
 .add-book-status-select {
   border-radius: 5px;
@@ -418,6 +451,7 @@ button,
 }
 
 button,
+.edit-book-status-option,
 .add-book-status-option {
   background-color: rgba(57, 54, 70, 1);
 }
@@ -437,6 +471,39 @@ input:focus,
   border-style: solid;
 }
 
+.edit-book-input,
+.deleted-books-select,
+.deleted-books-option,
+.add-book-input,
+th,
+td,
+.tracker-box {
+  padding: 12px;
+}
+
+.edit-book-input,
+.edit-book-status-select,
+.add-book-input,
+.add-book-status-select {
+  height: 35px;
+  width: 200px;
+}
+
+.book-data-text,
+h1,
+.book-status-container,
+.header-title-text {
+  color: rgba(227, 180, 100, 1);
+}
+
+#delete-book-text {
+  max-width: 500px;
+}
+
+input[type="date"] {
+  cursor: text;
+}
+
 .deleted-books-select {
   -moz-appearance: none;
   -webkit-appearance: none;
@@ -445,15 +512,6 @@ input:focus,
   height: auto;
   overflow: hidden;
   width: auto;
-}
-
-.deleted-books-select,
-.deleted-books-option,
-.add-book-input,
-th,
-td,
-.tracker-box {
-  padding: 12px;
 }
 
 .deleted-books-select,
@@ -466,18 +524,8 @@ tr {
   border-radius: 10px;
 }
 
-.add-book-input,
-.add-book-status-select {
-  height: 35px;
-  width: 200px;
-}
-
-input[type="date"] {
-  cursor: text;
-}
-
-#restore-title,
-#restore-text {
+#restore-text,
+#delete-book-warning {
   max-width: 300px;
 }
 
@@ -500,14 +548,9 @@ h1 {
   font-size: 36px;
 }
 
-h1,
-.book-status-container,
-.header-title-text {
-  color: rgba(227, 180, 100, 1);
-}
-
 .header-buttons:not(.github-button),
-.book-alter,
+.edit-book-button,
+.delete-book-button,
 .footer-buttons {
   filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.5));
 }
@@ -566,7 +609,8 @@ input[type="checkbox"] {
 }
 
 .book-alter-button-container,
-.book-alter-buttons,
+.edit-book-button,
+.delete-book-button,
 .footer-button-container,
 .footer-buttons,
 .github-logo {
@@ -574,7 +618,8 @@ input[type="checkbox"] {
 }
 
 .book-alter-button-container,
-.book-alter-buttons,
+.edit-book-button,
+.delete-book-button,
 .footer-button-container,
 .footer-buttons {
   height: 24px;
