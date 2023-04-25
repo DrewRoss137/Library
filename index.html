@@ -128,8 +128,170 @@
           >This action <i>cannot</i> be undone!</span
         >
         <div class="menu-button-container" id="restore-menu-buttons">
-          <button class="restore-menu-button" id="cancel-button">Cancel</button>
-          <button class="restore-menu-button" id="continue-button">
+          <button class="restore-menu-button" id="restore-menu-cancel-button">Cancel</button>
+          <button class="restore-menu-button" id="restore-menu-continue-button">
+            Continue
+          </button>
+        </div>
+      </div>
+      <div class="menu inactive" id="edit-book-menu">
+        <div class="menu-header" id="edit-book-header">
+          <a class="close-button-container" id="close-button-container">
+            <svg
+              class="close-button"
+              id="close-button"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91Z"
+              />
+            </svg>
+          </a
+          <span class="menu-title" id="edit-book-title">Edit Book</span>
+        </div>
+        <form class="edit-book-container" id="edit-book-container">
+          <div
+            class="edit-book-input-container"
+            id="edit-book-input-title-container"
+          >
+            <span class="input-text" id="edit-book-title-text">Title</span>
+            <input
+              class="edit-book-input"
+              id="edit-book-title-input"
+              type="text"
+            />
+          </div>
+          <div
+            class="edit-book-input-container"
+            id="edit-book-input-author-container"
+          >
+            <span class="input-text" id="edit-book-author-text">Author</span>
+            <input
+              class="edit-book-input"
+              id="edit-book-author-input"
+              type="text"
+            />
+          </div>
+          <div
+            class="edit-book-input-container"
+            id="edit-book-input-pages-container"
+          >
+            <span class="input-text" id="edit-book-pages-text">Pages</span>
+            <input
+              class="edit-book-input"
+              id="edit-book-pages-input"
+              min="1"
+              type="number"
+            />
+          </div>
+          <div
+            class="edit-book-input-container"
+            id="edit-book-input-publish-date-container"
+          >
+            <span class="input-text" id="edit-book-publish-date-text"
+              >Publish Date</span
+            >
+            <input
+              class="edit-book-input"
+              id="edit-book-publish-date-input"
+              type="date"
+            />
+          </div>
+          <div
+            class="edit-book-input-container"
+            id="edit-book-input-acquisition-date-container"
+          >
+            <span class="input-text" id="edit-book-acquisition-date-text"
+              >Acquisition Date</span
+            >
+            <input
+              class="edit-book-input"
+              id="edit-book-acquisition-date-input"
+              type="date"
+            />
+          </div>
+          <div
+            class="edit-book-input-container"
+            id="edit-book-input-status-container"
+          >
+            <span class="input-text" id="edit-book-status-text">Status</span>
+            <select class="edit-book-status-select" id="edit-book-status-select">
+              <option
+                class="edit-book-status-option"
+                id="edit-book-status-read-option"
+              >
+                Read
+              </option>
+              <option
+                class="edit-book-status-option"
+                id="edit-book-status-unread-option"
+              >
+                Unread
+              </option>
+            </select>
+          </div>
+        </form>
+        <button class="edit-books-button" id="edit-books-button">Edit Book</button>
+      </div>
+      <div class="menu inactive" id="delete-book-menu">
+        <div class="menu-header" id="delete-book-header">
+          <a class="close-button-container" id="close-button-container">
+            <svg
+              class="close-button"
+              id="close-button"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91Z"
+              />
+            </svg>
+          </a>
+          <span class="menu-title" id="delete-book-title"
+            >Delete Book</span
+          >
+        </div>
+        <span class="menu-text" id="delete-book-text"
+          >This will erase the selected book: <span class="book-data-text" id="book-title-text">${bookTitle}</span>, by <span class="book-data-text" id="book-author-text">${bookAuthor}</span>.</span
+        >
+        <span class="menu-text" id="delete-book-warning"
+          >You can recover, or permanently delete, this book by clicking the 'Deleted Books' button, found in the table footer.</span
+        >
+        <div class="menu-button-container" id="delete-book-menu-buttons">
+          <button class="delete-book-menu-button" id="delete-book-menu-cancel-button">Cancel</button>
+          <button class="delete-book-menu-button" id="delete-book-menu-continue-button">
+            Continue
+          </button>
+        </div>
+      </div>
+      <div class="menu inactive" id="delete-selected-books-menu">
+        <div class="menu-header" id="delete-selected-books-header">
+          <a class="close-button-container" id="close-button-container">
+            <svg
+              class="close-button"
+              id="close-button"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91Z"
+              />
+            </svg>
+          </a>
+          <span class="menu-title" id="delete-selected-books-title"
+            >Delete Selected Books</span
+          >
+        </div>
+        <span class="menu-text" id="delete-selected-books-text"
+          >This will erase ${selectedBooksNumber} books.</span
+        >
+        <span class="menu-text" id="delete-selected-books-warning"
+          >You can recover, or permanently delete, these books by clicking the 'Deleted Books' button, found in the table footer.</span
+        >
+        <div class="menu-button-container" id="delete-selected-books-menu-buttons">
+          <button class="delete-selected-books-menu-button" id="delete-selected-books-menu-cancel-button">Cancel</button>
+          <button class="delete-selected-books-menu-button" id="delete-selected-books-menu-continue-button">
             Continue
           </button>
         </div>
@@ -187,8 +349,7 @@
                 d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91Z"
               />
             </svg>
-          </a>
-
+          </a
           <span class="menu-title" id="add-book-title">Add Book</span>
         </div>
         <form class="add-book-container" id="add-book-container">
@@ -384,10 +545,10 @@
                 >
               </td>
               <td class="book-alter" id="book-alter">
-                <a class="book-alter-button-container" id="book-edit-container">
+                <a class="book-alter-button-container" id="edit-book-container">
                   <svg
-                    class="book-alter-buttons"
-                    id="book-edit-button"
+                    class="edit-book-button"
+                    id="edit-book-button"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -401,8 +562,8 @@
                   id="settings-button-container"
                 >
                   <svg
-                    class="book-alter-buttons"
-                    id="book-delete-button"
+                    class="delete-book-button"
+                    id="delete-book-button"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -437,10 +598,10 @@
                 >
               </td>
               <td class="book-alter" id="book-alter">
-                <a class="book-alter-button-container" id="book-edit-container">
+                <a class="book-alter-button-container" id="edit-book-container">
                   <svg
-                    class="book-alter-buttons"
-                    id="book-edit-button"
+                    class="edit-book-button"
+                    id="edit-book-button"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -454,8 +615,8 @@
                   id="settings-button-container"
                 >
                   <svg
-                    class="book-alter-buttons"
-                    id="book-delete-button"
+                    class="delete-book-button"
+                    id="delete-book-button"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -489,10 +650,10 @@
                 >
               </td>
               <td class="book-alter" id="book-alter">
-                <a class="book-alter-button-container" id="book-edit-container">
+                <a class="book-alter-button-container" id="edit-book-container">
                   <svg
-                    class="book-alter-buttons"
-                    id="book-edit-button"
+                    class="edit-book-button"
+                    id="edit-book-button"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -506,8 +667,8 @@
                   id="settings-button-container"
                 >
                   <svg
-                    class="book-alter-buttons"
-                    id="book-delete-button"
+                    class="delete-book-button"
+                    id="delete-book-button"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -539,10 +700,10 @@
                 >
               </td>
               <td class="book-alter" id="book-alter">
-                <a class="book-alter-button-container" id="book-edit-container">
+                <a class="book-alter-button-container" id="edit-book-container">
                   <svg
-                    class="book-alter-buttons"
-                    id="book-edit-button"
+                    class="edit-book-button"
+                    id="edit-book-button"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -556,8 +717,8 @@
                   id="settings-button-container"
                 >
                   <svg
-                    class="book-alter-buttons"
-                    id="book-delete-button"
+                    class="delete-book-button"
+                    id="delete-book-button"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -589,10 +750,10 @@
                 >
               </td>
               <td class="book-alter" id="book-alter">
-                <a class="book-alter-button-container" id="book-edit-container">
+                <a class="book-alter-button-container" id="edit-book-container">
                   <svg
-                    class="book-alter-buttons"
-                    id="book-edit-button"
+                    class="edit-book-button"
+                    id="edit-book-button"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -606,8 +767,8 @@
                   id="settings-button-container"
                 >
                   <svg
-                    class="book-alter-buttons"
-                    id="book-delete-button"
+                    class="delete-book-button"
+                    id="delete-book-button"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -639,10 +800,10 @@
                 >
               </td>
               <td class="book-alter" id="book-alter">
-                <a class="book-alter-button-container" id="book-edit-container">
+                <a class="book-alter-button-container" id="edit-book-container">
                   <svg
-                    class="book-alter-buttons"
-                    id="book-edit-button"
+                    class="edit-book-button"
+                    id="edit-book-button"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -656,8 +817,8 @@
                   id="settings-button-container"
                 >
                   <svg
-                    class="book-alter-buttons"
-                    id="book-delete-button"
+                    class="delete-book-button"
+                    id="delete-book-button"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -689,10 +850,10 @@
                 >
               </td>
               <td class="book-alter" id="book-alter">
-                <a class="book-alter-button-container" id="book-edit-container">
+                <a class="book-alter-button-container" id="edit-book-container">
                   <svg
-                    class="book-alter-buttons"
-                    id="book-edit-button"
+                    class="edit-book-button"
+                    id="edit-book-button"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -706,8 +867,8 @@
                   id="settings-button-container"
                 >
                   <svg
-                    class="book-alter-buttons"
-                    id="book-delete-button"
+                    class="delete-book-button"
+                    id="delete-book-button"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -739,10 +900,10 @@
                 >
               </td>
               <td class="book-alter" id="book-alter">
-                <a class="book-alter-button-container" id="book-edit-container">
+                <a class="book-alter-button-container" id="edit-book-container">
                   <svg
-                    class="book-alter-buttons"
-                    id="book-edit-button"
+                    class="edit-book-button"
+                    id="edit-book-button"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -756,8 +917,8 @@
                   id="settings-button-container"
                 >
                   <svg
-                    class="book-alter-buttons"
-                    id="book-delete-button"
+                    class="delete-book-button"
+                    id="delete-book-button"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -789,10 +950,10 @@
                 >
               </td>
               <td class="book-alter" id="book-alter">
-                <a class="book-alter-button-container" id="book-edit-container">
+                <a class="book-alter-button-container" id="edit-book-container">
                   <svg
-                    class="book-alter-buttons"
-                    id="book-edit-button"
+                    class="edit-book-button"
+                    id="edit-book-button"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -806,8 +967,8 @@
                   id="settings-button-container"
                 >
                   <svg
-                    class="book-alter-buttons"
-                    id="book-delete-button"
+                    class="delete-book-button"
+                    id="delete-book-button"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -841,10 +1002,10 @@
                 >
               </td>
               <td class="book-alter" id="book-alter">
-                <a class="book-alter-button-container" id="book-edit-container">
+                <a class="book-alter-button-container" id="edit-book-container">
                   <svg
-                    class="book-alter-buttons"
-                    id="book-edit-button"
+                    class="edit-book-button"
+                    id="edit-book-button"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -858,8 +1019,8 @@
                   id="settings-button-container"
                 >
                   <svg
-                    class="book-alter-buttons"
-                    id="book-delete-button"
+                    class="delete-book-button"
+                    id="delete-book-button"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -876,11 +1037,11 @@
               <td class="delete-selected" colspan="7" id="delete-selected">
                 <a
                   class="footer-button-container"
-                  id="delete-selected-book-button-container"
+                  id="delete-selected-books-button-container"
                 >
                   <svg
                     class="footer-buttons"
-                    id="delete-selected-book-button"
+                    id="delete-selected-books-button"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
