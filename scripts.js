@@ -1,9 +1,19 @@
 const overlay = document.getElementById("overlay");
+const closeButtons = document.querySelectorAll(".close-button");
 const settingsButton = document.getElementById("settings-button");
 const settingsMenu = document.getElementById("settings-menu");
-const closeButtons = document.querySelectorAll(".close-button");
 const restoreButton = document.getElementById("restore-button");
 const restoreMenu = document.getElementById("restore-menu");
+const editBookButtons = document.querySelectorAll(".edit-book-button");
+const editBookMenu = document.getElementById("edit-book-menu");
+const deleteBookButtons = document.querySelectorAll(".delete-book-button");
+const deleteBookMenu = document.getElementById("delete-book-menu");
+const deleteSelectedBookButton = document.getElementById(
+  "delete-selected-books-button"
+);
+const deleteSelectedBookMenu = document.getElementById(
+  "delete-selected-books-menu"
+);
 const deletedBooksButton = document.getElementById("deleted-books-button");
 const deletedBooksMenu = document.getElementById("deleted-books-menu");
 const addBookButton = document.getElementById("add-book-button");
@@ -15,6 +25,22 @@ settingsButton.addEventListener("click", () =>
 
 restoreButton.addEventListener("click", () =>
   updateMenuState(restoreMenu, "toggle")
+);
+
+editBookButtons.forEach((editButton) => {
+  editButton.addEventListener("click", () => {
+    updateMenuState(editBookMenu, "toggle");
+  });
+});
+
+deleteBookButtons.forEach((deleteButton) => {
+  deleteButton.addEventListener("click", () => {
+    updateMenuState(deleteBookMenu, "toggle");
+  });
+});
+
+deleteSelectedBookButton.addEventListener("click", () =>
+  updateMenuState(deleteSelectedBookMenu, "toggle")
 );
 
 deletedBooksButton.addEventListener("click", () =>
