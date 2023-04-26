@@ -57,12 +57,31 @@
           </div>
           <div
             class="colour-input-container"
+            id="controls-colour-input-container"
+          >
+            <span class="input-text" id="controls-colour-input-text"
+              >Controls Colour</span
+            >
+            <input
+              class="colour-input"
+              id="controls-colour-input"
+              type="color"
+            />
+          </div>
+          <div
+            class="colour-input-container"
             id="header-colour-input-container"
           >
             <span class="input-text" id="header-colour-input-text"
               >Header Colour</span
             >
             <input class="colour-input" id="header-colour-input" type="color" />
+          </div>
+          <div class="colour-input-container" id="menu-colour-input-container">
+            <span class="input-text" id="menu-colour-input-text"
+              >Menu Colour</span
+            >
+            <input class="colour-input" id="menu-colour-input" type="color" />
           </div>
           <div
             class="colour-input-container"
@@ -96,6 +115,19 @@
             >
             <input class="colour-input" id="text-colour-input" type="color" />
           </div>
+          <div
+            class="colour-input-container"
+            id="tracker-colour-input-container"
+          >
+            <span class="input-text" id="tracker-colour-input-text"
+              >Tracker Colour</span
+            >
+            <input
+              class="colour-input"
+              id="tracker-colour-input"
+              type="color"
+            />
+          </div>
         </div>
         <div class="menu-button-container" id="settings-button-container">
           <button class="menu-buttons" id="reset-button">Reset</button>
@@ -128,7 +160,9 @@
           >This action <i>cannot</i> be undone!</span
         >
         <div class="menu-button-container" id="restore-menu-buttons">
-          <button class="restore-menu-button" id="restore-menu-cancel-button">Cancel</button>
+          <button class="restore-menu-button" id="restore-menu-cancel-button">
+            Cancel
+          </button>
           <button class="restore-menu-button" id="restore-menu-continue-button">
             Continue
           </button>
@@ -147,7 +181,7 @@
                 d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91Z"
               />
             </svg>
-          </a
+          </a>
           <span class="menu-title" id="edit-book-title">Edit Book</span>
         </div>
         <form class="edit-book-container" id="edit-book-container">
@@ -216,7 +250,10 @@
             id="edit-book-input-status-container"
           >
             <span class="input-text" id="edit-book-status-text">Status</span>
-            <select class="edit-book-status-select" id="edit-book-status-select">
+            <select
+              class="edit-book-status-select"
+              id="edit-book-status-select"
+            >
               <option
                 class="edit-book-status-option"
                 id="edit-book-status-read-option"
@@ -232,7 +269,9 @@
             </select>
           </div>
         </form>
-        <button class="edit-books-button" id="edit-books-button">Edit Book</button>
+        <button class="edit-books-button" id="edit-books-button">
+          Edit Book
+        </button>
       </div>
       <div class="menu inactive" id="delete-book-menu">
         <div class="menu-header" id="delete-book-header">
@@ -248,19 +287,30 @@
               />
             </svg>
           </a>
-          <span class="menu-title" id="delete-book-title"
-            >Delete Book</span
-          >
+          <span class="menu-title" id="delete-book-title">Delete Book</span>
         </div>
         <span class="menu-text" id="delete-book-text"
-          >This will erase the selected book: <span class="book-data-text" id="book-title-text">${bookTitle}</span>, by <span class="book-data-text" id="book-author-text">${bookAuthor}</span>.</span
+          >This will erase the selected book:
+          <span class="book-data-text" id="book-title-text">${bookTitle}</span>,
+          by
+          <span class="book-data-text" id="book-author-text">${bookAuthor}</span
+          >.</span
         >
         <span class="menu-text" id="delete-book-warning"
-          >You can recover, or permanently delete, this book by clicking the 'Deleted Books' button, found in the table footer.</span
+          >You can recover, or permanently delete, this book by clicking the
+          'Deleted Books' button, found in the table footer.</span
         >
         <div class="menu-button-container" id="delete-book-menu-buttons">
-          <button class="delete-book-menu-button" id="delete-book-menu-cancel-button">Cancel</button>
-          <button class="delete-book-menu-button" id="delete-book-menu-continue-button">
+          <button
+            class="delete-book-menu-button"
+            id="delete-book-menu-cancel-button"
+          >
+            Cancel
+          </button>
+          <button
+            class="delete-book-menu-button"
+            id="delete-book-menu-continue-button"
+          >
             Continue
           </button>
         </div>
@@ -284,14 +334,30 @@
           >
         </div>
         <span class="menu-text" id="delete-selected-books-text"
-          >This will erase ${selectedBooksNumber} books.</span
+          >This will erase
+          <span class="book-data-text" id="selected-book-number-text"
+            >${bookTitle}</span
+          >
+          books.</span
         >
         <span class="menu-text" id="delete-selected-books-warning"
-          >You can recover, or permanently delete, these books by clicking the 'Deleted Books' button, found in the table footer.</span
+          >You can recover, or permanently delete, these books by clicking the
+          'Deleted Books' button, found in the table footer.</span
         >
-        <div class="menu-button-container" id="delete-selected-books-menu-buttons">
-          <button class="delete-selected-books-menu-button" id="delete-selected-books-menu-cancel-button">Cancel</button>
-          <button class="delete-selected-books-menu-button" id="delete-selected-books-menu-continue-button">
+        <div
+          class="menu-button-container"
+          id="delete-selected-books-menu-buttons"
+        >
+          <button
+            class="delete-selected-books-menu-button"
+            id="delete-selected-books-menu-cancel-button"
+          >
+            Cancel
+          </button>
+          <button
+            class="delete-selected-books-menu-button"
+            id="delete-selected-books-menu-continue-button"
+          >
             Continue
           </button>
         </div>
@@ -349,7 +415,7 @@
                 d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91Z"
               />
             </svg>
-          </a
+          </a>
           <span class="menu-title" id="add-book-title">Add Book</span>
         </div>
         <form class="add-book-container" id="add-book-container">
@@ -447,7 +513,11 @@
           <h1 class="library-header" id="library-header">Library</h1>
         </a>
         <div class="header-buttons-container" id="header-buttons-container">
-          <a class="header-button-container" id="settings-button-container">
+          <a
+            class="header-button-container"
+            id="settings-button-container"
+            title="Settings"
+          >
             <svg
               class="header-buttons"
               id="settings-button"
@@ -459,7 +529,11 @@
               />
             </svg>
           </a>
-          <a class="header-button-container" id="restore-button-container">
+          <a
+            class="header-button-container"
+            id="restore-button-container"
+            title="Restore Default Settings"
+          >
             <svg
               class="header-buttons"
               id="restore-button"
@@ -477,6 +551,7 @@
             id="github-button-container"
             rel="noopener"
             target="_blank"
+            title="GitHub Repository"
           >
             <svg
               class="header-buttons"
@@ -498,7 +573,8 @@
               <th class="select" id="select">
                 <input
                   class="select-checkbox"
-                  id="select-checkbox"
+                  id="select-all-checkbox"
+                  title="Select All"
                   type="checkbox"
                 />
               </th>
@@ -545,7 +621,11 @@
                 >
               </td>
               <td class="book-alter" id="book-alter">
-                <a class="book-alter-button-container" id="edit-book-container">
+                <a
+                  class="book-alter-button-container"
+                  id="edit-book-container"
+                  title="Edit Book"
+                >
                   <svg
                     class="edit-book-button"
                     id="edit-book-button"
@@ -559,7 +639,8 @@
                 </a>
                 <a
                   class="book-alter-button-container"
-                  id="settings-button-container"
+                  id="delete-book-container"
+                  title="Delete Book"
                 >
                   <svg
                     class="delete-book-button"
@@ -598,7 +679,11 @@
                 >
               </td>
               <td class="book-alter" id="book-alter">
-                <a class="book-alter-button-container" id="edit-book-container">
+                <a
+                  class="book-alter-button-container"
+                  id="edit-book-container"
+                  title="Edit Book"
+                >
                   <svg
                     class="edit-book-button"
                     id="edit-book-button"
@@ -612,7 +697,8 @@
                 </a>
                 <a
                   class="book-alter-button-container"
-                  id="settings-button-container"
+                  id="delete-book-container"
+                  title="Delete Book"
                 >
                   <svg
                     class="delete-book-button"
@@ -650,7 +736,11 @@
                 >
               </td>
               <td class="book-alter" id="book-alter">
-                <a class="book-alter-button-container" id="edit-book-container">
+                <a
+                  class="book-alter-button-container"
+                  id="edit-book-container"
+                  title="Edit Book"
+                >
                   <svg
                     class="edit-book-button"
                     id="edit-book-button"
@@ -664,7 +754,8 @@
                 </a>
                 <a
                   class="book-alter-button-container"
-                  id="settings-button-container"
+                  id="delete-book-container"
+                  title="Delete Book"
                 >
                   <svg
                     class="delete-book-button"
@@ -700,7 +791,11 @@
                 >
               </td>
               <td class="book-alter" id="book-alter">
-                <a class="book-alter-button-container" id="edit-book-container">
+                <a
+                  class="book-alter-button-container"
+                  id="edit-book-container"
+                  title="Edit Book"
+                >
                   <svg
                     class="edit-book-button"
                     id="edit-book-button"
@@ -714,7 +809,8 @@
                 </a>
                 <a
                   class="book-alter-button-container"
-                  id="settings-button-container"
+                  id="delete-book-container"
+                  title="Delete Book"
                 >
                   <svg
                     class="delete-book-button"
@@ -750,7 +846,11 @@
                 >
               </td>
               <td class="book-alter" id="book-alter">
-                <a class="book-alter-button-container" id="edit-book-container">
+                <a
+                  class="book-alter-button-container"
+                  id="edit-book-container"
+                  title="Edit Book"
+                >
                   <svg
                     class="edit-book-button"
                     id="edit-book-button"
@@ -764,7 +864,8 @@
                 </a>
                 <a
                   class="book-alter-button-container"
-                  id="settings-button-container"
+                  id="delete-book-container"
+                  title="Delete Book"
                 >
                   <svg
                     class="delete-book-button"
@@ -800,7 +901,11 @@
                 >
               </td>
               <td class="book-alter" id="book-alter">
-                <a class="book-alter-button-container" id="edit-book-container">
+                <a
+                  class="book-alter-button-container"
+                  id="edit-book-container"
+                  title="Edit Book"
+                >
                   <svg
                     class="edit-book-button"
                     id="edit-book-button"
@@ -814,7 +919,8 @@
                 </a>
                 <a
                   class="book-alter-button-container"
-                  id="settings-button-container"
+                  id="delete-book-container"
+                  title="Delete Book"
                 >
                   <svg
                     class="delete-book-button"
@@ -850,7 +956,11 @@
                 >
               </td>
               <td class="book-alter" id="book-alter">
-                <a class="book-alter-button-container" id="edit-book-container">
+                <a
+                  class="book-alter-button-container"
+                  id="edit-book-container"
+                  title="Edit Book"
+                >
                   <svg
                     class="edit-book-button"
                     id="edit-book-button"
@@ -864,7 +974,8 @@
                 </a>
                 <a
                   class="book-alter-button-container"
-                  id="settings-button-container"
+                  id="delete-book-container"
+                  title="Delete Book"
                 >
                   <svg
                     class="delete-book-button"
@@ -900,7 +1011,11 @@
                 >
               </td>
               <td class="book-alter" id="book-alter">
-                <a class="book-alter-button-container" id="edit-book-container">
+                <a
+                  class="book-alter-button-container"
+                  id="edit-book-container"
+                  title="Edit Book"
+                >
                   <svg
                     class="edit-book-button"
                     id="edit-book-button"
@@ -914,7 +1029,8 @@
                 </a>
                 <a
                   class="book-alter-button-container"
-                  id="settings-button-container"
+                  id="delete-book-container"
+                  title="Delete Book"
                 >
                   <svg
                     class="delete-book-button"
@@ -950,7 +1066,11 @@
                 >
               </td>
               <td class="book-alter" id="book-alter">
-                <a class="book-alter-button-container" id="edit-book-container">
+                <a
+                  class="book-alter-button-container"
+                  id="edit-book-container"
+                  title="Edit Book"
+                >
                   <svg
                     class="edit-book-button"
                     id="edit-book-button"
@@ -964,7 +1084,8 @@
                 </a>
                 <a
                   class="book-alter-button-container"
-                  id="settings-button-container"
+                  id="delete-book-container"
+                  title="Delete Book"
                 >
                   <svg
                     class="delete-book-button"
@@ -1002,7 +1123,11 @@
                 >
               </td>
               <td class="book-alter" id="book-alter">
-                <a class="book-alter-button-container" id="edit-book-container">
+                <a
+                  class="book-alter-button-container"
+                  id="edit-book-container"
+                  title="Edit Book"
+                >
                   <svg
                     class="edit-book-button"
                     id="edit-book-button"
@@ -1016,7 +1141,8 @@
                 </a>
                 <a
                   class="book-alter-button-container"
-                  id="settings-button-container"
+                  id="delete-book-container"
+                  title="Delete Book"
                 >
                   <svg
                     class="delete-book-button"
@@ -1038,6 +1164,7 @@
                 <a
                   class="footer-button-container"
                   id="delete-selected-books-button-container"
+                  title="Delete Selected Books"
                 >
                   <svg
                     class="footer-buttons"
@@ -1055,6 +1182,7 @@
                 <a
                   class="footer-button-container"
                   id="deleted-books-button-container"
+                  title="Deleted Books"
                 >
                   <svg
                     class="footer-buttons"
@@ -1070,6 +1198,7 @@
                 <a
                   class="footer-button-container"
                   id="add-book-button-container"
+                  title="Add New Book"
                 >
                   <svg
                     class="footer-buttons"
