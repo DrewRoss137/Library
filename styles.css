@@ -1,3 +1,27 @@
+:root {
+  --accent-colour: #e3b464;
+  --background-colour: #393646;
+  --controls-colour: #393646;
+  --header-colour: #4f4557;
+  --menu-colour: #4f4557;
+  --table-primary-colour: #4f4557;
+  --table-secondary-colour: #393646;
+  --text-colour: #ffffff;
+  --tracker-colour: #4f4557;
+}
+
+*,
+*::before,
+*::after,
+html,
+a,
+input,
+button,
+select,
+option {
+  color: var(--text-colour);
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -71,20 +95,10 @@ main,
 html,
 body,
 input,
-input[type="color"] main,
+input[type="color"],
+main,
 h1 {
   margin: 0;
-}
-
-html,
-button,
-option,
-.edit-book-input,
-.edit-book-status-select,
-.add-book-input,
-.add-book-status-select,
-a {
-  color: rgba(255, 255, 255, 1);
 }
 
 html,
@@ -113,35 +127,8 @@ main {
   height: 100%;
 }
 
-body,
-.edit-book-input,
-.edit-book-status-select,
-.edit-book-status-option,
-.deleted-books-select,
-.add-book-input,
-.add-book-status-select,
-.add-book-status-option,
-thead,
-tfoot {
-  background-image: radial-gradient(
-    circle at center,
-    rgba(79, 69, 87, 1),
-    rgba(57, 54, 70, 1)
-  );
-}
-
-body,
-.settings-menu,
-.restore-menu,
-.edit-book-menu,
-.delete-book-menu,
-.deleted-books-menu,
-.add-book-menu,
-header {
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+body {
+  background-color: var(--background-colour);
 }
 
 .overlay .inactive,
@@ -164,10 +151,15 @@ footer {
   position: fixed;
 }
 
+#settings-menu {
+  width: 300px;
+}
+
 .menu {
-  position: absolute;
-  left: 50%;
+  background-color: var(--menu-colour);
   bottom: 50%;
+  left: 50%;
+  position: absolute;
   transform: translate(-50%, 50%);
 }
 
@@ -205,17 +197,6 @@ main,
 }
 
 .menu,
-header,
-.table-body-row,
-.tracker-box {
-  background-image: radial-gradient(
-    circle at center,
-    rgba(109, 93, 110, 1),
-    rgba(79, 69, 87, 1)
-  );
-}
-
-.menu,
 button,
 header {
   padding: 16px;
@@ -247,6 +228,8 @@ button,
 #delete-book-warning,
 option,
 table,
+#delete-selected-books-text,
+#delete-selected-books-warning,
 .tracker-box {
   text-align: center;
 }
@@ -267,6 +250,7 @@ option,
 #add-book-menu,
 input,
 h1,
+#delete-selected-books-warning,
 .tracker-box {
   font-weight: 900;
 }
@@ -328,11 +312,11 @@ h1,
 .edit-book-button,
 .delete-book-button,
 .footer-buttons {
-  fill: rgba(227, 180, 100, 1);
+  fill: var(--accent-colour);
 }
 
 .close-button:hover,
-input:focus,
+input:not([type="color"]):focus,
 #settings-button:hover,
 #restore-button:hover,
 #github-button:hover,
@@ -340,7 +324,7 @@ h1:hover,
 .edit-book-button:hover,
 .delete-book-button:hover,
 .footer-buttons:hover {
-  filter: drop-shadow(0px 0px 1.6px rgba(227, 180, 100, 1));
+  filter: drop-shadow(0px 0px 1.6px var(--accent-colour));
   transform: scale(1.05);
 }
 
@@ -364,15 +348,14 @@ select:focus,
 }
 
 input:focus,
-select:focus,
-.tracker-box {
+select:focus {
   border-width: 2px;
 }
 
-input:focus,
+input:not([type="color"]):focus,
 select:focus,
 .table-body-row:hover {
-  filter: drop-shadow(0px 0px 5px rgba(227, 180, 100, 1));
+  filter: drop-shadow(0px 0px 5px var(--accent-colour));
 }
 
 input:focus,
@@ -383,8 +366,8 @@ select:focus,
 
 input:focus,
 select:focus {
-  border-color: rgba(227, 180, 100, 1);
-  box-shadow: 0px 0px 3px rgba(227, 180, 100, 1);
+  border-color: var(--accent-colour);
+  box-shadow: 0px 0px 3px var(--accent-colour);
 }
 
 input[type="color"] {
@@ -436,9 +419,16 @@ button {
 }
 
 button,
-table,
-.tracker-box {
-  font-size: 16px;
+.edit-book-status-option,
+.add-book-status-option,
+.edit-book-input,
+.edit-book-status-select,
+.edit-book-status-option,
+.deleted-books-select,
+.add-book-input,
+.add-book-status-select,
+.add-book-status-option {
+  background-color: var(--controls-colour);
 }
 
 button,
@@ -451,23 +441,16 @@ button,
 }
 
 button,
-.edit-book-status-option,
-.add-book-status-option {
-  background-color: rgba(57, 54, 70, 1);
+table,
+.tracker-box {
+  font-size: 16px;
 }
 
-button:hover {
-  background-color: rgba(79, 69, 87, 1);
-  border-color: rgba(109, 93, 110, 1);
-  border-width: 2.5px;
-  filter: drop-shadow(0px 0px 2px rgba(109, 93, 110, 1));
-}
-
-button:hover,
-input:focus,
+input:not([type="color"]):focus,
 .select-checkbox,
 .deleted-books-select,
-.table-body-row {
+table,
+tr {
   border-style: solid;
 }
 
@@ -493,7 +476,7 @@ td,
 h1,
 .book-status-container,
 .header-title-text {
-  color: rgba(227, 180, 100, 1);
+  color: var(--accent-colour);
 }
 
 #delete-book-text {
@@ -525,23 +508,21 @@ tr {
 }
 
 #restore-text,
-#delete-book-warning {
+#delete-book-warning,
+#delete-selected-books-warning {
   max-width: 300px;
 }
 
 header {
+  background-color: var(--header-colour);
   border-bottom-color: rgba(0, 0, 0, 1);
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-left: none;
   border-right: none;
   border-top: none;
-  justify-content: space-around;
-}
-
-header,
-.tracker-box {
   height: 50px;
+  justify-content: space-around;
 }
 
 h1 {
@@ -577,12 +558,20 @@ table {
 }
 
 table,
-.table-body-row {
+tr {
   border-color: rgba(0, 0, 0, 1);
 }
 
+thead {
+  background-color: var(--table-secondary-colour);
+}
+
+.table-body-row {
+  background-color: var(--table-primary-colour);
+}
+
 .table-body-row:hover {
-  outline-color: rgba(227, 180, 100, 1);
+  outline-color: var(--accent-colour);
   outline-style: solid;
   outline-width: 1px;
 }
@@ -600,12 +589,7 @@ input[type="checkbox"] {
 
 .header-title-text:hover,
 .book-status-container:hover {
-  filter: drop-shadow(0px 0px 1px rgba(227, 180, 100, 1));
-}
-
-.book-status-container {
-  height: 0;
-  width: 0;
+  filter: drop-shadow(0px 0px 1.5px var(--accent-colour));
 }
 
 .book-alter-button-container,
@@ -625,14 +609,18 @@ input[type="checkbox"] {
   height: 24px;
 }
 
+tfoot {
+  background-color: var(--table-secondary-colour);
+}
+
 .tracker-container {
   width: 1500px;
 }
 
 .tracker-box {
-  border-color: rgba(255, 255, 255, 0.1);
-  border-width: 2px;
+  background-color: var(--tracker-colour);
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.5);
+  height: 45px;
 }
 
 .tracker-value {
