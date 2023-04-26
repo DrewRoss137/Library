@@ -1,73 +1,89 @@
 const overlay = document.getElementById("overlay");
-const closeButtons = document.querySelectorAll(".close-button");
-const settingsButton = document.getElementById("settings-button");
-const settingsMenu = document.getElementById("settings-menu");
-const restoreButton = document.getElementById("restore-button");
-const restoreMenu = document.getElementById("restore-menu");
-const editBookButtons = document.querySelectorAll(".edit-book-button");
-const editBookMenu = document.getElementById("edit-book-menu");
-const deleteBookButtons = document.querySelectorAll(".delete-book-button");
-const deleteBookMenu = document.getElementById("delete-book-menu");
-const deleteSelectedBookButton = document.getElementById(
-  "delete-selected-books-button"
+const accentColourInput = document.getElementById("accent-colour-input");
+const backgroundColourInput = document.getElementById(
+  "background-colour-input"
 );
-const deleteSelectedBookMenu = document.getElementById(
-  "delete-selected-books-menu"
+const controlsColourInput = document.getElementById("controls-colour-input");
+const headerColourInput = document.getElementById("header-colour-input");
+const menuColourInput = document.getElementById("menu-colour-input");
+const tablePrimaryColourInput = document.getElementById(
+  "table-primary-colour-input"
 );
-const deletedBooksButton = document.getElementById("deleted-books-button");
-const deletedBooksMenu = document.getElementById("deleted-books-menu");
-const addBookButton = document.getElementById("add-book-button");
-const addBookMenu = document.getElementById("add-book-menu");
+const tableSecondaryColourInput = document.getElementById(
+  "table-secondary-colour-input"
+);
+const textColourInput = document.getElementById("text-colour-input");
+const trackerColourInput = document.getElementById("tracker-colour-input");
 
-settingsButton.addEventListener("click", () =>
-  updateMenuState(settingsMenu, "toggle")
-);
+const menuItems = [
+  { buttonID: "settings-button", menuID: "settings-menu" },
+  { buttonID: "restore-button", menuID: "restore-menu" },
+  {
+    buttonID: "delete-selected-books-button",
+    menuID: "delete-selected-books-menu",
+  },
+  { buttonID: "deleted-books-button", menuID: "deleted-books-menu" },
+  { buttonID: "add-book-button", menuID: "add-book-menu" },
+];
 
-restoreButton.addEventListener("click", () =>
-  updateMenuState(restoreMenu, "toggle")
-);
-
-editBookButtons.forEach((editButton) => {
-  editButton.addEventListener("click", () => {
-    updateMenuState(editBookMenu, "toggle");
+menuItems.forEach(({ buttonID, menuID }) => {
+  addEventListenerToButton(buttonID, () => {
+    toggleMenu(document.getElementById(menuID));
   });
 });
 
-deleteBookButtons.forEach((deleteButton) => {
-  deleteButton.addEventListener("click", () => {
-    updateMenuState(deleteBookMenu, "toggle");
-  });
-});
-
-deleteSelectedBookButton.addEventListener("click", () =>
-  updateMenuState(deleteSelectedBookMenu, "toggle")
-);
-
-deletedBooksButton.addEventListener("click", () =>
-  updateMenuState(deletedBooksMenu, "toggle")
-);
-
-addBookButton.addEventListener("click", () =>
-  updateMenuState(addBookMenu, "toggle")
-);
-
-closeButtons.forEach((closeButton) => {
+document.querySelectorAll(".close-button").forEach((closeButton) => {
   closeButton.addEventListener("click", () => {
     const parentMenu = closeButton.closest(".menu");
     if (parentMenu.classList.contains("active")) {
-      updateMenuState(parentMenu, "close");
+      toggleMenu(parentMenu);
     }
   });
 });
 
-function isActive(menu, action) {
-  return action === "toggle" ? !menu.classList.contains("active") : false;
+function addEventListenerToButton(buttonID, callback) {
+  const button = document.getElementById(buttonID);
+  button.addEventListener("click", callback);
 }
 
-function updateMenuState(menu, action) {
-  const activeState = isActive(menu, action);
-  overlay.classList[activeState ? "add" : "remove"]("active");
-  overlay.classList[activeState ? "remove" : "add"]("inactive");
-  menu.classList[activeState ? "add" : "remove"]("active");
-  menu.classList[activeState ? "remove" : "add"]("inactive");
+function toggleMenu(menu) {
+  const isActive = !menu.classList.contains("active");
+  overlay.classList[isActive ? "add" : "remove"]("active");
+  overlay.classList[isActive ? "remove" : "add"]("inactive");
+  menu.classList[isActive ? "add" : "remove"]("active");
+  menu.classList[isActive ? "remove" : "add"]("inactive");
 }
+
+function addToggleMenuListeners(selector, menuId) {
+  document.querySelectorAll(selector).forEach((button) => {
+    button.addEventListener("click", () => {
+      toggleMenu(document.getElementById(menuId));
+    });
+  });
+}
+
+function updateElementColour(variableName, colour) {
+  document.documentElement.style.setProperty(variableName, colour);
+}
+
+function initialiseColourInput(inputElement, variableName) {
+  inputElement.addEventListener("input", (event) => {
+    const newColour = event.target.value;
+    updateElementColour(variableName, newColour);
+  });
+  inputElement.value = getComputedStyle(document.documentElement)
+    .getPropertyValue(variableName)
+    .trim();
+}
+
+addToggleMenuListeners(".edit-book-button", "edit-book-menu");
+addToggleMenuListeners(".delete-book-button", "delete-book-menu");
+initialiseColourInput(accentColourInput, "--accent-colour");
+initialiseColourInput(backgroundColourInput, "--background-colour");
+initialiseColourInput(controlsColourInput, "--controls-colour");
+initialiseColourInput(headerColourInput, "--header-colour");
+initialiseColourInput(menuColourInput, "--menu-colour");
+initialiseColourInput(tablePrimaryColourInput, "--table-primary-colour");
+initialiseColourInput(tableSecondaryColourInput, "--table-secondary-colour");
+initialiseColourInput(textColourInput, "--text-colour");
+initialiseColourInput(trackerColourInput, "--tracker-colour");
