@@ -14,6 +14,8 @@ const tableSecondaryColourInput = document.getElementById(
 );
 const textColourInput = document.getElementById("text-colour-input");
 const trackerColourInput = document.getElementById("tracker-colour-input");
+const selectAllCheckbox = document.getElementById("select-all-checkbox");
+const selectCheckboxes = document.getElementsByClassName("select-checkbox");
 
 const menuItems = [
   { buttonID: "settings-button", menuID: "settings-menu" },
@@ -39,6 +41,12 @@ document.querySelectorAll(".close-button").forEach((closeButton) => {
       toggleMenu(parentMenu);
     }
   });
+});
+
+selectAllCheckbox.addEventListener("click", function () {
+  for (let checkbox of selectCheckboxes) {
+    checkbox.checked = selectAllCheckbox.checked;
+  }
 });
 
 function addEventListenerToButton(buttonID, callback) {
