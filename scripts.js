@@ -14,6 +14,7 @@ const tableSecondaryColourInput = document.getElementById(
 );
 const textColourInput = document.getElementById("text-colour-input");
 const trackerColourInput = document.getElementById("tracker-colour-input");
+const resetButton = document.getElementById("reset-button");
 const selectAllCheckbox = document.getElementById("select-all-checkbox");
 const selectCheckboxes = document.getElementsByClassName("select-checkbox");
 
@@ -27,6 +28,18 @@ const menuItems = [
   { buttonID: "deleted-books-button", menuID: "deleted-books-menu" },
   { buttonID: "add-book-button", menuID: "add-book-menu" },
 ];
+
+const defaultColours = {
+  "accent-colour": "#e3b464",
+  "background-colour": "#393646",
+  "controls-colour": "#393646",
+  "header-colour": "#4f4557",
+  "menu-colour": "#4f4557",
+  "table-primary-colour": "#4f4557",
+  "table-secondary-colour": "#393646",
+  "text-colour": "#ffffff",
+  "tracker-colour": "#4f4557",
+};
 
 menuItems.forEach(({ buttonID, menuID }) => {
   addEventListenerToButton(buttonID, () => {
@@ -42,6 +55,8 @@ document.querySelectorAll(".close-button").forEach((closeButton) => {
     }
   });
 });
+
+resetButton.addEventListener("click", restoreDefaultColours);
 
 selectAllCheckbox.addEventListener("click", function () {
   for (let checkbox of selectCheckboxes) {
@@ -82,6 +97,21 @@ function initialiseColourInput(inputElement, variableName) {
   inputElement.value = getComputedStyle(document.documentElement)
     .getPropertyValue(variableName)
     .trim();
+}
+
+function restoreDefaultColours() {
+  for (const [variableName, defaultColour] of Object.entries(defaultColours)) {
+    updateElementColour(`--${variableName}`, defaultColour);
+  }
+  accentColourInput.value = defaultColours["accent-colour"];
+  backgroundColourInput.value = defaultColours["background-colour"];
+  controlsColourInput.value = defaultColours["controls-colour"];
+  headerColourInput.value = defaultColours["header-colour"];
+  menuColourInput.value = defaultColours["menu-colour"];
+  tablePrimaryColourInput.value = defaultColours["table-primary-colour"];
+  tableSecondaryColourInput.value = defaultColours["table-secondary-colour"];
+  textColourInput.value = defaultColours["text-colour"];
+  trackerColourInput.value = defaultColours["tracker-colour"];
 }
 
 addToggleMenuListeners(".edit-book-button", "edit-book-menu");
