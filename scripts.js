@@ -1,5 +1,3 @@
-document.addEventListener("DOMContentLoaded", () => {});
-
 const overlay = document.getElementById("overlay");
 const accentColourInput = document.getElementById("accent-colour-input");
 const backgroundColourInput = document.getElementById(
@@ -52,6 +50,11 @@ menuItems.forEach(({ buttonID, menuID }) => {
   });
 });
 
+function addEventListenerToButton(buttonID, callback) {
+  const button = document.getElementById(buttonID);
+  button.addEventListener("click", callback);
+}
+
 document.querySelectorAll(".close-button").forEach((closeButton) => {
   closeButton.addEventListener("click", () => {
     const parentMenu = closeButton.closest(".menu");
@@ -61,17 +64,12 @@ document.querySelectorAll(".close-button").forEach((closeButton) => {
   });
 });
 
-resetButton.addEventListener("click", restoreDefaultColours);
-
-selectAllCheckbox.addEventListener("click", function () {
-  for (let checkbox of selectCheckboxes) {
-    checkbox.checked = selectAllCheckbox.checked;
-  }
-});
-
-function addEventListenerToButton(buttonID, callback) {
-  const button = document.getElementById(buttonID);
-  button.addEventListener("click", callback);
+function addToggleMenuListeners(selector, menuId) {
+  document.querySelectorAll(selector).forEach((button) => {
+    button.addEventListener("click", () => {
+      toggleMenu(document.getElementById(menuId));
+    });
+  });
 }
 
 function toggleMenu(menu) {
@@ -82,13 +80,7 @@ function toggleMenu(menu) {
   menu.classList[isActive ? "remove" : "add"]("inactive");
 }
 
-function addToggleMenuListeners(selector, menuId) {
-  document.querySelectorAll(selector).forEach((button) => {
-    button.addEventListener("click", () => {
-      toggleMenu(document.getElementById(menuId));
-    });
-  });
-}
+resetButton.addEventListener("click", restoreDefaultColours);
 
 function updateElementColour(variableName, colour) {
   document.documentElement.style.setProperty(variableName, colour);
@@ -119,24 +111,16 @@ function restoreDefaultColours() {
   trackerColourInput.value = defaultColours["tracker-colour"];
 }
 
-addToggleMenuListeners(".edit-book-button", "edit-book-menu");
-addToggleMenuListeners(".delete-book-button", "delete-book-menu");
-initialiseColourInput(accentColourInput, "--accent-colour");
-initialiseColourInput(backgroundColourInput, "--background-colour");
-initialiseColourInput(controlsColourInput, "--controls-colour");
-initialiseColourInput(headerColourInput, "--header-colour");
-initialiseColourInput(menuColourInput, "--menu-colour");
-initialiseColourInput(tablePrimaryColourInput, "--table-primary-colour");
-initialiseColourInput(tableSecondaryColourInput, "--table-secondary-colour");
-initialiseColourInput(textColourInput, "--text-colour");
-initialiseColourInput(trackerColourInput, "--tracker-colour");
+selectAllCheckbox.addEventListener("click", function () {
+  for (let checkbox of selectCheckboxes) {
+    checkbox.checked = selectAllCheckbox.checked;
+  }
+});
 
 document.querySelectorAll(".delete-book-button").forEach((button) => {
   button.addEventListener("click", (event) => {
     selectedRow = event.target.closest("tr");
-    if (deleteBookMenu.classList.contains("inactive")) {
-      toggleMenu(deleteBookMenu);
-    }
+    toggleMenu(deleteBookMenu);
   });
 });
 
@@ -151,3 +135,14 @@ document
       toggleMenu(deleteBookMenu);
     }
   });
+
+addToggleMenuListeners(".edit-book-button", "edit-book-menu");
+initialiseColourInput(accentColourInput, "--accent-colour");
+initialiseColourInput(backgroundColourInput, "--background-colour");
+initialiseColourInput(controlsColourInput, "--controls-colour");
+initialiseColourInput(headerColourInput, "--header-colour");
+initialiseColourInput(menuColourInput, "--menu-colour");
+initialiseColourInput(tablePrimaryColourInput, "--table-primary-colour");
+initialiseColourInput(tableSecondaryColourInput, "--table-secondary-colour");
+initialiseColourInput(textColourInput, "--text-colour");
+initialiseColourInput(trackerColourInput, "--tracker-colour");
