@@ -1,3 +1,5 @@
+document.addEventListener("DOMContentLoaded", () => {});
+
 const overlay = document.getElementById("overlay");
 const accentColourInput = document.getElementById("accent-colour-input");
 const backgroundColourInput = document.getElementById(
@@ -17,6 +19,7 @@ const trackerColourInput = document.getElementById("tracker-colour-input");
 const resetButton = document.getElementById("reset-button");
 const selectAllCheckbox = document.getElementById("select-all-checkbox");
 const selectCheckboxes = document.getElementsByClassName("select-checkbox");
+const deleteBookMenu = document.getElementById("delete-book-menu");
 
 const menuItems = [
   { buttonID: "settings-button", menuID: "settings-menu" },
@@ -40,6 +43,8 @@ const defaultColours = {
   "text-colour": "#ffffff",
   "tracker-colour": "#4f4557",
 };
+
+let selectedRow;
 
 menuItems.forEach(({ buttonID, menuID }) => {
   addEventListenerToButton(buttonID, () => {
@@ -125,3 +130,24 @@ initialiseColourInput(tablePrimaryColourInput, "--table-primary-colour");
 initialiseColourInput(tableSecondaryColourInput, "--table-secondary-colour");
 initialiseColourInput(textColourInput, "--text-colour");
 initialiseColourInput(trackerColourInput, "--tracker-colour");
+
+document.querySelectorAll(".delete-book-button").forEach((button) => {
+  button.addEventListener("click", (event) => {
+    selectedRow = event.target.closest("tr");
+    if (deleteBookMenu.classList.contains("inactive")) {
+      toggleMenu(deleteBookMenu);
+    }
+  });
+});
+
+document
+  .getElementById("delete-book-menu-continue-button")
+  .addEventListener("click", () => {
+    if (selectedRow) {
+      selectedRow.remove();
+      selectedRow = null;
+    }
+    if (deleteBookMenu.classList.contains("active")) {
+      toggleMenu(deleteBookMenu);
+    }
+  });
