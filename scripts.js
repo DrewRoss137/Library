@@ -17,7 +17,12 @@ const trackerColourInput = document.getElementById("tracker-colour-input");
 const resetButton = document.getElementById("reset-button");
 const selectAllCheckbox = document.getElementById("select-all-checkbox");
 const selectCheckboxes = document.getElementsByClassName("select-checkbox");
+const bookTitleText = document.getElementById("book-title-text");
+const bookAuthorText = document.getElementById("book-author-text");
 const deleteBookMenu = document.getElementById("delete-book-menu");
+const deleteBookMenuContinueButton = document.getElementById(
+  "delete-book-menu-continue-button"
+);
 
 const menuItems = [
   { buttonID: "settings-button", menuID: "settings-menu" },
@@ -120,21 +125,29 @@ selectAllCheckbox.addEventListener("click", function () {
 document.querySelectorAll(".delete-book-button").forEach((button) => {
   button.addEventListener("click", (event) => {
     selectedRow = event.target.closest("tr");
+    const selectedRowBookTitle =
+      selectedRow.querySelector(".book-title").textContent;
+    const selectedRowBookAuthor =
+      selectedRow.querySelector(".book-author").textContent;
+    updateDeleteBookMenuContent(selectedRowBookTitle, selectedRowBookAuthor);
     toggleMenu(deleteBookMenu);
   });
 });
 
-document
-  .getElementById("delete-book-menu-continue-button")
-  .addEventListener("click", () => {
-    if (selectedRow) {
-      selectedRow.remove();
-      selectedRow = null;
-    }
-    if (deleteBookMenu.classList.contains("active")) {
-      toggleMenu(deleteBookMenu);
-    }
-  });
+function updateDeleteBookMenuContent(bookTitle, bookAuthor) {
+  bookTitleText.textContent = bookTitle.trim() + ",";
+  bookAuthorText.textContent = "by " + bookAuthor.trim() + ".";
+}
+
+deleteBookMenuContinueButton.addEventListener("click", () => {
+  if (selectedRow) {
+    selectedRow.remove();
+    selectedRow = null;
+  }
+  if (deleteBookMenu.classList.contains("active")) {
+    toggleMenu(deleteBookMenu);
+  }
+});
 
 addToggleMenuListeners(".edit-book-button", "edit-book-menu");
 initialiseColourInput(accentColourInput, "--accent-colour");
