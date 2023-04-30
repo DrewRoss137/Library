@@ -225,6 +225,7 @@ button,
 #restore-text,
 #restore-warning,
 #delete-book-text,
+#delete-book-data-text,
 #delete-book-warning,
 option,
 table,
@@ -479,7 +480,8 @@ h1,
   color: var(--accent-colour);
 }
 
-#delete-book-text {
+#delete-book-text,
+#delete-book-data-text {
   max-width: 500px;
 }
 
