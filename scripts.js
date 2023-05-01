@@ -19,6 +19,17 @@ const selectAllCheckbox = document.getElementById("select-all-checkbox");
 const selectCheckboxes = document.getElementsByClassName("select-checkbox");
 const bookTitleText = document.getElementById("book-title-text");
 const bookAuthorText = document.getElementById("book-author-text");
+const editBookMenu = document.getElementById("edit-book-menu");
+const editBookTitleInput = document.getElementById("edit-book-title-input");
+const editBookAuthorInput = document.getElementById("edit-book-author-input");
+const editBookPagesInput = document.getElementById("edit-book-pages-input");
+const editBookPublishDateInput = document.getElementById(
+  "edit-book-publish-date-input"
+);
+const editBookAcquisitionDateInput = document.getElementById(
+  "edit-book-acquisition-date-input"
+);
+const editBookStatusSelect = document.getElementById("edit-book-status-select");
 const deleteBookMenu = document.getElementById("delete-book-menu");
 const deleteBookMenuContinueButton = document.getElementById(
   "delete-book-menu-continue-button"
@@ -69,14 +80,6 @@ document.querySelectorAll(".close-button").forEach((closeButton) => {
   });
 });
 
-function addToggleMenuListeners(selector, menuId) {
-  document.querySelectorAll(selector).forEach((button) => {
-    button.addEventListener("click", () => {
-      toggleMenu(document.getElementById(menuId));
-    });
-  });
-}
-
 function toggleMenu(menu) {
   const isActive = !menu.classList.contains("active");
   overlay.classList[isActive ? "add" : "remove"]("active");
@@ -122,6 +125,50 @@ selectAllCheckbox.addEventListener("click", function () {
   }
 });
 
+document.querySelectorAll(".edit-book-button").forEach((button) => {
+  button.addEventListener("click", (event) => {
+    selectedRow = event.target.closest("tr");
+    fillEditBookMenuInputs(selectedRow);
+    toggleMenu(editBookMenu);
+  });
+});
+
+function fillEditBookMenuInputs(selectedRow) {
+  editBookTitleInput.value = selectedRow
+    .querySelector(".book-title")
+    .textContent.trim();
+  editBookAuthorInput.value = selectedRow
+    .querySelector(".book-author")
+    .textContent.trim();
+  editBookPagesInput.value = selectedRow
+    .querySelector(".book-pages")
+    .textContent.trim();
+  const selectedRowPublishDate = selectedRow
+    .querySelector(".book-published")
+    .textContent.trim();
+  const selectedRowAcquisitionDate = selectedRow
+    .querySelector(".book-acquired")
+    .textContent.trim();
+  const selectedRowPublishDateFormatted = formatDate(selectedRowPublishDate);
+  const selectedRowAcquisitionDateFormatted = formatDate(
+    selectedRowAcquisitionDate
+  );
+  editBookPublishDateInput.value = selectedRowPublishDateFormatted;
+  editBookAcquisitionDateInput.value = selectedRowAcquisitionDateFormatted;
+  const selectedRowStatus = selectedRow
+    .querySelector(".book-status-container")
+    .textContent.trim();
+  editBookStatusSelect.value = selectedRowStatus;
+}
+
+function formatDate(dateString) {
+  const dateArray = dateString.split("/");
+  const year = dateArray[2];
+  const month = dateArray[1].padStart(2, "0");
+  const day = dateArray[0].padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
 document.querySelectorAll(".delete-book-button").forEach((button) => {
   button.addEventListener("click", (event) => {
     selectedRow = event.target.closest("tr");
@@ -149,7 +196,6 @@ deleteBookMenuContinueButton.addEventListener("click", () => {
   }
 });
 
-addToggleMenuListeners(".edit-book-button", "edit-book-menu");
 initialiseColourInput(accentColourInput, "--accent-colour");
 initialiseColourInput(backgroundColourInput, "--background-colour");
 initialiseColourInput(controlsColourInput, "--controls-colour");
