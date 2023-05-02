@@ -15,6 +15,7 @@ const tableSecondaryColourInput = document.getElementById(
 const textColourInput = document.getElementById("text-colour-input");
 const trackerColourInput = document.getElementById("tracker-colour-input");
 const resetButton = document.getElementById("reset-button");
+const tableBody = document.getElementById("table-body");
 const selectAllCheckbox = document.getElementById("select-all-checkbox");
 const selectCheckboxes = document.getElementsByClassName("select-checkbox");
 const bookTitleText = document.getElementById("book-title-text");
@@ -35,6 +36,7 @@ const deleteBookMenu = document.getElementById("delete-book-menu");
 const deleteBookMenuContinueButton = document.getElementById(
   "delete-book-menu-continue-button"
 );
+const addBookButton = document.getElementById("add-books-button");
 
 const menuItems = [
   { buttonID: "settings-button", menuID: "settings-menu" },
@@ -84,24 +86,7 @@ selectAllCheckbox.addEventListener("click", function () {
   }
 });
 
-document.querySelectorAll(".edit-book-button").forEach((button) => {
-  button.addEventListener("click", (event) => {
-    selectedRow = event.target.closest("tr");
-    populateEditBookMenuInputs(selectedRow);
-    toggleMenu(editBookMenu);
-  });
-});
-
 editBookButton.addEventListener("click", updateSelectedRow);
-
-document.querySelectorAll(".delete-book-button").forEach((button) => {
-  button.addEventListener("click", (event) => {
-    selectedRow = event.target.closest("tr");
-    const rowData = getSelectedRowData(selectedRow);
-    updateDeleteBookMenuContent(rowData.bookTitleText, rowData.bookAuthorText);
-    toggleMenu(deleteBookMenu);
-  });
-});
 
 deleteBookMenuContinueButton.addEventListener("click", () => {
   if (selectedRow) {
@@ -255,3 +240,125 @@ initialiseColourInput(tablePrimaryColourInput, "--table-primary-colour");
 initialiseColourInput(tableSecondaryColourInput, "--table-secondary-colour");
 initialiseColourInput(textColourInput, "--text-colour");
 initialiseColourInput(trackerColourInput, "--tracker-colour");
+
+/* New Code: */
+
+tableBody.addEventListener("click", (event) => {
+  const editButton = event.target.closest(".edit-book-button");
+  const deleteButton = event.target.closest(".delete-book-button");
+
+  if (editButton) {
+    selectedRow = editButton.closest("tr");
+    populateEditBookMenuInputs(selectedRow);
+    toggleMenu(editBookMenu);
+  }
+
+  if (deleteButton) {
+    selectedRow = deleteButton.closest("tr");
+    const rowData = getSelectedRowData(selectedRow);
+    updateDeleteBookMenuContent(rowData.bookTitleText, rowData.bookAuthorText);
+    toggleMenu(deleteBookMenu);
+  }
+});
+
+addBookButton.addEventListener("click", function () {
+  const title = document.getElementById("add-book-title-input").value;
+  const author = document.getElementById("add-book-author-input").value;
+  const pages = document.getElementById("add-book-pages-input").value;
+  const publishDate = document.getElementById(
+    "add-book-publish-date-input"
+  ).value;
+  const acquisitionDate = document.getElementById(
+    "add-book-acquisition-date-input"
+  ).value;
+  const status = document.getElementById("add-book-status-select").value;
+
+  const newRow = tableBody.insertRow(0);
+
+  const bookSelectCell = newRow.insertCell(0);
+  bookSelectCell.classList.add("book-select");
+  bookSelectCell.id = "book-select";
+  bookSelectCell.innerHTML = `
+    <input
+      class="select-checkbox"
+      id="select-checkbox"
+      type="checkbox"
+    />
+  `;
+
+  const titleCell = newRow.insertCell(1);
+  titleCell.textContent = title;
+  titleCell.classList.add("book-title");
+  titleCell.id = "book-title";
+
+  const authorCell = newRow.insertCell(2);
+  authorCell.textContent = author;
+  authorCell.classList.add("book-author");
+  authorCell.id = "book-author";
+
+  const pagesCell = newRow.insertCell(3);
+  pagesCell.textContent = pages;
+  pagesCell.classList.add("book-pages");
+  pagesCell.id = "book-pages";
+
+  const publishedCell = newRow.insertCell(4);
+  publishedCell.textContent = formatDisplayDate(publishDate);
+  publishedCell.classList.add("book-published");
+  publishedCell.id = "book-published";
+
+  const acquiredCell = newRow.insertCell(5);
+  acquiredCell.textContent = formatDisplayDate(acquisitionDate);
+  acquiredCell.classList.add("book-acquired");
+  acquiredCell.id = "book-acquired";
+
+  const statusCell = newRow.insertCell(6);
+  statusCell.textContent = status;
+  statusCell.classList.add("book-status-container");
+  statusCell.id = "book-status";
+
+  const bookAlterCell = newRow.insertCell(7);
+  bookAlterCell.classList.add("book-alter");
+  bookAlterCell.id = "book-alter";
+  bookAlterCell.innerHTML = `
+  <a
+    class="book-alter-button-container"
+    id="edit-book-container"
+    title="Edit Book"
+  >
+    <svg
+      class="edit-book-button"
+      id="edit-book-button"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M19.39 10.74L11 19.13V22H6C4.89 22 4 21.11 4 20V4C4 2.9 4.89 2 6 2H7V9L9.5 7.5L12 9V2H18C19.1 2 20 2.89 20 4V10.3C19.78 10.42 19.57 10.56 19.39 10.74M13 19.96V22H15.04L21.17 15.88L19.13 13.83L13 19.96M22.85 13.47L21.53 12.15C21.33 11.95 21 11.95 20.81 12.15L19.83 13.13L21.87 15.17L22.85 14.19C23.05 14 23.05 13.67 22.85 13.47Z"
+      />
+    </svg>
+  </a>
+  <a
+    class="book-alter-button-container"
+    id="delete-book-container"
+    title="Delete Book"
+  >
+    <svg
+      class="delete-book-button"
+      id="delete-book-button"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"
+      />
+    </svg>
+  </a>
+`;
+
+  newRow.classList.add("table-body-row");
+
+  document.getElementById("add-book-title-input").value = "";
+  document.getElementById("add-book-author-input").value = "";
+  document.getElementById("add-book-pages-input").value = "";
+  document.getElementById("add-book-publish-date-input").value = "";
+  document.getElementById("add-book-acquisition-date-input").value = "";
+});
