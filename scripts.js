@@ -9,6 +9,9 @@ const menuColourInput = document.getElementById("menu-colour-input");
 const tablePrimaryColourInput = document.getElementById(
   "table-primary-colour-input"
 );
+const tableAlternateColourInput = document.getElementById(
+  "table-primary-alternate-colour-input"
+);
 const tableSecondaryColourInput = document.getElementById(
   "table-secondary-colour-input"
 );
@@ -140,6 +143,7 @@ const defaultColours = {
   "header-colour": "#4f4557",
   "menu-colour": "#4f4557",
   "table-primary-colour": "#4f4557",
+  "table-primary-alternate-colour": "#3d3645",
   "table-secondary-colour": "#393646",
   "text-colour": "#ffffff",
   "tracker-colour": "#4f4557",
@@ -178,14 +182,17 @@ document.querySelectorAll(".close-button").forEach((closeButton) => {
 resetButton.addEventListener("click", restoreDefaultColours);
 
 tableBody.addEventListener("click", (event) => {
+  const bookStatusCell = event.target.closest(".book-status");
   const editButton = event.target.closest(".edit-book-button");
   const deleteButton = event.target.closest(".delete-book-button");
-  if (editButton) {
+  if (bookStatusCell) {
+    bookStatusCell.textContent =
+      bookStatusCell.textContent === "Read" ? "Unread" : "Read";
+  } else if (editButton) {
     selectedRow = editButton.closest("tr");
     populateEditBookMenuInputs(selectedRow);
     toggleMenu(editBookMenu);
-  }
-  if (deleteButton) {
+  } else if (deleteButton) {
     selectedRow = deleteButton.closest("tr");
     const rowData = getSelectedRowData(selectedRow);
     updateDeleteBookMenuContent(rowData.bookTitleText, rowData.bookAuthorText);
@@ -240,6 +247,104 @@ addBookButton.addEventListener("click", function () {
   displayBooks();
 });
 
+function toggleMenu(menu) {
+  const isActive = !menu.classList.contains("active");
+  overlay.classList[isActive ? "add" : "remove"]("active");
+  overlay.classList[isActive ? "remove" : "add"]("inactive");
+  menu.classList[isActive ? "add" : "remove"]("active");
+  menu.classList[isActive ? "remove" : "add"]("inactive");
+}
+
+function restoreDefaultColours() {
+  for (const [variableName, defaultColour] of Object.entries(defaultColours)) {
+    updateElementColour(`--${variableName}`, defaultColour);
+  }
+  accentColourInput.value = defaultColours["accent-colour"];
+  backgroundColourInput.value = defaultColours["background-colour"];
+  controlsColourInput.value = defaultColours["controls-colour"];
+  headerColourInput.value = defaultColours["header-colour"];
+  menuColourInput.value = defaultColours["menu-colour"];
+  tablePrimaryColourInput.value = defaultColours["table-primary-colour"];
+  tableAlternateColourInput.value =
+    defaultColours["table-primary-alternate-colour"];
+  tableSecondaryColourInput.value = defaultColours["table-secondary-colour"];
+  textColourInput.value = defaultColours["text-colour"];
+  trackerColourInput.value = defaultColours["tracker-colour"];
+}
+
+function populateEditBookMenuInputs(selectedRow) {
+  const rowData = getSelectedRowData(selectedRow);
+  editBookTitleInput.value = rowData.bookTitleText;
+  editBookAuthorInput.value = rowData.bookAuthorText;
+  editBookPagesInput.value = rowData.bookPagesText;
+  editBookPublishDateInput.value = formatDate(rowData.bookPublishedText);
+  editBookAcquisitionDateInput.value = formatDate(rowData.bookAcquiredText);
+  editBookStatusSelect.value = rowData.bookStatusText;
+}
+
+function getSelectedRowData(selectedRow) {
+  const bookTitleText = selectedRow
+    .querySelector(".book-title")
+    .textContent.trim();
+  const bookAuthorText = selectedRow
+    .querySelector(".book-author")
+    .textContent.trim();
+  const bookPagesText = selectedRow
+    .querySelector(".book-pages")
+    .textContent.trim();
+  const bookPublishedText = selectedRow
+    .querySelector(".book-published")
+    .textContent.trim();
+  const bookAcquiredText = selectedRow
+    .querySelector(".book-acquired")
+    .textContent.trim();
+  const bookStatusText = selectedRow
+    .querySelector(".book-status")
+    .textContent.trim();
+
+  return {
+    bookTitleText,
+    bookAuthorText,
+    bookPagesText,
+    bookPublishedText,
+    bookAcquiredText,
+    bookStatusText,
+  };
+}
+
+function updateDeleteBookMenuContent(bookTitle, bookAuthor) {
+  bookTitleText.textContent = bookTitle.trim() + ",";
+  bookAuthorText.textContent = "by " + bookAuthor.trim() + ".";
+}
+
+function updateSelectedRow() {
+  if (!selectedRow) {
+    return;
+  }
+  const selectedRowBookTitle = selectedRow.querySelector(".book-title");
+  const selectedRowBookAuthor = selectedRow.querySelector(".book-author");
+  const selectedRowBookPages = selectedRow.querySelector(".book-pages");
+  const selectedRowBookPublishDate =
+    selectedRow.querySelector(".book-published");
+  const selectedRowBookAcquisitionDate =
+    selectedRow.querySelector(".book-acquired");
+  const selectedRowBookStatus = selectedRow.querySelector(".book-status");
+  selectedRowBookTitle.textContent = editBookTitleInput.value.trim();
+  selectedRowBookAuthor.textContent = editBookAuthorInput.value.trim();
+  selectedRowBookPages.textContent = editBookPagesInput.value.trim();
+  selectedRowBookPublishDate.textContent = formatDisplayDate(
+    editBookPublishDateInput.value
+  );
+  selectedRowBookAcquisitionDate.textContent = formatDisplayDate(
+    editBookAcquisitionDateInput.value
+  );
+  selectedRowBookStatus.textContent = editBookStatusSelect.value;
+  if (editBookMenu.classList.contains("active")) {
+    toggleMenu(editBookMenu);
+  }
+  selectedRow = null;
+}
+
 function addBookToLibrary(book) {
   library.push(book);
 }
@@ -254,6 +359,7 @@ function displayBooks() {
 function createBookTableRow(book) {
   const newRow = tableBody.insertRow(0);
   newRow.classList.add("table-body-row");
+  newRow.id = "table-body-row";
   newRow.innerHTML = `
     ${createCell(
       `<input class="select-checkbox" id="select-checkbox" type="checkbox" />`,
@@ -273,7 +379,7 @@ function createBookTableRow(book) {
       "book-acquired",
       "book-acquired"
     )}
-    ${createCell(book.status, "book-status-container", "book-status")}
+    ${createCell(book.status, "book-status", "book-status")}
     ${createCell(
       `
       <a class="book-alter-button-container" id="edit-book-container" title="Edit Book">
@@ -298,31 +404,24 @@ function createCell(content, classes, id) {
   return `<td class="${classes}" id="${id}">${content}</td>`;
 }
 
-function toggleMenu(menu) {
-  const isActive = !menu.classList.contains("active");
-  overlay.classList[isActive ? "add" : "remove"]("active");
-  overlay.classList[isActive ? "remove" : "add"]("inactive");
-  menu.classList[isActive ? "add" : "remove"]("active");
-  menu.classList[isActive ? "remove" : "add"]("inactive");
-}
-
-function restoreDefaultColours() {
-  for (const [variableName, defaultColour] of Object.entries(defaultColours)) {
-    updateElementColour(`--${variableName}`, defaultColour);
-  }
-  accentColourInput.value = defaultColours["accent-colour"];
-  backgroundColourInput.value = defaultColours["background-colour"];
-  controlsColourInput.value = defaultColours["controls-colour"];
-  headerColourInput.value = defaultColours["header-colour"];
-  menuColourInput.value = defaultColours["menu-colour"];
-  tablePrimaryColourInput.value = defaultColours["table-primary-colour"];
-  tableSecondaryColourInput.value = defaultColours["table-secondary-colour"];
-  textColourInput.value = defaultColours["text-colour"];
-  trackerColourInput.value = defaultColours["tracker-colour"];
-}
-
 function updateElementColour(variableName, colour) {
   document.documentElement.style.setProperty(variableName, colour);
+}
+
+function formatDate(dateString) {
+  const dateArray = dateString.split("/");
+  const year = dateArray[2];
+  const month = dateArray[1].padStart(2, "0");
+  const day = dateArray[0].padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function formatDisplayDate(dateString) {
+  const date = new Date(dateString);
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
 }
 
 function initialiseColourInput(inputElement, variableName) {
@@ -335,97 +434,6 @@ function initialiseColourInput(inputElement, variableName) {
     .trim();
 }
 
-function populateEditBookMenuInputs(selectedRow) {
-  const rowData = getSelectedRowData(selectedRow);
-  editBookTitleInput.value = rowData.bookTitleText;
-  editBookAuthorInput.value = rowData.bookAuthorText;
-  editBookPagesInput.value = rowData.bookPagesText;
-  editBookPublishDateInput.value = formatDate(rowData.bookPublishedText);
-  editBookAcquisitionDateInput.value = formatDate(rowData.bookAcquiredText);
-  editBookStatusSelect.value = rowData.bookStatusText;
-}
-
-function formatDate(dateString) {
-  const dateArray = dateString.split("/");
-  const year = dateArray[2];
-  const month = dateArray[1].padStart(2, "0");
-  const day = dateArray[0].padStart(2, "0");
-  return `${year}-${month}-${day}`;
-}
-
-function updateSelectedRow() {
-  if (!selectedRow) {
-    return;
-  }
-  const selectedRowBookTitle = selectedRow.querySelector(".book-title");
-  const selectedRowBookAuthor = selectedRow.querySelector(".book-author");
-  const selectedRowBookPages = selectedRow.querySelector(".book-pages");
-  const selectedRowBookPublishDate =
-    selectedRow.querySelector(".book-published");
-  const selectedRowBookAcquisitionDate =
-    selectedRow.querySelector(".book-acquired");
-  const selectedRowBookStatus = selectedRow.querySelector(
-    ".book-status-container"
-  );
-  selectedRowBookTitle.textContent = editBookTitleInput.value.trim();
-  selectedRowBookAuthor.textContent = editBookAuthorInput.value.trim();
-  selectedRowBookPages.textContent = editBookPagesInput.value.trim();
-  selectedRowBookPublishDate.textContent = formatDisplayDate(
-    editBookPublishDateInput.value
-  );
-  selectedRowBookAcquisitionDate.textContent = formatDisplayDate(
-    editBookAcquisitionDateInput.value
-  );
-  selectedRowBookStatus.textContent = editBookStatusSelect.value;
-  if (editBookMenu.classList.contains("active")) {
-    toggleMenu(editBookMenu);
-  }
-  selectedRow = null;
-}
-
-function formatDisplayDate(dateString) {
-  const date = new Date(dateString);
-  const day = String(date.getDate()).padStart(2, "0");
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const year = date.getFullYear();
-  return `${day}/${month}/${year}`;
-}
-
-function getSelectedRowData(selectedRow) {
-  const bookTitleText = selectedRow
-    .querySelector(".book-title")
-    .textContent.trim();
-  const bookAuthorText = selectedRow
-    .querySelector(".book-author")
-    .textContent.trim();
-  const bookPagesText = selectedRow
-    .querySelector(".book-pages")
-    .textContent.trim();
-  const bookPublishedText = selectedRow
-    .querySelector(".book-published")
-    .textContent.trim();
-  const bookAcquiredText = selectedRow
-    .querySelector(".book-acquired")
-    .textContent.trim();
-  const bookStatusText = selectedRow
-    .querySelector(".book-status-container")
-    .textContent.trim();
-
-  return {
-    bookTitleText,
-    bookAuthorText,
-    bookPagesText,
-    bookPublishedText,
-    bookAcquiredText,
-    bookStatusText,
-  };
-}
-
-function updateDeleteBookMenuContent(bookTitle, bookAuthor) {
-  bookTitleText.textContent = bookTitle.trim() + ",";
-  bookAuthorText.textContent = "by " + bookAuthor.trim() + ".";
-}
-
 displayBooks();
 
 initialiseColourInput(accentColourInput, "--accent-colour");
@@ -434,6 +442,7 @@ initialiseColourInput(controlsColourInput, "--controls-colour");
 initialiseColourInput(headerColourInput, "--header-colour");
 initialiseColourInput(menuColourInput, "--menu-colour");
 initialiseColourInput(tablePrimaryColourInput, "--table-primary-colour");
+initialiseColourInput(tableAlternateColourInput, "--table-alternate-colour");
 initialiseColourInput(tableSecondaryColourInput, "--table-secondary-colour");
 initialiseColourInput(textColourInput, "--text-colour");
 initialiseColourInput(trackerColourInput, "--tracker-colour");
