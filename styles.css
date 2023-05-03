@@ -5,6 +5,7 @@
   --header-colour: #4f4557;
   --menu-colour: #4f4557;
   --table-primary-colour: #4f4557;
+  --table-alternate-colour: #3d3645;
   --table-secondary-colour: #393646;
   --text-colour: #ffffff;
   --tracker-colour: #4f4557;
@@ -88,7 +89,7 @@ body,
 input[type="color"],
 input[type="color"]::-webkit-color-swatch-wrapper,
 main,
-.book-status-container {
+.book-status {
   padding: 0;
 }
 
@@ -281,7 +282,7 @@ footer {
 .close-button,
 input[type="color"],
 button,
-.book-status-container,
+.book-status,
 .header-buttons,
 .header-title-text,
 input[type="checkbox"],
@@ -475,7 +476,7 @@ td,
 
 .book-data-text,
 h1,
-.book-status-container,
+.book-status,
 .header-title-text {
   color: var(--accent-colour);
 }
@@ -572,6 +573,10 @@ thead {
   background-color: var(--table-primary-colour);
 }
 
+tbody tr:nth-child(odd) {
+  background-color: var(--table-alternate-colour);
+}
+
 .table-body-row:hover {
   outline-color: var(--accent-colour);
   outline-style: solid;
@@ -585,12 +590,12 @@ input[type="checkbox"] {
 }
 
 .header-title-text,
-.book-status-container {
+.book-status {
   transition: all 0.3s ease-in-out;
 }
 
 .header-title-text:hover,
-.book-status-container:hover {
+.book-status:hover {
   filter: drop-shadow(0px 0px 1.5px var(--accent-colour));
 }
 
