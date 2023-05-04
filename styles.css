@@ -199,7 +199,8 @@ main,
 
 .menu,
 button,
-header {
+header,
+.deleted-books-select {
   padding: 16px;
 }
 
@@ -457,7 +458,6 @@ tr {
 }
 
 .edit-book-input,
-.deleted-books-select,
 .deleted-books-option,
 .add-book-input,
 th,
@@ -495,9 +495,8 @@ input[type="date"] {
   -webkit-appearance: none;
   appearance: none;
   border-color: transparent;
-  height: auto;
-  overflow: hidden;
-  width: auto;
+  height: 700px;
+  width: 700px;
 }
 
 .deleted-books-select,
