@@ -39,7 +39,16 @@ const deleteBookMenu = document.getElementById("delete-book-menu");
 const deleteBookMenuContinueButton = document.getElementById(
   "delete-book-menu-continue-button"
 );
+const deletedBookSelect = document.getElementById("deleted-books-select");
+const deleteButton = document.getElementById("delete-button");
+const restoreButton = document.getElementById("restore-books-button");
 const addBookButton = document.getElementById("add-books-button");
+const addBookMenu = document.getElementById("add-book-menu");
+const totalBooksValue = document.getElementById("total-books-value");
+const totalPagesValue = document.getElementById("total-pages-value");
+const uniqueAuthorsValue = document.getElementById("authors-value");
+const readBooksValue = document.getElementById("read-books-value");
+const unreadBooksValue = document.getElementById("unread-books-value");
 
 const library = [
   {
@@ -184,7 +193,7 @@ resetButton.addEventListener("click", restoreDefaultColours);
 tableBody.addEventListener("click", (event) => {
   const bookStatusCell = event.target.closest(".book-status");
   const editButton = event.target.closest(".edit-book-button");
-  const deleteButton = event.target.closest(".delete-book-button");
+  const deleteBookButton = event.target.closest(".delete-book-button");
   if (bookStatusCell) {
     bookStatusCell.textContent =
       bookStatusCell.textContent === "Read" ? "Unread" : "Read";
@@ -192,9 +201,17 @@ tableBody.addEventListener("click", (event) => {
     selectedRow = editButton.closest("tr");
     populateEditBookMenuInputs(selectedRow);
     toggleMenu(editBookMenu);
-  } else if (deleteButton) {
-    selectedRow = deleteButton.closest("tr");
+  } else if (deleteBookButton) {
+    selectedRow = deleteBookButton.closest("tr");
     const rowData = getSelectedRowData(selectedRow);
+    convertBookToOption(
+      rowData.bookTitleText,
+      rowData.bookAuthorText,
+      rowData.bookPagesText,
+      rowData.bookPublishedText,
+      rowData.bookAcquiredText,
+      rowData.bookStatusText
+    );
     updateDeleteBookMenuContent(rowData.bookTitleText, rowData.bookAuthorText);
     toggleMenu(deleteBookMenu);
   }
@@ -215,6 +232,14 @@ deleteBookMenuContinueButton.addEventListener("click", () => {
   }
   if (deleteBookMenu.classList.contains("active")) {
     toggleMenu(deleteBookMenu);
+  }
+});
+
+restoreButton.addEventListener("click", () => {
+  const selectedOption =
+    deletedBookSelect.options[deletedBookSelect.selectedIndex];
+  if (selectedOption) {
+    restoreSelectedBookToTable(selectedOption);
   }
 });
 
@@ -245,6 +270,9 @@ addBookButton.addEventListener("click", function () {
   document.getElementById("add-book-acquisition-date-input").value = "";
   addBookToLibrary(newBook);
   displayBooks();
+  if (addBookMenu.classList.contains("active")) {
+    toggleMenu(addBookMenu);
+  }
 });
 
 function toggleMenu(menu) {
@@ -310,6 +338,47 @@ function getSelectedRowData(selectedRow) {
     bookAcquiredText,
     bookStatusText,
   };
+}
+
+function convertBookToOption(
+  title,
+  author,
+  pages,
+  published,
+  acquired,
+  status
+) {
+  const option = document.createElement("option");
+  option.textContent = `${title} - ${author}`;
+  option.className = "deleted-books-option";
+  option.id = "deleted-books-option";
+  option.dataset.title = title;
+  option.dataset.author = author;
+  option.dataset.pages = pages;
+  option.dataset.published = formatDate(published);
+  option.dataset.acquired = formatDate(acquired);
+  option.dataset.status = status;
+  deletedBookSelect.appendChild(option);
+}
+
+function restoreSelectedBookToTable(option, removeOption = false) {
+  const selectedOption =
+    deletedBookSelect.options[deletedBookSelect.selectedIndex];
+  if (selectedOption) {
+    const newBook = new Book(
+      selectedOption.dataset.title,
+      selectedOption.dataset.author,
+      selectedOption.dataset.pages,
+      selectedOption.dataset.published,
+      selectedOption.dataset.acquired,
+      selectedOption.dataset.status
+    );
+    createBookTableRow(newBook);
+    selectedOption.remove();
+  }
+  if (removeOption) {
+    option.remove();
+  }
 }
 
 function updateDeleteBookMenuContent(bookTitle, bookAuthor) {
@@ -434,7 +503,27 @@ function initialiseColourInput(inputElement, variableName) {
     .trim();
 }
 
+function updateTracker() {
+  const totalBooks = library.length;
+  const totalPages = library.reduce((sum, book) => sum + book.pages, 0);
+  const authorSet = new Set();
+  library.forEach((book) => {
+    const authors = book.author.split(",").map((author) => author.trim());
+    authors.forEach((author) => authorSet.add(author));
+  });
+  const uniqueAuthors = authorSet.size;
+  const readBooks = library.filter((book) => book.status === "Read").length;
+  const unreadBooks = library.filter((book) => book.status === "Unread").length;
+  totalBooksValue.textContent = totalBooks;
+  totalPagesValue.textContent = totalPages;
+  uniqueAuthorsValue.textContent = uniqueAuthors;
+  readBooksValue.textContent = readBooks;
+  unreadBooksValue.textContent = unreadBooks;
+}
+
 displayBooks();
+
+updateTracker();
 
 initialiseColourInput(accentColourInput, "--accent-colour");
 initialiseColourInput(backgroundColourInput, "--background-colour");
@@ -446,3 +535,15 @@ initialiseColourInput(tableAlternateColourInput, "--table-alternate-colour");
 initialiseColourInput(tableSecondaryColourInput, "--table-secondary-colour");
 initialiseColourInput(textColourInput, "--text-colour");
 initialiseColourInput(trackerColourInput, "--tracker-colour");
+
+/* */
+
+const deletedBooksDeleteButton = document.getElementById("delete-button");
+
+deletedBooksDeleteButton.addEventListener("click", () => {
+  const selectedOption =
+    deletedBookSelect.options[deletedBookSelect.selectedIndex];
+  if (selectedOption) {
+    selectedOption.remove();
+  }
+});
