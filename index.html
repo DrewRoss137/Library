@@ -85,19 +85,6 @@
           </div>
           <div
             class="colour-input-container"
-            id="table-primary-colour-input-container"
-          >
-            <span class="input-text" id="table-primary-colour-input-text"
-              >Table Primary Colour</span
-            >
-            <input
-              class="colour-input"
-              id="table-primary-colour-input"
-              type="color"
-            />
-          </div>
-          <div
-            class="colour-input-container"
             id="table-primary-alternate-colour-input-container"
           >
             <span
@@ -108,6 +95,19 @@
             <input
               class="colour-input"
               id="table-primary-alternate-colour-input"
+              type="color"
+            />
+          </div>
+          <div
+            class="colour-input-container"
+            id="table-primary-colour-input-container"
+          >
+            <span class="input-text" id="table-primary-colour-input-text"
+              >Table Primary Colour</span
+            >
+            <input
+              class="colour-input"
+              id="table-primary-colour-input"
               type="color"
             />
           </div>
@@ -348,13 +348,7 @@
             >Delete Selected Books</span
           >
         </div>
-        <span class="menu-text" id="delete-selected-books-text"
-          >This will erase
-          <span class="book-data-text" id="selected-book-number-text"
-            >${selectedBookNumber}</span
-          >
-          books.</span
-        >
+        <span class="menu-text" id="delete-selected-books-text"></span>
         <span class="menu-text" id="delete-selected-books-warning"
           >You can recover, or permanently delete, these books by clicking the
           'Deleted Books' button, found in the table footer.</span
@@ -398,18 +392,7 @@
           id="deleted-books-select"
           multiple
           size="3"
-        >
-          <option class="deleted-books-option" id="deleted-books-option">
-            Peopleware: Productive Projects and Teams - Tom DeMarco, Tim Lister
-          </option>
-          <option class="deleted-books-option" id="deleted-books-option">
-            Grokking Algorithms: An illustrated guide for programmers and other
-            curious people - Aditya Bhargava
-          </option>
-          <option class="deleted-books-option" id="deleted-books-option">
-            Algorithms - Robert Sedgewick, Kevin Wayne
-          </option>
-        </select>
+        ></select>
         <div class="menu-button-container" id="deleted-books-buttons">
           <button class="menu-buttons" id="delete-button">Delete</button>
           <button class="menu-buttons" id="restore-books-button">
@@ -695,7 +678,7 @@
           </div>
           <div class="tracker-box" id="deleted-books-box">
             Deleted Books
-            <span class="tracker-value" id="deleted-books-value">1</span>
+            <span class="tracker-value" id="deleted-books-value"></span>
           </div>
         </div>
       </div>
