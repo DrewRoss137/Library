@@ -1,4 +1,5 @@
 const overlay = document.getElementById("overlay");
+const closeButtons = document.querySelectorAll(".close-button");
 const accentColourInput = document.getElementById("accent-colour-input");
 const backgroundColourInput = document.getElementById(
   "background-colour-input"
@@ -39,7 +40,7 @@ const deleteBookMenu = document.getElementById("delete-book-menu");
 const deleteBookMenuContinueButton = document.getElementById(
   "delete-book-menu-continue-button"
 );
-const deletedBookSelect = document.getElementById("deleted-books-select");
+const deletedBooksSelect = document.getElementById("deleted-books-select");
 const deleteButton = document.getElementById("delete-button");
 const restoreButton = document.getElementById("restore-books-button");
 const addBookButton = document.getElementById("add-books-button");
@@ -49,6 +50,41 @@ const totalPagesValue = document.getElementById("total-pages-value");
 const uniqueAuthorsValue = document.getElementById("authors-value");
 const readBooksValue = document.getElementById("read-books-value");
 const unreadBooksValue = document.getElementById("unread-books-value");
+
+const menuItems = [
+  { buttonID: "settings-button", menuID: "settings-menu" },
+  { buttonID: "restore-button", menuID: "restore-menu" },
+  {
+    buttonID: "delete-selected-books-button",
+    menuID: "delete-selected-books-menu",
+  },
+  { buttonID: "deleted-books-button", menuID: "deleted-books-menu" },
+  { buttonID: "add-book-button", menuID: "add-book-menu" },
+];
+
+const defaultColours = {
+  "accent-colour": "#e3b464",
+  "background-colour": "#393646",
+  "controls-colour": "#393646",
+  "header-colour": "#4f4557",
+  "menu-colour": "#4f4557",
+  "table-primary-colour": "#4f4557",
+  "table-primary-alternate-colour": "#3d3645",
+  "table-secondary-colour": "#393646",
+  "text-colour": "#ffffff",
+  "tracker-colour": "#4f4557",
+};
+
+class Book {
+  constructor(title, author, pages, publishDate, acquisitionDate, status) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.publishDate = publishDate;
+    this.acquisitionDate = acquisitionDate;
+    this.status = status;
+  }
+}
 
 const library = [
   {
@@ -134,40 +170,33 @@ const library = [
   },
 ];
 
-const menuItems = [
-  { buttonID: "settings-button", menuID: "settings-menu" },
-  { buttonID: "restore-button", menuID: "restore-menu" },
+const deletedBooks = [
   {
-    buttonID: "delete-selected-books-button",
-    menuID: "delete-selected-books-menu",
+    title: "Peopleware: Productive Projects and Teams",
+    author: "Tom DeMarco, Timothy Lister",
+    pages: 272,
+    publishDate: "2016-04-22",
+    acquisitionDate: "2023-03-23",
+    status: "Unread",
   },
-  { buttonID: "deleted-books-button", menuID: "deleted-books-menu" },
-  { buttonID: "add-book-button", menuID: "add-book-menu" },
+  {
+    title:
+      "Grokking Algorithms: An illustrated guide for programmers and other curious people",
+    author: "Aditya Bhargava",
+    pages: 300,
+    publishDate: "2015-12-31",
+    acquisitionDate: "2023-03-23",
+    status: "Unread",
+  },
+  {
+    title: "Algorithms",
+    author: "Robert Sedgewick, Kevin Wayne",
+    pages: 976,
+    publishDate: "2011-04-28",
+    acquisitionDate: "2023-03-23",
+    status: "Unread",
+  },
 ];
-
-const defaultColours = {
-  "accent-colour": "#e3b464",
-  "background-colour": "#393646",
-  "controls-colour": "#393646",
-  "header-colour": "#4f4557",
-  "menu-colour": "#4f4557",
-  "table-primary-colour": "#4f4557",
-  "table-primary-alternate-colour": "#3d3645",
-  "table-secondary-colour": "#393646",
-  "text-colour": "#ffffff",
-  "tracker-colour": "#4f4557",
-};
-
-class Book {
-  constructor(title, author, pages, publishDate, acquisitionDate, status) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.publishDate = publishDate;
-    this.acquisitionDate = acquisitionDate;
-    this.status = status;
-  }
-}
 
 let selectedRow;
 
@@ -179,9 +208,9 @@ menuItems.forEach(({ buttonID, menuID }) => {
   });
 });
 
-document.querySelectorAll(".close-button").forEach((closeButton) => {
-  closeButton.addEventListener("click", () => {
-    const parentMenu = closeButton.closest(".menu");
+closeButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const parentMenu = button.closest(".menu");
     if (parentMenu.classList.contains("active")) {
       toggleMenu(parentMenu);
     }
@@ -191,28 +220,31 @@ document.querySelectorAll(".close-button").forEach((closeButton) => {
 resetButton.addEventListener("click", restoreDefaultColours);
 
 tableBody.addEventListener("click", (event) => {
-  const bookStatusCell = event.target.closest(".book-status");
-  const editButton = event.target.closest(".edit-book-button");
+  const bookStatus = event.target.closest(".book-status");
+  const editBookButton = event.target.closest(".edit-book-button");
   const deleteBookButton = event.target.closest(".delete-book-button");
-  if (bookStatusCell) {
-    bookStatusCell.textContent =
-      bookStatusCell.textContent === "Read" ? "Unread" : "Read";
-  } else if (editButton) {
-    selectedRow = editButton.closest("tr");
+  if (bookStatus) {
+    bookStatus.textContent =
+      bookStatus.textContent === "Read" ? "Unread" : "Read";
+  } else if (editBookButton) {
+    selectedRow = editBookButton.closest("tr");
     populateEditBookMenuInputs(selectedRow);
     toggleMenu(editBookMenu);
   } else if (deleteBookButton) {
     selectedRow = deleteBookButton.closest("tr");
-    const rowData = getSelectedRowData(selectedRow);
+    const selectedBook = getSelectedRowData(selectedRow);
     convertBookToOption(
-      rowData.bookTitleText,
-      rowData.bookAuthorText,
-      rowData.bookPagesText,
-      rowData.bookPublishedText,
-      rowData.bookAcquiredText,
-      rowData.bookStatusText
+      selectedBook.bookTitleText,
+      selectedBook.bookAuthorText,
+      selectedBook.bookPagesText,
+      selectedBook.bookPublishedText,
+      selectedBook.bookAcquiredText,
+      selectedBook.bookStatusText
     );
-    updateDeleteBookMenuContent(rowData.bookTitleText, rowData.bookAuthorText);
+    updateDeleteBookMenuContent(
+      selectedBook.bookTitleText,
+      selectedBook.bookAuthorText
+    );
     toggleMenu(deleteBookMenu);
   }
 });
@@ -235,26 +267,47 @@ deleteBookMenuContinueButton.addEventListener("click", () => {
   }
 });
 
+deletedBooks.forEach((book) => {
+  const option = document.createElement("option");
+  option.classList.add("deleted-books-option");
+  option.textContent = `${book.title} - ${book.author}`;
+  option.dataset.title = book.title;
+  option.dataset.author = book.author;
+  option.dataset.pages = book.pages;
+  option.dataset.publishDate = book.publishDate;
+  option.dataset.acquisitionDate = book.acquisitionDate;
+  option.dataset.status = book.status;
+  deletedBooksSelect.appendChild(option);
+});
+
+deleteButton.addEventListener("click", () => {
+  const selectedOption =
+    deletedBooksSelect.options[deletedBooksSelect.selectedIndex];
+  if (selectedOption) {
+    selectedOption.remove();
+  }
+});
+
 restoreButton.addEventListener("click", () => {
   const selectedOption =
-    deletedBookSelect.options[deletedBookSelect.selectedIndex];
+    deletedBooksSelect.options[deletedBooksSelect.selectedIndex];
   if (selectedOption) {
     restoreSelectedBookToTable(selectedOption);
   }
 });
 
 addBookButton.addEventListener("click", function () {
-  const title = document.getElementById("add-book-title-input").value;
-  const author = document.getElementById("add-book-author-input").value;
-  const pages = document.getElementById("add-book-pages-input").value;
-  const publishDate = document.getElementById(
+  let title = document.getElementById("add-book-title-input").value;
+  let author = document.getElementById("add-book-author-input").value;
+  let pages = document.getElementById("add-book-pages-input").value;
+  let publishDate = document.getElementById(
     "add-book-publish-date-input"
   ).value;
-  const acquisitionDate = document.getElementById(
+  let acquisitionDate = document.getElementById(
     "add-book-acquisition-date-input"
   ).value;
-  const status = document.getElementById("add-book-status-select").value;
-  const newBook = new Book(
+  let status = document.getElementById("add-book-status-select").value;
+  let newBook = new Book(
     title,
     author,
     pages,
@@ -263,11 +316,11 @@ addBookButton.addEventListener("click", function () {
     status
   );
   createBookTableRow(newBook);
-  document.getElementById("add-book-title-input").value = "";
-  document.getElementById("add-book-author-input").value = "";
-  document.getElementById("add-book-pages-input").value = "";
-  document.getElementById("add-book-publish-date-input").value = "";
-  document.getElementById("add-book-acquisition-date-input").value = "";
+  title.value = "";
+  author.value = "";
+  pages.value = "";
+  publishDate.value = "";
+  acquisitionDate.value = "";
   addBookToLibrary(newBook);
   displayBooks();
   if (addBookMenu.classList.contains("active")) {
@@ -301,13 +354,15 @@ function restoreDefaultColours() {
 }
 
 function populateEditBookMenuInputs(selectedRow) {
-  const rowData = getSelectedRowData(selectedRow);
-  editBookTitleInput.value = rowData.bookTitleText;
-  editBookAuthorInput.value = rowData.bookAuthorText;
-  editBookPagesInput.value = rowData.bookPagesText;
-  editBookPublishDateInput.value = formatDate(rowData.bookPublishedText);
-  editBookAcquisitionDateInput.value = formatDate(rowData.bookAcquiredText);
-  editBookStatusSelect.value = rowData.bookStatusText;
+  const selectedBook = getSelectedRowData(selectedRow);
+  editBookTitleInput.value = selectedBook.bookTitleText;
+  editBookAuthorInput.value = selectedBook.bookAuthorText;
+  editBookPagesInput.value = selectedBook.bookPagesText;
+  editBookPublishDateInput.value = formatDate(selectedBook.bookPublishedText);
+  editBookAcquisitionDateInput.value = formatDate(
+    selectedBook.bookAcquiredText
+  );
+  editBookStatusSelect.value = selectedBook.bookStatusText;
 }
 
 function getSelectedRowData(selectedRow) {
@@ -358,27 +413,7 @@ function convertBookToOption(
   option.dataset.published = formatDate(published);
   option.dataset.acquired = formatDate(acquired);
   option.dataset.status = status;
-  deletedBookSelect.appendChild(option);
-}
-
-function restoreSelectedBookToTable(option, removeOption = false) {
-  const selectedOption =
-    deletedBookSelect.options[deletedBookSelect.selectedIndex];
-  if (selectedOption) {
-    const newBook = new Book(
-      selectedOption.dataset.title,
-      selectedOption.dataset.author,
-      selectedOption.dataset.pages,
-      selectedOption.dataset.published,
-      selectedOption.dataset.acquired,
-      selectedOption.dataset.status
-    );
-    createBookTableRow(newBook);
-    selectedOption.remove();
-  }
-  if (removeOption) {
-    option.remove();
-  }
+  deletedBooksSelect.appendChild(option);
 }
 
 function updateDeleteBookMenuContent(bookTitle, bookAuthor) {
@@ -412,6 +447,23 @@ function updateSelectedRow() {
     toggleMenu(editBookMenu);
   }
   selectedRow = null;
+}
+
+function restoreSelectedBookToTable() {
+  const selectedOption =
+    deletedBooksSelect.options[deletedBooksSelect.selectedIndex];
+  if (selectedOption) {
+    const newBook = new Book(
+      selectedOption.dataset.title,
+      selectedOption.dataset.author,
+      parseInt(selectedOption.dataset.pages),
+      selectedOption.dataset.publishDate,
+      selectedOption.dataset.acquisitionDate,
+      selectedOption.dataset.status
+    );
+    createBookTableRow(newBook);
+    selectedOption.remove();
+  }
 }
 
 function addBookToLibrary(book) {
@@ -522,7 +574,6 @@ function updateTracker() {
 }
 
 displayBooks();
-
 updateTracker();
 
 initialiseColourInput(accentColourInput, "--accent-colour");
@@ -535,15 +586,3 @@ initialiseColourInput(tableAlternateColourInput, "--table-alternate-colour");
 initialiseColourInput(tableSecondaryColourInput, "--table-secondary-colour");
 initialiseColourInput(textColourInput, "--text-colour");
 initialiseColourInput(trackerColourInput, "--tracker-colour");
-
-/* */
-
-const deletedBooksDeleteButton = document.getElementById("delete-button");
-
-deletedBooksDeleteButton.addEventListener("click", () => {
-  const selectedOption =
-    deletedBookSelect.options[deletedBookSelect.selectedIndex];
-  if (selectedOption) {
-    selectedOption.remove();
-  }
-});
