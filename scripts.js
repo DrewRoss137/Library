@@ -1,5 +1,5 @@
 const overlay = document.getElementById("overlay");
-const closeButtons = document.querySelectorAll(".close-button");
+const closeButton = document.querySelectorAll(".close-button");
 const accentColourInput = document.getElementById("accent-colour-input");
 const backgroundColourInput = document.getElementById(
   "background-colour-input"
@@ -35,10 +35,16 @@ const editBookAcquisitionDateInput = document.getElementById(
   "edit-book-acquisition-date-input"
 );
 const editBookStatusSelect = document.getElementById("edit-book-status-select");
-const editBookButton = document.getElementById("edit-books-button");
+const editBookEditBookButton = document.getElementById("edit-books-button");
 const deleteBookMenu = document.getElementById("delete-book-menu");
 const deleteBookMenuContinueButton = document.getElementById(
   "delete-book-menu-continue-button"
+);
+const deleteSelectedBooksText = document.getElementById(
+  "delete-selected-books-text"
+);
+const cancelButton = document.getElementById(
+  "delete-selected-books-menu-cancel-button"
 );
 const deletedBooksSelect = document.getElementById("deleted-books-select");
 const deleteButton = document.getElementById("delete-button");
@@ -50,6 +56,7 @@ const totalPagesValue = document.getElementById("total-pages-value");
 const uniqueAuthorsValue = document.getElementById("authors-value");
 const readBooksValue = document.getElementById("read-books-value");
 const unreadBooksValue = document.getElementById("unread-books-value");
+const deletedBooksValue = document.getElementById("deleted-books-value");
 
 const menuItems = [
   { buttonID: "settings-button", menuID: "settings-menu" },
@@ -101,7 +108,7 @@ const library = [
     pages: 464,
     publishDate: "2008-08-01",
     acquisitionDate: "2023-02-01",
-    status: "Unread",
+    status: "Read",
   },
   {
     title: "Code Complete: A Practical Handbook of Software Construction",
@@ -170,6 +177,8 @@ const library = [
   },
 ];
 
+const closeButtons = [...closeButton, cancelButton];
+
 const deletedBooks = [
   {
     title: "Peopleware: Productive Projects and Teams",
@@ -224,8 +233,13 @@ tableBody.addEventListener("click", (event) => {
   const editBookButton = event.target.closest(".edit-book-button");
   const deleteBookButton = event.target.closest(".delete-book-button");
   if (bookStatus) {
-    bookStatus.textContent =
-      bookStatus.textContent === "Read" ? "Unread" : "Read";
+    const book = library.find((book) => book.statusElement === bookStatus);
+    if (book) {
+      const newStatus = bookStatus.textContent === "Read" ? "Unread" : "Read";
+      book.status = newStatus;
+      bookStatus.textContent = newStatus;
+      updateTracker();
+    }
   } else if (editBookButton) {
     selectedRow = editBookButton.closest("tr");
     populateEditBookMenuInputs(selectedRow);
@@ -249,22 +263,29 @@ tableBody.addEventListener("click", (event) => {
   }
 });
 
-selectAllCheckbox.addEventListener("click", function () {
-  for (let checkbox of selectCheckboxes) {
-    checkbox.checked = selectAllCheckbox.checked;
+selectAllCheckbox.addEventListener("change", () => {
+  for (let i = 0; i < selectCheckboxes.length; i++) {
+    selectCheckboxes[i].checked = selectAllCheckbox.checked;
   }
+  updateSelectedBookCount();
 });
 
-editBookButton.addEventListener("click", updateSelectedRow);
+editBookEditBookButton.addEventListener("click", updateSelectedRow);
 
 deleteBookMenuContinueButton.addEventListener("click", () => {
   if (selectedRow) {
+    const selectedBook = getSelectedRowData(selectedRow);
+    const bookIndex = selectedBook.bookIndex;
+    const deletedBook = library[bookIndex];
+    deletedBooks.push(deletedBook);
+    library.splice(bookIndex, 1);
     selectedRow.remove();
     selectedRow = null;
   }
   if (deleteBookMenu.classList.contains("active")) {
     toggleMenu(deleteBookMenu);
   }
+  updateTracker();
 });
 
 deletedBooks.forEach((book) => {
@@ -292,7 +313,16 @@ restoreButton.addEventListener("click", () => {
   const selectedOption =
     deletedBooksSelect.options[deletedBooksSelect.selectedIndex];
   if (selectedOption) {
-    restoreSelectedBookToTable(selectedOption);
+    const bookId = selectedOption.dataset.bookId;
+    const bookIndex = deletedBooks.findIndex((book) => book.id === bookId);
+    if (bookIndex !== -1) {
+      const restoredBook = deletedBooks[bookIndex];
+      deletedBooks.splice(bookIndex, 1);
+      library.push(restoredBook);
+      restoreSelectedBook(restoredBook);
+      selectedOption.remove();
+      updateTracker();
+    }
   }
 });
 
@@ -326,6 +356,7 @@ addBookButton.addEventListener("click", function () {
   if (addBookMenu.classList.contains("active")) {
     toggleMenu(addBookMenu);
   }
+  updateTracker();
 });
 
 function toggleMenu(menu) {
@@ -449,7 +480,7 @@ function updateSelectedRow() {
   selectedRow = null;
 }
 
-function restoreSelectedBookToTable() {
+function restoreSelectedBook() {
   const selectedOption =
     deletedBooksSelect.options[deletedBooksSelect.selectedIndex];
   if (selectedOption) {
@@ -519,6 +550,7 @@ function createBookTableRow(book) {
       "book-alter"
     )}
     `;
+  book.statusElement = newRow.querySelector(".book-status");
 }
 
 function createCell(content, classes, id) {
@@ -555,25 +587,63 @@ function initialiseColourInput(inputElement, variableName) {
     .trim();
 }
 
+function initialiseCheckboxListeners() {
+  for (let i = 0; i < selectCheckboxes.length; i++) {
+    selectCheckboxes[i].addEventListener("change", () => {
+      for (let j = 0; j < selectCheckboxes.length; j++) {
+        if (
+          selectCheckboxes[j] !== selectAllCheckbox &&
+          !selectCheckboxes[j].checked
+        ) {
+          selectAllCheckbox.checked = false;
+          break;
+        }
+        selectAllCheckbox.checked = true;
+      }
+      updateSelectedBookCount();
+    });
+  }
+}
+
+function updateSelectedBookCount() {
+  const selectedBookNumber = Array.from(selectCheckboxes)
+    .filter((checkbox) => checkbox !== selectAllCheckbox)
+    .reduce((acc, checkbox) => acc + checkbox.checked, 0);
+
+  deleteSelectedBooksText.textContent =
+    selectedBookNumber === 0
+      ? "You do not have any books selected."
+      : `This will erase ${selectedBookNumber} book${
+          selectedBookNumber > 1 ? "s" : ""
+        }.`;
+}
+
 function updateTracker() {
   const totalBooks = library.length;
-  const totalPages = library.reduce((sum, book) => sum + book.pages, 0);
   const authorSet = new Set();
   library.forEach((book) => {
     const authors = book.author.split(",").map((author) => author.trim());
     authors.forEach((author) => authorSet.add(author));
   });
   const uniqueAuthors = authorSet.size;
+  const totalPages = library.reduce(
+    (sum, book) => sum + parseInt(book.pages),
+    0
+  );
   const readBooks = library.filter((book) => book.status === "Read").length;
   const unreadBooks = library.filter((book) => book.status === "Unread").length;
+  const deletedBooksNumber = deletedBooks.length;
   totalBooksValue.textContent = totalBooks;
   totalPagesValue.textContent = totalPages;
   uniqueAuthorsValue.textContent = uniqueAuthors;
   readBooksValue.textContent = readBooks;
   unreadBooksValue.textContent = unreadBooks;
+  deletedBooksValue.textContent = deletedBooksNumber;
 }
 
 displayBooks();
+initialiseCheckboxListeners();
+updateSelectedBookCount();
 updateTracker();
 
 initialiseColourInput(accentColourInput, "--accent-colour");
@@ -586,3 +656,13 @@ initialiseColourInput(tableAlternateColourInput, "--table-alternate-colour");
 initialiseColourInput(tableSecondaryColourInput, "--table-secondary-colour");
 initialiseColourInput(textColourInput, "--text-colour");
 initialiseColourInput(trackerColourInput, "--tracker-colour");
+
+/*
+To-Do:
+  -Ascending And Descending Sorting By Clicking TH Elements, With An Arrow Appearing Adjacent Upon Clicking;
+  -Editing A Book Causes Tracker Values To Change;
+  -Deleted Selected Book(s) Functionality;
+  -Validate Input Forms Within Edit Book And Add Book;
+  -Bug: Deleting Books Will Make The Last Book In The Library Broken: Unable To Toggle Status;
+  -Bug: Deleting All Books But One Will Result In Total Pages = 501;
+*/
