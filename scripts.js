@@ -94,118 +94,122 @@ class Book {
 }
 
 const library = [
-  {
-    title: "The Pragmatic Programmer: Your Journey to Mastery",
-    author: "David Thomas, Andrew Hunt",
-    pages: 352,
-    publishDate: "2019-12-02",
-    acquisitionDate: "2023-01-23",
-    status: "Unread",
-  },
-  {
-    title: "Clean Code: A Handbook of Agile Software Craftsmanship",
-    author: "Robert C. Martin",
-    pages: 464,
-    publishDate: "2008-08-01",
-    acquisitionDate: "2023-02-01",
-    status: "Read",
-  },
-  {
-    title: "Code Complete: A Practical Handbook of Software Construction",
-    author: "Steve McConnell",
-    pages: 960,
-    publishDate: "2004-06-09",
-    acquisitionDate: "2023-02-14",
-    status: "Unread",
-  },
-  {
-    title: "Refactoring: Improving the Design of Existing Code",
-    author: "Martin Fowler",
-    pages: 448,
-    publishDate: "2019-01-02",
-    acquisitionDate: "2023-03-19",
-    status: "Read",
-  },
-  {
-    title: "The Mythical Man-Month: Essays on Software Engineering",
-    author: "Frederick Brooks Jr.",
-    pages: 336,
-    publishDate: "1995-08-15",
-    acquisitionDate: "2023-03-23",
-    status: "Unread",
-  },
-  {
-    title: "The Clean Coder: A Code of Conduct for Professional Programmers",
-    author: "Robert C. Martin",
-    pages: 242,
-    publishDate: "2011-03-13",
-    acquisitionDate: "2023-06-21",
-    status: "Unread",
-  },
-  {
-    title: "Working Effectively with Legacy Code",
-    author: "Michael Feathers",
-    pages: 456,
-    publishDate: "2004-09-22",
-    acquisitionDate: "2023-07-27",
-    status: "Read",
-  },
-  {
-    title: "Design Patterns: Elements of Reusable Object-Oriented Software",
-    author: "Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides",
-    pages: 416,
-    publishDate: "1995-03-14",
-    acquisitionDate: "2023-08-17",
-    status: "Read",
-  },
-  {
-    title:
-      "Cracking the Coding Interview: 189 Programming Questions & Solutions",
-    author: "Gayle Laakmann McDowell",
-    pages: 706,
-    publishDate: "2015-07-01",
-    acquisitionDate: "2023-12-07",
-    status: "Read",
-  },
-  {
-    title: "Soft Skills: The Software Developer's Life Manual",
-    author: "John Sonmez",
-    pages: 501,
-    publishDate: "2020-11-11",
-    acquisitionDate: "2023-12-23",
-    status: "Unread",
-  },
-];
+  new Book(
+    "The Pragmatic Programmer: Your Journey to Mastery",
+    "David Thomas, Andrew Hunt",
+    352,
+    "2019-12-02",
+    "2023-01-23",
+    "Unread"
+  ),
+  new Book(
+    "Clean Code: A Handbook of Agile Software Craftsmanship",
+    "Robert C. Martin",
+    464,
+    "2008-08-01",
+    "2023-02-01",
+    "Read"
+  ),
+  new Book(
+    "Code Complete: A Practical Handbook of Software Construction",
+    "Steve McConnell",
+    960,
+    "2004-06-09",
+    "2023-02-14",
+    "Unread"
+  ),
+  new Book(
+    "Refactoring: Improving the Design of Existing Code",
+    "Martin Fowler",
+    448,
+    "2019-01-02",
+    "2023-03-19",
+    "Read"
+  ),
+  new Book(
+    "The Mythical Man-Month: Essays on Software Engineering",
+    "Frederick Brooks Jr.",
+    336,
+    "1995-08-15",
+    "2023-03-23",
+    "Unread"
+  ),
+  new Book(
+    "The Clean Coder: A Code of Conduct for Professional Programmers",
+    "Robert C. Martin",
+    242,
+    "2011-03-13",
+    "2023-06-21",
+    "Unread"
+  ),
+  new Book(
+    "Working Effectively with Legacy Code",
+    "Michael Feathers",
+    456,
+    "2004-09-22",
+    "2023-07-27",
+    "Read"
+  ),
+  new Book(
+    "Design Patterns: Elements of Reusable Object-Oriented Software",
+    "Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides",
+    416,
+    "1995-03-14",
+    "2023-08-17",
+    "Read"
+  ),
+  new Book(
+    "Cracking the Coding Interview: 189 Programming Questions & Solutions",
+    "Gayle Laakmann McDowell",
+    706,
+    "2015-07-01",
+    "2023-12-07",
+    "Read"
+  ),
+  new Book(
+    "Soft Skills: The Software Developer's Life Manual",
+    "John Sonmez",
+    501,
+    "2020-11-11",
+    "2023-12-23",
+    "Unread"
+  ),
+].map((book, index) => {
+  book.index = index;
+  return book;
+});
 
 const closeButtons = [...closeButton, cancelButton];
 
 const deletedBooks = [
-  {
-    title: "Peopleware: Productive Projects and Teams",
-    author: "Tom DeMarco, Timothy Lister",
-    pages: 272,
-    publishDate: "2016-04-22",
-    acquisitionDate: "2023-03-23",
-    status: "Unread",
-  },
-  {
-    title:
-      "Grokking Algorithms: An illustrated guide for programmers and other curious people",
-    author: "Aditya Bhargava",
-    pages: 300,
-    publishDate: "2015-12-31",
-    acquisitionDate: "2023-03-23",
-    status: "Unread",
-  },
-  {
-    title: "Algorithms",
-    author: "Robert Sedgewick, Kevin Wayne",
-    pages: 976,
-    publishDate: "2011-04-28",
-    acquisitionDate: "2023-03-23",
-    status: "Unread",
-  },
-];
+  new Book(
+    "Peopleware: Productive Projects and Teams",
+    "Tom DeMarco, Timothy Lister",
+    272,
+    "2016-04-22",
+    "2023-03-23",
+    "Unread"
+  ),
+  new Book(
+    "Grokking Algorithms: An illustrated guide for programmers and other curious people",
+    "Aditya Bhargava",
+    300,
+    "2015-12-31",
+    "2023-03-23",
+    "Unread"
+  ),
+  new Book(
+    "Algorithms",
+    "Robert Sedgewick, Kevin Wayne",
+    976,
+    "2011-04-28",
+    "2023-03-23",
+    "Unread"
+  ),
+].map((book, index) => {
+  book.index = index;
+  return book;
+});
 
 let selectedRow;
 
@@ -456,6 +460,16 @@ function updateSelectedRow() {
   if (!selectedRow) {
     return;
   }
+  const selectedRowIndex = Array.from(
+    selectedRow.parentElement.children
+  ).indexOf(selectedRow);
+  const book = library[selectedRowIndex];
+  book.title = editBookTitleInput.value.trim();
+  book.author = editBookAuthorInput.value.trim();
+  book.pages = parseInt(editBookPagesInput.value.trim(), 10);
+  book.publishDate = editBookPublishDateInput.value;
+  book.acquisitionDate = editBookAcquisitionDateInput.value;
+  book.status = editBookStatusSelect.value;
   const selectedRowBookTitle = selectedRow.querySelector(".book-title");
   const selectedRowBookAuthor = selectedRow.querySelector(".book-author");
   const selectedRowBookPages = selectedRow.querySelector(".book-pages");
@@ -464,20 +478,20 @@ function updateSelectedRow() {
   const selectedRowBookAcquisitionDate =
     selectedRow.querySelector(".book-acquired");
   const selectedRowBookStatus = selectedRow.querySelector(".book-status");
-  selectedRowBookTitle.textContent = editBookTitleInput.value.trim();
-  selectedRowBookAuthor.textContent = editBookAuthorInput.value.trim();
-  selectedRowBookPages.textContent = editBookPagesInput.value.trim();
-  selectedRowBookPublishDate.textContent = formatDisplayDate(
-    editBookPublishDateInput.value
-  );
+  selectedRowBookTitle.textContent = book.title;
+  selectedRowBookAuthor.textContent = book.author;
+  selectedRowBookPages.textContent = book.pages;
+  selectedRowBookPublishDate.textContent = formatDisplayDate(book.publishDate);
   selectedRowBookAcquisitionDate.textContent = formatDisplayDate(
-    editBookAcquisitionDateInput.value
+    book.acquisitionDate
   );
-  selectedRowBookStatus.textContent = editBookStatusSelect.value;
+  selectedRowBookStatus.textContent = book.status;
+
   if (editBookMenu.classList.contains("active")) {
     toggleMenu(editBookMenu);
   }
   selectedRow = null;
+  updateTracker();
 }
 
 function restoreSelectedBook() {
