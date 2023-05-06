@@ -486,13 +486,39 @@ function updateSelectedRow() {
     book.acquisitionDate
   );
   selectedRowBookStatus.textContent = book.status;
-
   if (editBookMenu.classList.contains("active")) {
     toggleMenu(editBookMenu);
   }
   selectedRow = null;
-  updateTracker();
 }
+
+// function updateSelectedRow() {
+//   if (!selectedRow) {
+//     return;
+//   }
+//   const selectedRowBookTitle = selectedRow.querySelector(".book-title");
+//   const selectedRowBookAuthor = selectedRow.querySelector(".book-author");
+//   const selectedRowBookPages = selectedRow.querySelector(".book-pages");
+//   const selectedRowBookPublishDate =
+//     selectedRow.querySelector(".book-published");
+//   const selectedRowBookAcquisitionDate =
+//     selectedRow.querySelector(".book-acquired");
+//   const selectedRowBookStatus = selectedRow.querySelector(".book-status");
+//   selectedRowBookTitle.textContent = editBookTitleInput.value.trim();
+//   selectedRowBookAuthor.textContent = editBookAuthorInput.value.trim();
+//   selectedRowBookPages.textContent = editBookPagesInput.value.trim();
+//   selectedRowBookPublishDate.textContent = formatDisplayDate(
+//     editBookPublishDateInput.value
+//   );
+//   selectedRowBookAcquisitionDate.textContent = formatDisplayDate(
+//     editBookAcquisitionDateInput.value
+//   );
+//   selectedRowBookStatus.textContent = editBookStatusSelect.value;
+//   if (editBookMenu.classList.contains("active")) {
+//     toggleMenu(editBookMenu);
+//   }
+//   selectedRow = null;
+// }
 
 function restoreSelectedBook() {
   const selectedOption =
