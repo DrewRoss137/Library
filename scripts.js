@@ -40,8 +40,14 @@ const deleteBookMenu = document.getElementById("delete-book-menu");
 const deleteBookMenuContinueButton = document.getElementById(
   "delete-book-menu-continue-button"
 );
+const deleteSelectedBooksMenu = document.getElementById(
+  "delete-selected-books-menu"
+);
 const deleteSelectedBooksText = document.getElementById(
   "delete-selected-books-text"
+);
+const deleteSelectedBooksMenuContinueButton = document.getElementById(
+  "delete-selected-books-menu-continue-button"
 );
 const cancelButton = document.getElementById(
   "delete-selected-books-menu-cancel-button"
@@ -292,6 +298,24 @@ tableBody.addEventListener("click", (event) => {
   }
 });
 
+function deleteBookByIndex(bookIndex) {
+  const deletedBook = library[bookIndex];
+  deletedBooks.push(deletedBook);
+  library.splice(bookIndex, 1);
+  convertBookToOption(
+    deletedBook.title,
+    deletedBook.author,
+    deletedBook.pages,
+    deletedBook.publishDate,
+    deletedBook.acquisitionDate,
+    deletedBook.status
+  );
+  library.forEach((book, index) => {
+    book.index = index;
+  });
+  updateTracker();
+}
+
 selectAllCheckbox.addEventListener("change", () => {
   for (let i = 0; i < selectCheckboxes.length; i++) {
     selectCheckboxes[i].checked = selectAllCheckbox.checked;
@@ -305,29 +329,13 @@ deleteBookMenuContinueButton.addEventListener("click", () => {
   if (selectedRow) {
     const selectedBook = getSelectedRowData(selectedRow);
     const bookIndex = selectedBook.bookIndex;
-    console.log("Book index to delete:", bookIndex); // Add this line
-    console.log(
-      "Library before deletion:",
-      JSON.parse(JSON.stringify(library))
-    ); // Add this line
-    const deletedBook = library[bookIndex];
-    deletedBooks.push(deletedBook);
-    library.splice(bookIndex, 1);
+    deleteBookByIndex(bookIndex);
     selectedRow.remove();
     selectedRow = null;
-
-    // Update book indexes
-    library.forEach((book, index) => {
-      book.index = index;
-    });
-
-    console.log("Library after deletion:", JSON.parse(JSON.stringify(library))); // Add this line
-    console.log("Deleted books:", JSON.parse(JSON.stringify(deletedBooks))); // Add this line
   }
   if (deleteBookMenu.classList.contains("active")) {
     toggleMenu(deleteBookMenu);
   }
-  updateTracker();
 });
 
 deletedBooks.forEach((book) => {
@@ -348,6 +356,30 @@ deleteButton.addEventListener("click", () => {
     deletedBooksSelect.options[deletedBooksSelect.selectedIndex];
   if (selectedOption) {
     selectedOption.remove();
+  }
+});
+
+deleteSelectedBooksMenuContinueButton.addEventListener("click", () => {
+  const selectedCheckboxes = document.querySelectorAll(
+    ".select-checkbox:checked"
+  );
+  const selectedIndices = [];
+  selectedCheckboxes.forEach((checkbox) => {
+    const selectedRow = checkbox.closest(".table-body-row");
+    const selectedBook = getSelectedRowData(selectedRow);
+    const bookIndex = selectedBook.bookIndex;
+    selectedIndices.push(bookIndex);
+  });
+  selectedIndices.sort((a, b) => b - a);
+  selectedIndices.forEach((bookIndex) => {
+    deleteBookByIndex(bookIndex);
+  });
+  selectedCheckboxes.forEach((checkbox) => {
+    const selectedRow = checkbox.closest(".table-body-row");
+    selectedRow.remove();
+  });
+  if (deleteSelectedBooksMenu.classList.contains("active")) {
+    toggleMenu(deleteSelectedBooksMenu);
   }
 });
 
@@ -484,8 +516,8 @@ function convertBookToOption(
   option.dataset.title = title;
   option.dataset.author = author;
   option.dataset.pages = pages;
-  option.dataset.published = formatDate(published);
-  option.dataset.acquired = formatDate(acquired);
+  option.dataset.published = new Date(published);
+  option.dataset.acquired = new Date(acquired);
   option.dataset.status = status;
   deletedBooksSelect.appendChild(option);
 }
@@ -530,34 +562,6 @@ function updateSelectedRow() {
   }
   selectedRow = null;
 }
-
-// function updateSelectedRow() {
-//   if (!selectedRow) {
-//     return;
-//   }
-//   const selectedRowBookTitle = selectedRow.querySelector(".book-title");
-//   const selectedRowBookAuthor = selectedRow.querySelector(".book-author");
-//   const selectedRowBookPages = selectedRow.querySelector(".book-pages");
-//   const selectedRowBookPublishDate =
-//     selectedRow.querySelector(".book-published");
-//   const selectedRowBookAcquisitionDate =
-//     selectedRow.querySelector(".book-acquired");
-//   const selectedRowBookStatus = selectedRow.querySelector(".book-status");
-//   selectedRowBookTitle.textContent = editBookTitleInput.value.trim();
-//   selectedRowBookAuthor.textContent = editBookAuthorInput.value.trim();
-//   selectedRowBookPages.textContent = editBookPagesInput.value.trim();
-//   selectedRowBookPublishDate.textContent = formatDisplayDate(
-//     editBookPublishDateInput.value
-//   );
-//   selectedRowBookAcquisitionDate.textContent = formatDisplayDate(
-//     editBookAcquisitionDateInput.value
-//   );
-//   selectedRowBookStatus.textContent = editBookStatusSelect.value;
-//   if (editBookMenu.classList.contains("active")) {
-//     toggleMenu(editBookMenu);
-//   }
-//   selectedRow = null;
-// }
 
 function restoreSelectedBook() {
   const selectedOption =
@@ -719,9 +723,6 @@ function updateTracker() {
   readBooksValue.textContent = readBooks;
   unreadBooksValue.textContent = unreadBooks;
   deletedBooksValue.textContent = deletedBooksNumber;
-  console.log("Total pages:", totalPages); // Add this line
-  console.log("Read books:", readBooks); // Add this line
-  console.log("Unread books:", unreadBooks); // Add this line
 }
 
 displayBooks();
