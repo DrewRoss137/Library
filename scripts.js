@@ -83,13 +83,22 @@ const defaultColours = {
 };
 
 class Book {
-  constructor(title, author, pages, publishDate, acquisitionDate, status) {
+  constructor(
+    title,
+    author,
+    pages,
+    publishDate,
+    acquisitionDate,
+    status,
+    index
+  ) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.publishDate = publishDate;
     this.acquisitionDate = acquisitionDate;
     this.status = status;
+    this.index = index;
   }
 }
 
@@ -174,10 +183,18 @@ const library = [
     "2023-12-23",
     "Unread"
   ),
-].map((book, index) => {
-  book.index = index;
-  return book;
-});
+].map(
+  (book, index) =>
+    new Book(
+      book.title,
+      book.author,
+      book.pages,
+      book.publishDate,
+      book.acquisitionDate,
+      book.status,
+      index
+    )
+);
 
 const closeButtons = [...closeButton, cancelButton];
 
@@ -206,10 +223,18 @@ const deletedBooks = [
     "2023-03-23",
     "Unread"
   ),
-].map((book, index) => {
-  book.index = index;
-  return book;
-});
+].map(
+  (book, index) =>
+    new Book(
+      book.title,
+      book.author,
+      book.pages,
+      book.publishDate,
+      book.acquisitionDate,
+      book.status,
+      index
+    )
+);
 
 let selectedRow;
 
@@ -280,11 +305,24 @@ deleteBookMenuContinueButton.addEventListener("click", () => {
   if (selectedRow) {
     const selectedBook = getSelectedRowData(selectedRow);
     const bookIndex = selectedBook.bookIndex;
+    console.log("Book index to delete:", bookIndex); // Add this line
+    console.log(
+      "Library before deletion:",
+      JSON.parse(JSON.stringify(library))
+    ); // Add this line
     const deletedBook = library[bookIndex];
     deletedBooks.push(deletedBook);
     library.splice(bookIndex, 1);
     selectedRow.remove();
     selectedRow = null;
+
+    // Update book indexes
+    library.forEach((book, index) => {
+      book.index = index;
+    });
+
+    console.log("Library after deletion:", JSON.parse(JSON.stringify(library))); // Add this line
+    console.log("Deleted books:", JSON.parse(JSON.stringify(deletedBooks))); // Add this line
   }
   if (deleteBookMenu.classList.contains("active")) {
     toggleMenu(deleteBookMenu);
@@ -419,7 +457,7 @@ function getSelectedRowData(selectedRow) {
   const bookStatusText = selectedRow
     .querySelector(".book-status")
     .textContent.trim();
-
+  const bookIndex = parseInt(selectedRow.dataset.index);
   return {
     bookTitleText,
     bookAuthorText,
@@ -427,6 +465,7 @@ function getSelectedRowData(selectedRow) {
     bookPublishedText,
     bookAcquiredText,
     bookStatusText,
+    bookIndex,
   };
 }
 
@@ -590,6 +629,7 @@ function createBookTableRow(book) {
       "book-alter"
     )}
     `;
+  newRow.setAttribute("data-index", book.index);
   book.statusElement = newRow.querySelector(".book-status");
 }
 
@@ -679,6 +719,9 @@ function updateTracker() {
   readBooksValue.textContent = readBooks;
   unreadBooksValue.textContent = unreadBooks;
   deletedBooksValue.textContent = deletedBooksNumber;
+  console.log("Total pages:", totalPages); // Add this line
+  console.log("Read books:", readBooks); // Add this line
+  console.log("Unread books:", unreadBooks); // Add this line
 }
 
 displayBooks();
