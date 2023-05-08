@@ -252,8 +252,8 @@ let sortDirection = {
   title: 1,
   author: 1,
   pages: 1,
-  published: 1,
-  acquired: 1,
+  publishDate: 1,
+  acquisitionDate: 1,
   status: 1,
 };
 
@@ -579,11 +579,9 @@ function sortBooks(key) {
   library.sort((a, b) => {
     const valueA = a[key];
     const valueB = b[key];
-    if (key === "published" || key === "acquired") {
-      const formattedDateA = formatDate(valueA);
-      const formattedDateB = formatDate(valueB);
-      if (formattedDateA < formattedDateB) return -1 * sortDirection[key];
-      if (formattedDateA > formattedDateB) return 1 * sortDirection[key];
+    if (key === "publishDate" || key === "acquisitionDate") {
+      if (valueA < valueB) return -1 * sortDirection[key];
+      if (valueA > valueB) return 1 * sortDirection[key];
       return 0;
     } else {
       if (valueA < valueB) return -1 * sortDirection[key];
