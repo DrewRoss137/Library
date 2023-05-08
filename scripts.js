@@ -20,6 +20,12 @@ const textColourInput = document.getElementById("text-colour-input");
 const trackerColourInput = document.getElementById("tracker-colour-input");
 const resetButton = document.getElementById("reset-button");
 const tableBody = document.getElementById("table-body");
+const titleHeader = document.getElementById("title");
+const authorHeader = document.getElementById("author");
+const pagesHeader = document.getElementById("pages");
+const publishedHeader = document.getElementById("published");
+const acquiredHeader = document.getElementById("acquired");
+const statusHeader = document.getElementById("status");
 const selectAllCheckbox = document.getElementById("select-all-checkbox");
 const selectCheckboxes = document.getElementsByClassName("select-checkbox");
 const bookTitleText = document.getElementById("book-title-text");
@@ -242,6 +248,15 @@ const deletedBooks = [
     )
 );
 
+let sortDirection = {
+  title: 1,
+  author: 1,
+  pages: 1,
+  published: 1,
+  acquired: 1,
+  status: 1,
+};
+
 let selectedRow;
 
 menuItems.forEach(({ buttonID, menuID }) => {
@@ -296,6 +311,36 @@ tableBody.addEventListener("click", (event) => {
     );
     toggleMenu(deleteBookMenu);
   }
+});
+
+titleHeader.addEventListener("click", () => {
+  sortBooks("title");
+  renderSortedTable();
+});
+
+authorHeader.addEventListener("click", () => {
+  sortBooks("author");
+  renderSortedTable();
+});
+
+pagesHeader.addEventListener("click", () => {
+  sortBooks("pages");
+  renderSortedTable();
+});
+
+publishedHeader.addEventListener("click", () => {
+  sortBooks("publishDate");
+  renderSortedTable();
+});
+
+acquiredHeader.addEventListener("click", () => {
+  sortBooks("acquisitionDate");
+  renderSortedTable();
+});
+
+statusHeader.addEventListener("click", () => {
+  sortBooks("status");
+  renderSortedTable();
 });
 
 function deleteBookByIndex(bookIndex) {
@@ -360,8 +405,11 @@ deleteButton.addEventListener("click", () => {
 });
 
 deleteSelectedBooksMenuContinueButton.addEventListener("click", () => {
-  const selectedCheckboxes = document.querySelectorAll(
+  const allSelectedCheckboxes = document.querySelectorAll(
     ".select-checkbox:checked"
+  );
+  const selectedCheckboxes = Array.from(allSelectedCheckboxes).filter(
+    (checkbox) => checkbox.id !== "select-all-checkbox"
   );
   const selectedIndices = [];
   selectedCheckboxes.forEach((checkbox) => {
@@ -525,6 +573,30 @@ function convertBookToOption(
 function updateDeleteBookMenuContent(bookTitle, bookAuthor) {
   bookTitleText.textContent = bookTitle.trim() + ",";
   bookAuthorText.textContent = "by " + bookAuthor.trim() + ".";
+}
+
+function sortBooks(key) {
+  library.sort((a, b) => {
+    const valueA = a[key];
+    const valueB = b[key];
+    if (key === "published" || key === "acquired") {
+      const formattedDateA = formatDate(valueA);
+      const formattedDateB = formatDate(valueB);
+      if (formattedDateA < formattedDateB) return -1 * sortDirection[key];
+      if (formattedDateA > formattedDateB) return 1 * sortDirection[key];
+      return 0;
+    } else {
+      if (valueA < valueB) return -1 * sortDirection[key];
+      if (valueA > valueB) return 1 * sortDirection[key];
+      return 0;
+    }
+  });
+  sortDirection[key] = -1 * sortDirection[key];
+}
+
+function renderSortedTable() {
+  tableBody.innerHTML = "";
+  library.forEach((book) => createBookTableRow(book));
 }
 
 function updateSelectedRow() {
