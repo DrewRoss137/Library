@@ -303,14 +303,14 @@ tableBody.addEventListener("click", (event) => {
   } else if (deleteBookButton) {
     selectedRow = deleteBookButton.closest("tr");
     const selectedBook = getSelectedRowData(selectedRow);
-    convertBookToOption(
-      selectedBook.bookTitleText,
-      selectedBook.bookAuthorText,
-      selectedBook.bookPagesText,
-      selectedBook.bookPublishedText,
-      selectedBook.bookAcquiredText,
-      selectedBook.bookStatusText
-    );
+    // convertBookToOption(
+    //   selectedBook.bookTitleText,
+    //   selectedBook.bookAuthorText,
+    //   selectedBook.bookPagesText,
+    //   selectedBook.bookPublishedText,
+    //   selectedBook.bookAcquiredText,
+    //   selectedBook.bookStatusText
+    // ); - This Causes Duplication When A Book Is Deleted;
     updateDeleteBookMenuContent(
       selectedBook.bookTitleText,
       selectedBook.bookAuthorText
@@ -462,30 +462,30 @@ restoreButton.addEventListener("click", () => {
 });
 
 addBookButton.addEventListener("click", function () {
-  let title = document.getElementById("add-book-title-input").value;
-  let author = document.getElementById("add-book-author-input").value;
-  let pages = document.getElementById("add-book-pages-input").value;
-  let publishDate = document.getElementById(
-    "add-book-publish-date-input"
-  ).value;
+  let title = document.getElementById("add-book-title-input");
+  let author = document.getElementById("add-book-author-input");
+  let pages = document.getElementById("add-book-pages-input");
+  let publishDate = document.getElementById("add-book-publish-date-input");
   let acquisitionDate = document.getElementById(
     "add-book-acquisition-date-input"
-  ).value;
-  let status = document.getElementById("add-book-status-select").value;
+  );
+  let status = document.getElementById("add-book-status-select");
+  if (!validateInput(title, author, pages, publishDate, acquisitionDate)) {
+    return;
+  }
   let newBook = new Book(
-    title,
-    author,
-    pages,
-    publishDate,
-    acquisitionDate,
-    status
+    title.value,
+    author.value,
+    pages.value,
+    publishDate.value,
+    acquisitionDate.value,
+    status.value
   );
   createBookTableRow(newBook);
   title.value = "";
   author.value = "";
   pages.value = "";
   publishDate.value = "";
-  acquisitionDate.value = "";
   addBookToLibrary(newBook);
   displayBooks();
   if (addBookMenu.classList.contains("active")) {
@@ -493,6 +493,33 @@ addBookButton.addEventListener("click", function () {
   }
   updateTracker();
 });
+
+function validateInput(title, author, pages, publishDate, acquisitionDate) {
+  let isValid = true;
+  if (
+    !title.value ||
+    !author.value ||
+    !pages.value ||
+    !publishDate.value ||
+    !acquisitionDate.value
+  ) {
+    alert("All fields are required.");
+    isValid = false;
+  }
+  if (!Number.isInteger(parseInt(pages.value)) || parseInt(pages.value) <= 0) {
+    alert("Pages should be a positive integer.");
+    isValid = false;
+  }
+  const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+  if (
+    !publishDate.value.match(datePattern) ||
+    !acquisitionDate.value.match(datePattern)
+  ) {
+    alert("Dates should be in the format YYYY-MM-DD.");
+    isValid = false;
+  }
+  return isValid;
+}
 
 function toggleMenu(menu) {
   const isActive = !menu.classList.contains("active");
@@ -826,5 +853,7 @@ initialiseColourInput(trackerColourInput, "--tracker-colour");
 
 /*
 To-Do:
-  -Validate Input Forms Within Edit Book And Add Book;
+  -Improve Validation Input Forms Within Edit Book And Add Book;
+  -Bug: Deleted Books Duplicated In deletedBooks;
+  -Bug: Deleting Books, Restoring Books, And Deleting Books Again Is Broken;
 */
