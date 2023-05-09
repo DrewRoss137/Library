@@ -63,6 +63,12 @@ const deleteButton = document.getElementById("delete-button");
 const restoreButton = document.getElementById("restore-books-button");
 const addBookButton = document.getElementById("add-books-button");
 const addBookMenu = document.getElementById("add-book-menu");
+const addBookAcquisitionDateInput = document.getElementById(
+  "add-book-acquisition-date-input"
+);
+const currentDate = new Date();
+const formattedDate = currentDate.toISOString().slice(0, 10);
+addBookAcquisitionDateInput.value = formattedDate;
 const totalBooksValue = document.getElementById("total-books-value");
 const totalPagesValue = document.getElementById("total-pages-value");
 const uniqueAuthorsValue = document.getElementById("authors-value");
