@@ -397,10 +397,16 @@ deletedBooks.forEach((book) => {
 });
 
 deleteButton.addEventListener("click", () => {
-  const selectedOption =
-    deletedBooksSelect.options[deletedBooksSelect.selectedIndex];
-  if (selectedOption) {
-    selectedOption.remove();
+  const selectedOptions = Array.from(deletedBooksSelect.selectedOptions);
+  if (selectedOptions.length) {
+    selectedOptions.forEach((selectedOption) => {
+      const bookId = selectedOption.dataset.bookId;
+      const bookIndex = library.findIndex((book) => book.id === bookId);
+      if (bookIndex !== -1) {
+        library.splice(bookIndex, 1);
+        selectedOption.remove();
+      }
+    });
   }
 });
 
@@ -432,19 +438,20 @@ deleteSelectedBooksMenuContinueButton.addEventListener("click", () => {
 });
 
 restoreButton.addEventListener("click", () => {
-  const selectedOption =
-    deletedBooksSelect.options[deletedBooksSelect.selectedIndex];
-  if (selectedOption) {
-    const bookId = selectedOption.dataset.bookId;
-    const bookIndex = deletedBooks.findIndex((book) => book.id === bookId);
-    if (bookIndex !== -1) {
-      const restoredBook = deletedBooks[bookIndex];
-      deletedBooks.splice(bookIndex, 1);
-      library.push(restoredBook);
-      restoreSelectedBook(restoredBook);
-      selectedOption.remove();
-      updateTracker();
-    }
+  const selectedOptions = Array.from(deletedBooksSelect.selectedOptions);
+  if (selectedOptions.length) {
+    selectedOptions.forEach((selectedOption) => {
+      const bookId = selectedOption.dataset.bookId;
+      const bookIndex = deletedBooks.findIndex((book) => book.id === bookId);
+      if (bookIndex !== -1) {
+        const restoredBook = deletedBooks[bookIndex];
+        deletedBooks.splice(bookIndex, 1);
+        library.push(restoredBook);
+        restoreSelectedBook(restoredBook);
+        selectedOption.remove();
+      }
+    });
+    updateTracker();
   }
 });
 
@@ -813,10 +820,5 @@ initialiseColourInput(trackerColourInput, "--tracker-colour");
 
 /*
 To-Do:
-  -Ascending And Descending Sorting By Clicking TH Elements, With An Arrow Appearing Adjacent Upon Clicking;
-  -Editing A Book Causes Tracker Values To Change;
-  -Deleted Selected Book(s) Functionality;
   -Validate Input Forms Within Edit Book And Add Book;
-  -Bug: Deleting Books Will Make The Last Book In The Library Broken: Unable To Toggle Status;
-  -Bug: Deleting All Books But One Will Result In Total Pages = 501;
 */
