@@ -593,8 +593,8 @@ function convertBookToOption(
   title,
   author,
   pages,
-  published,
-  acquired,
+  publishDate,
+  acquisitionDate,
   status
 ) {
   const option = document.createElement("option");
@@ -604,8 +604,8 @@ function convertBookToOption(
   option.dataset.title = title;
   option.dataset.author = author;
   option.dataset.pages = pages;
-  option.dataset.published = new Date(published);
-  option.dataset.acquired = new Date(acquired);
+  option.dataset.publishDate = publishDate;
+  option.dataset.acquisitionDate = acquisitionDate;
   option.dataset.status = status;
   deletedBooksSelect.appendChild(option);
 }
@@ -856,4 +856,5 @@ To-Do:
   -Improve Validation Input Forms Within Edit Book And Add Book;
   -Bug: Deleted Books Duplicated In deletedBooks;
   -Bug: Deleting Books, Restoring Books, And Deleting Books Again Is Broken;
+  -Bug: Restored Book Dates Displaying as NaN;
 */
