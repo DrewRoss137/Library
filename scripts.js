@@ -1,10 +1,3 @@
-/* To-Do: */
-
-/*
--Improve Validation;
--Add Validation To Add Book And Edit Book;
-
-*/
 const overlay = document.getElementById("overlay");
 const closeButton = document.querySelectorAll(".close-button");
 const accentColourInput = document.getElementById("accent-colour-input");
@@ -302,8 +295,6 @@ deleteBookMenuContinueButton.addEventListener("click", () => {
     convertBookToOption();
     updateTracker();
   }
-  console.log(library);
-  console.log(deletedBooks);
 });
 
 selectAllCheckbox.addEventListener("change", () => {
@@ -382,8 +373,6 @@ deleteButton.addEventListener("click", () => {
       selectedOption.remove();
     }
   });
-  console.log(library);
-  console.log(deletedBooks);
 });
 
 deleteSelectedBooksMenuContinueButton.addEventListener("click", () => {
@@ -410,6 +399,7 @@ deleteSelectedBooksMenuContinueButton.addEventListener("click", () => {
     toggleMenu(deleteSelectedBooksMenu);
   }
   updateTracker();
+  selectAllCheckbox.checked = false;
 });
 
 restoreBooksButton.addEventListener("click", () => {
@@ -425,8 +415,6 @@ restoreBooksButton.addEventListener("click", () => {
   });
   displayBooks();
   updateTracker();
-  console.log(library);
-  console.log(deletedBooks);
 });
 
 addBookButton.addEventListener("click", function () {
@@ -438,9 +426,6 @@ addBookButton.addEventListener("click", function () {
     "add-book-acquisition-date-input"
   );
   let status = document.getElementById("add-book-status-select");
-  if (!validateInput(title, author, pages, publishDate, acquisitionDate)) {
-    return;
-  }
   let newBook = new Book(
     title.value,
     author.value,
@@ -525,23 +510,18 @@ function updateTracker() {
 let currentHeader;
 
 function sortBooks(key, clickedElement) {
-  const currentDirection = sortDirection[key] || 1;
+  sortDirection[key] *= -1;
   library.sort((a, b) => {
     const valueA = a[key];
     const valueB = b[key];
-    const compareResult =
-      currentDirection * (valueA < valueB ? -1 : valueA > valueB ? 1 : 0);
-    if (key === "publishDate" || key === "acquisitionDate") {
-      return compareResult;
-    } else {
-      return compareResult;
-    }
+    return (
+      sortDirection[key] * (valueA < valueB ? -1 : valueA > valueB ? 1 : 0)
+    );
   });
-  sortDirection[key] = -currentDirection;
   if (currentHeader) {
     currentHeader.textContent = currentHeader.textContent.replace(/▲|▼/g, "");
   }
-  clickedElement.textContent += sortDirection[key] === -1 ? "▼" : "▲";
+  clickedElement.textContent += sortDirection[key] === -1 ? "▲" : "▼";
   currentHeader = clickedElement;
 }
 
@@ -611,33 +591,6 @@ function updateSelectedBookCount() {
         }.`;
 }
 
-function validateInput(title, author, pages, publishDate, acquisitionDate) {
-  let isValid = true;
-  if (
-    !title.value ||
-    !author.value ||
-    !pages.value ||
-    !publishDate.value ||
-    !acquisitionDate.value
-  ) {
-    alert("All fields are required.");
-    isValid = false;
-  }
-  if (!Number.isInteger(parseInt(pages.value)) || parseInt(pages.value) <= 0) {
-    alert("Pages should be a positive integer.");
-    isValid = false;
-  }
-  const datePattern = /^\d{4}-\d{2}-\d{2}$/;
-  if (
-    !publishDate.value.match(datePattern) ||
-    !acquisitionDate.value.match(datePattern)
-  ) {
-    alert("Dates should be in the format YYYY-MM-DD.");
-    isValid = false;
-  }
-  return isValid;
-}
-
 function updateSelectedRow() {
   if (!selectedRow) {
     return;
@@ -705,7 +658,7 @@ function createBookTableRow(book) {
       "book-acquired",
       "book-acquired"
     )}
-    ${createCell(book.status, "book-status", "book-status")}
+    ${createCell("", "book-status-container", "book-status-container")}
     ${createCell(
       `
       <a class="book-alter-button-container" id="edit-book-container" title="Edit Book">
@@ -722,9 +675,14 @@ function createBookTableRow(book) {
         `,
       "book-alter",
       "book-alter"
-    )}
-    `;
-  book.statusElement = newRow.querySelector(".book-status");
+    )}`;
+  const bookStatusContainer = newRow.querySelector(".book-status-container");
+  const bookStatusElement = document.createElement("a");
+  bookStatusElement.classList.add("book-status");
+  bookStatusElement.id = "book-status";
+  bookStatusElement.textContent = book.status;
+  bookStatusContainer.appendChild(bookStatusElement);
+  book.statusElement = bookStatusElement;
 }
 
 function addBookToLibrary(book) {
