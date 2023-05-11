@@ -4,9 +4,9 @@
   --controls-colour: #393646;
   --header-colour: #4f4557;
   --menu-colour: #4f4557;
-  --table-primary-colour: #4f4557;
-  --table-alternate-colour: #3d3645;
-  --table-secondary-colour: #393646;
+  --table-bookend-colour: #393646;
+  --table-primary-row-colour: #4f4557;
+  --table-secondary-row-colour: #3d3645;
   --text-colour: #ffffff;
   --tracker-colour: #4f4557;
 }
@@ -88,8 +88,7 @@ html,
 body,
 input[type="color"],
 input[type="color"]::-webkit-color-swatch-wrapper,
-main,
-.book-status {
+main {
   padding: 0;
 }
 
@@ -572,15 +571,15 @@ table,
 }
 
 thead {
-  background-color: var(--table-secondary-colour);
+  background-color: var(--table-bookend-colour);
 }
 
 .table-body-row {
-  background-color: var(--table-primary-colour);
+  background-color: var(--table-primary-row-colour);
 }
 
 tbody tr:nth-child(odd) {
-  background-color: var(--table-alternate-colour);
+  background-color: var(--table-secondary-row-colour);
 }
 
 .table-body-row:hover {
@@ -623,7 +622,7 @@ input[type="checkbox"] {
 }
 
 tfoot {
-  background-color: var(--table-secondary-colour);
+  background-color: var(--table-bookend-colour);
 }
 
 .tracker-box {
