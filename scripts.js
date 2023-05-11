@@ -1,3 +1,10 @@
+/* To-Do: */
+
+/*
+-Improve Validation;
+-Add Validation To Add Book And Edit Book;
+
+*/
 const overlay = document.getElementById("overlay");
 const closeButton = document.querySelectorAll(".close-button");
 const accentColourInput = document.getElementById("accent-colour-input");
@@ -19,7 +26,7 @@ const tableSecondaryRowColourInput = document.getElementById(
 const textColourInput = document.getElementById("text-colour-input");
 const trackerColourInput = document.getElementById("tracker-colour-input");
 const resetButton = document.getElementById("reset-button");
-const saveButton = document.getElementById("save-button");
+// const saveButton = document.getElementById("save-button");
 const editBookMenu = document.getElementById("edit-book-menu");
 const editBookTitleInput = document.getElementById("edit-book-title-input");
 const editBookAuthorInput = document.getElementById("edit-book-author-input");
@@ -306,33 +313,33 @@ selectAllCheckbox.addEventListener("change", () => {
   updateSelectedBookCount();
 });
 
-titleHeader.addEventListener("click", () => {
-  sortBooks("title");
+titleHeader.addEventListener("click", function () {
+  sortBooks("title", this);
   renderSortedTable();
 });
 
-authorHeader.addEventListener("click", () => {
-  sortBooks("author");
+authorHeader.addEventListener("click", function () {
+  sortBooks("author", this);
   renderSortedTable();
 });
 
-pagesHeader.addEventListener("click", () => {
-  sortBooks("pages");
+pagesHeader.addEventListener("click", function () {
+  sortBooks("pages", this);
   renderSortedTable();
 });
 
-publishedHeader.addEventListener("click", () => {
-  sortBooks("publishDate");
+publishedHeader.addEventListener("click", function () {
+  sortBooks("publishDate", this);
   renderSortedTable();
 });
 
-acquiredHeader.addEventListener("click", () => {
-  sortBooks("acquisitionDate");
+acquiredHeader.addEventListener("click", function () {
+  sortBooks("acquisitionDate", this);
   renderSortedTable();
 });
 
-statusHeader.addEventListener("click", () => {
-  sortBooks("status");
+statusHeader.addEventListener("click", function () {
+  sortBooks("status", this);
   renderSortedTable();
 });
 
@@ -515,21 +522,27 @@ function updateTracker() {
   deletedBooksValue.textContent = deletedBooksNumber;
 }
 
-function sortBooks(key) {
+let currentHeader;
+
+function sortBooks(key, clickedElement) {
+  const currentDirection = sortDirection[key] || 1;
   library.sort((a, b) => {
     const valueA = a[key];
     const valueB = b[key];
+    const compareResult =
+      currentDirection * (valueA < valueB ? -1 : valueA > valueB ? 1 : 0);
     if (key === "publishDate" || key === "acquisitionDate") {
-      if (valueA < valueB) return -1 * sortDirection[key];
-      if (valueA > valueB) return 1 * sortDirection[key];
-      return 0;
+      return compareResult;
     } else {
-      if (valueA < valueB) return -1 * sortDirection[key];
-      if (valueA > valueB) return 1 * sortDirection[key];
-      return 0;
+      return compareResult;
     }
   });
-  sortDirection[key] = -1 * sortDirection[key];
+  sortDirection[key] = -currentDirection;
+  if (currentHeader) {
+    currentHeader.textContent = currentHeader.textContent.replace(/▲|▼/g, "");
+  }
+  clickedElement.textContent += sortDirection[key] === -1 ? "▼" : "▲";
+  currentHeader = clickedElement;
 }
 
 function renderSortedTable() {
