@@ -7,29 +7,19 @@ const backgroundColourInput = document.getElementById(
 const controlsColourInput = document.getElementById("controls-colour-input");
 const headerColourInput = document.getElementById("header-colour-input");
 const menuColourInput = document.getElementById("menu-colour-input");
-const tablePrimaryColourInput = document.getElementById(
-  "table-primary-colour-input"
+const tableBookendColourInput = document.getElementById(
+  "table-bookend-colour-input"
 );
-const tableAlternateColourInput = document.getElementById(
-  "table-primary-alternate-colour-input"
+const tablePrimaryRowColourInput = document.getElementById(
+  "table-primary-row-colour-input"
 );
-const tableSecondaryColourInput = document.getElementById(
-  "table-secondary-colour-input"
+const tableSecondaryRowColourInput = document.getElementById(
+  "table-secondary-row-colour-input"
 );
 const textColourInput = document.getElementById("text-colour-input");
 const trackerColourInput = document.getElementById("tracker-colour-input");
 const resetButton = document.getElementById("reset-button");
-const tableBody = document.getElementById("table-body");
-const titleHeader = document.getElementById("title");
-const authorHeader = document.getElementById("author");
-const pagesHeader = document.getElementById("pages");
-const publishedHeader = document.getElementById("published");
-const acquiredHeader = document.getElementById("acquired");
-const statusHeader = document.getElementById("status");
-const selectAllCheckbox = document.getElementById("select-all-checkbox");
-const selectCheckboxes = document.getElementsByClassName("select-checkbox");
-const bookTitleText = document.getElementById("book-title-text");
-const bookAuthorText = document.getElementById("book-author-text");
+const saveButton = document.getElementById("save-button");
 const editBookMenu = document.getElementById("edit-book-menu");
 const editBookTitleInput = document.getElementById("edit-book-title-input");
 const editBookAuthorInput = document.getElementById("edit-book-author-input");
@@ -43,12 +33,38 @@ const editBookAcquisitionDateInput = document.getElementById(
 const editBookStatusSelect = document.getElementById("edit-book-status-select");
 const editBookEditBookButton = document.getElementById("edit-books-button");
 const deleteBookMenu = document.getElementById("delete-book-menu");
+const deleteBookMenuCancelButton = document.getElementById(
+  "delete-book-menu-cancel-button"
+);
+const deleteBookMenuContinueButton = document.getElementById(
+  "delete-book-menu-continue-button"
+);
+const deleteSelectedBooksMenu = document.getElementById(
+  "delete-selected-books-menu"
+);
 const deleteSelectedBooksText = document.getElementById(
   "delete-selected-books-text"
 );
-const cancelButton = document.getElementById(
+const deletedBooksSelect = document.getElementById("deleted-books-select");
+const deleteSelectedBooksMenuCancelButton = document.getElementById(
   "delete-selected-books-menu-cancel-button"
 );
+const deleteSelectedBooksMenuContinueButton = document.getElementById(
+  "delete-selected-books-menu-continue-button"
+);
+const tableBody = document.getElementById("table-body");
+const titleHeader = document.getElementById("title");
+const authorHeader = document.getElementById("author");
+const pagesHeader = document.getElementById("pages");
+const publishedHeader = document.getElementById("published");
+const acquiredHeader = document.getElementById("acquired");
+const statusHeader = document.getElementById("status");
+const selectAllCheckbox = document.getElementById("select-all-checkbox");
+const selectCheckboxes = document.getElementsByClassName("select-checkbox");
+const bookTitleText = document.getElementById("book-title-text");
+const bookAuthorText = document.getElementById("book-author-text");
+const deleteButton = document.getElementById("delete-button");
+const restoreBooksButton = document.getElementById("restore-books-button");
 const addBookButton = document.getElementById("add-books-button");
 const addBookMenu = document.getElementById("add-book-menu");
 const addBookAcquisitionDateInput = document.getElementById(
@@ -81,15 +97,24 @@ const defaultColours = {
   "controls-colour": "#393646",
   "header-colour": "#4f4557",
   "menu-colour": "#4f4557",
-  "table-primary-colour": "#4f4557",
-  "table-primary-alternate-colour": "#3d3645",
-  "table-secondary-colour": "#393646",
+  "table-bookend-colour": "#393646",
+  "table-primary-row-colour": "#4f4557",
+  "table-secondary-row-colour": "#3d3645",
   "text-colour": "#ffffff",
   "tracker-colour": "#4f4557",
 };
 
+const closeButtons = [
+  ...closeButton,
+  deleteBookMenuCancelButton,
+  deleteSelectedBooksMenuCancelButton,
+];
+
+let id = 0;
+
 class Book {
   constructor(title, author, pages, publishDate, acquisitionDate, status) {
+    this.id = id++;
     this.title = title;
     this.author = author;
     this.pages = pages;
@@ -192,8 +217,6 @@ const library = [
     )
 );
 
-const closeButtons = [...closeButton, cancelButton];
-
 const deletedBooks = [
   new Book(
     "Peopleware: Productive Projects and Teams",
@@ -261,31 +284,26 @@ closeButtons.forEach((button) => {
 
 resetButton.addEventListener("click", restoreDefaultColours);
 
-tableBody.addEventListener("click", (event) => {
-  const bookStatus = event.target.closest(".book-status");
-  const editBookButton = event.target.closest(".edit-book-button");
-  const deleteBookButton = event.target.closest(".delete-book-button");
-  if (bookStatus) {
-    const book = library.find((book) => book.statusElement === bookStatus);
-    if (book) {
-      const newStatus = bookStatus.textContent === "Read" ? "Unread" : "Read";
-      book.status = newStatus;
-      bookStatus.textContent = newStatus;
-      updateTracker();
-    }
-  } else if (editBookButton) {
-    selectedRow = editBookButton.closest("tr");
-    populateEditBookMenuInputs(selectedRow);
-    toggleMenu(editBookMenu);
-  } else if (deleteBookButton) {
-    selectedRow = deleteBookButton.closest("tr");
-    const selectedBook = getSelectedRowData(selectedRow);
-    updateDeleteBookMenuContent(
-      selectedBook.bookTitleText,
-      selectedBook.bookAuthorText
-    );
+deleteBookMenuContinueButton.addEventListener("click", () => {
+  const bookId = parseInt(selectedRow.dataset.id, 10);
+  const bookIndex = library.findIndex((book) => book.id === bookId);
+  if (bookIndex !== -1) {
+    const [deletedBook] = library.splice(bookIndex, 1);
+    deletedBooks.push(deletedBook);
+    selectedRow.remove();
     toggleMenu(deleteBookMenu);
+    convertBookToOption();
+    updateTracker();
   }
+  console.log(library);
+  console.log(deletedBooks);
+});
+
+selectAllCheckbox.addEventListener("change", () => {
+  for (let i = 0; i < selectCheckboxes.length; i++) {
+    selectCheckboxes[i].checked = selectAllCheckbox.checked;
+  }
+  updateSelectedBookCount();
 });
 
 titleHeader.addEventListener("click", () => {
@@ -318,14 +336,91 @@ statusHeader.addEventListener("click", () => {
   renderSortedTable();
 });
 
-selectAllCheckbox.addEventListener("change", () => {
-  for (let i = 0; i < selectCheckboxes.length; i++) {
-    selectCheckboxes[i].checked = selectAllCheckbox.checked;
+tableBody.addEventListener("click", (event) => {
+  const bookStatus = event.target.closest(".book-status");
+  const editBookButton = event.target.closest(".edit-book-button");
+  const deleteBookButton = event.target.closest(".delete-book-button");
+  if (bookStatus) {
+    const book = library.find((book) => book.statusElement === bookStatus);
+    if (book) {
+      const newStatus = bookStatus.textContent === "Read" ? "Unread" : "Read";
+      book.status = newStatus;
+      bookStatus.textContent = newStatus;
+      updateTracker();
+    }
+  } else if (editBookButton) {
+    selectedRow = editBookButton.closest("tr");
+    populateEditBookMenuInputs(selectedRow);
+    toggleMenu(editBookMenu);
+  } else if (deleteBookButton) {
+    selectedRow = deleteBookButton.closest("tr");
+    const selectedBook = getSelectedRowData(selectedRow);
+    updateDeleteBookMenuContent(
+      selectedBook.bookTitleText,
+      selectedBook.bookAuthorText
+    );
+    toggleMenu(deleteBookMenu);
   }
-  updateSelectedBookCount();
 });
 
 editBookEditBookButton.addEventListener("click", updateSelectedRow);
+
+deleteButton.addEventListener("click", () => {
+  const selectedOptions = Array.from(deletedBooksSelect.selectedOptions);
+  selectedOptions.forEach((selectedOption) => {
+    const bookId = parseInt(selectedOption.value, 10);
+    const bookIndex = deletedBooks.findIndex((book) => book.id === bookId);
+    if (bookIndex !== -1) {
+      deletedBooks.splice(bookIndex, 1);
+      selectedOption.remove();
+    }
+  });
+  console.log(library);
+  console.log(deletedBooks);
+});
+
+deleteSelectedBooksMenuContinueButton.addEventListener("click", () => {
+  const allSelectedCheckboxes = document.querySelectorAll(
+    ".select-checkbox:checked"
+  );
+  const selectedCheckboxes = Array.from(allSelectedCheckboxes).filter(
+    (checkbox) => checkbox.id !== "select-all-checkbox"
+  );
+  selectedCheckboxes.forEach((checkbox) => {
+    const selectedRow = checkbox.closest(".table-body-row");
+    const selectedBookData = getSelectedRowData(selectedRow);
+    const bookIndex = library.findIndex(
+      (book) => book.id === selectedBookData.bookId
+    );
+    if (bookIndex !== -1) {
+      const [deletedBook] = library.splice(bookIndex, 1);
+      deletedBooks.push(deletedBook);
+      selectedRow.remove();
+      convertBookToOption(deletedBook);
+    }
+  });
+  if (deleteSelectedBooksMenu.classList.contains("active")) {
+    toggleMenu(deleteSelectedBooksMenu);
+  }
+  updateTracker();
+});
+
+restoreBooksButton.addEventListener("click", () => {
+  const selectedOptions = Array.from(deletedBooksSelect.selectedOptions);
+  selectedOptions.forEach((selectedOption) => {
+    const bookId = parseInt(selectedOption.value, 10);
+    const bookIndex = deletedBooks.findIndex((book) => book.id === bookId);
+    if (bookIndex !== -1) {
+      const [restoredBook] = deletedBooks.splice(bookIndex, 1);
+      library.push(restoredBook);
+      selectedOption.remove();
+    }
+  });
+  displayBooks();
+  updateTracker();
+  console.log(library);
+  console.log(deletedBooks);
+});
 
 addBookButton.addEventListener("click", function () {
   let title = document.getElementById("add-book-title-input");
@@ -360,6 +455,149 @@ addBookButton.addEventListener("click", function () {
   updateTracker();
 });
 
+function toggleMenu(menu) {
+  const isActive = !menu.classList.contains("active");
+  overlay.classList[isActive ? "add" : "remove"]("active");
+  overlay.classList[isActive ? "remove" : "add"]("inactive");
+  menu.classList[isActive ? "add" : "remove"]("active");
+  menu.classList[isActive ? "remove" : "add"]("inactive");
+}
+
+function restoreDefaultColours() {
+  for (const [variableName, defaultColour] of Object.entries(defaultColours)) {
+    updateElementColour(`--${variableName}`, defaultColour);
+  }
+  accentColourInput.value = defaultColours["accent-colour"];
+  backgroundColourInput.value = defaultColours["background-colour"];
+  controlsColourInput.value = defaultColours["controls-colour"];
+  headerColourInput.value = defaultColours["header-colour"];
+  menuColourInput.value = defaultColours["menu-colour"];
+  tableBookendColourInput.value = defaultColours["table-bookend-colour"];
+  tableSecondaryRowColourInput.value =
+    defaultColours["table-secondary-row-colour"];
+  tablePrimaryRowColourInput.value = defaultColours["table-primary-colour"];
+  textColourInput.value = defaultColours["text-colour"];
+  trackerColourInput.value = defaultColours["tracker-colour"];
+}
+
+function convertBookToOption() {
+  deletedBooksSelect.innerHTML = "";
+  deletedBooks.forEach((book) => {
+    const option = document.createElement("option");
+    option.textContent = `${book.title} - ${book.author}`;
+    option.className = "deleted-books-option";
+    option.id = "deleted-books-option";
+    option.value = book.id;
+    deletedBooksSelect.appendChild(option);
+  });
+}
+
+function updateTracker() {
+  const totalBooks = library.length;
+  const authorSet = new Set();
+  library.forEach((book) => {
+    const authors = book.author.split(",").map((author) => author.trim());
+    authors.forEach((author) => authorSet.add(author));
+  });
+  const uniqueAuthors = authorSet.size;
+  const totalPages = library.reduce(
+    (sum, book) => sum + parseInt(book.pages),
+    0
+  );
+  const readBooks = library.filter((book) => book.status === "Read").length;
+  const unreadBooks = library.filter((book) => book.status === "Unread").length;
+  const deletedBooksNumber = deletedBooks.length;
+  totalBooksValue.textContent = totalBooks;
+  totalPagesValue.textContent = totalPages;
+  uniqueAuthorsValue.textContent = uniqueAuthors;
+  readBooksValue.textContent = readBooks;
+  unreadBooksValue.textContent = unreadBooks;
+  deletedBooksValue.textContent = deletedBooksNumber;
+}
+
+function sortBooks(key) {
+  library.sort((a, b) => {
+    const valueA = a[key];
+    const valueB = b[key];
+    if (key === "publishDate" || key === "acquisitionDate") {
+      if (valueA < valueB) return -1 * sortDirection[key];
+      if (valueA > valueB) return 1 * sortDirection[key];
+      return 0;
+    } else {
+      if (valueA < valueB) return -1 * sortDirection[key];
+      if (valueA > valueB) return 1 * sortDirection[key];
+      return 0;
+    }
+  });
+  sortDirection[key] = -1 * sortDirection[key];
+}
+
+function renderSortedTable() {
+  tableBody.innerHTML = "";
+  library.forEach((book) => createBookTableRow(book));
+}
+
+function populateEditBookMenuInputs(selectedRow) {
+  const selectedBook = getSelectedRowData(selectedRow);
+  editBookTitleInput.value = selectedBook.bookTitleText;
+  editBookAuthorInput.value = selectedBook.bookAuthorText;
+  editBookPagesInput.value = selectedBook.bookPagesText;
+  editBookPublishDateInput.value = formatDate(selectedBook.bookPublishedText);
+  editBookAcquisitionDateInput.value = formatDate(
+    selectedBook.bookAcquiredText
+  );
+  editBookStatusSelect.value = selectedBook.bookStatusText;
+}
+
+function getSelectedRowData(selectedRow) {
+  const bookId = Number(selectedRow.dataset.id);
+  const bookTitleText = selectedRow
+    .querySelector(".book-title")
+    .textContent.trim();
+  const bookAuthorText = selectedRow
+    .querySelector(".book-author")
+    .textContent.trim();
+  const bookPagesText = selectedRow
+    .querySelector(".book-pages")
+    .textContent.trim();
+  const bookPublishedText = selectedRow
+    .querySelector(".book-published")
+    .textContent.trim();
+  const bookAcquiredText = selectedRow
+    .querySelector(".book-acquired")
+    .textContent.trim();
+  const bookStatusText = selectedRow
+    .querySelector(".book-status")
+    .textContent.trim();
+  return {
+    bookId,
+    bookTitleText,
+    bookAuthorText,
+    bookPagesText,
+    bookPublishedText,
+    bookAcquiredText,
+    bookStatusText,
+  };
+}
+
+function updateDeleteBookMenuContent(bookTitle, bookAuthor) {
+  bookTitleText.textContent = bookTitle.trim() + ",";
+  bookAuthorText.textContent = "by " + bookAuthor.trim() + ".";
+}
+
+function updateSelectedBookCount() {
+  const selectedBookNumber = Array.from(selectCheckboxes)
+    .filter((checkbox) => checkbox !== selectAllCheckbox)
+    .reduce((acc, checkbox) => acc + checkbox.checked, 0);
+
+  deleteSelectedBooksText.textContent =
+    selectedBookNumber === 0
+      ? "You do not have any books selected."
+      : `This will erase ${selectedBookNumber} book${
+          selectedBookNumber > 1 ? "s" : ""
+        }.`;
+}
+
 function validateInput(title, author, pages, publishDate, acquisitionDate) {
   let isValid = true;
   if (
@@ -385,99 +623,6 @@ function validateInput(title, author, pages, publishDate, acquisitionDate) {
     isValid = false;
   }
   return isValid;
-}
-
-function toggleMenu(menu) {
-  const isActive = !menu.classList.contains("active");
-  overlay.classList[isActive ? "add" : "remove"]("active");
-  overlay.classList[isActive ? "remove" : "add"]("inactive");
-  menu.classList[isActive ? "add" : "remove"]("active");
-  menu.classList[isActive ? "remove" : "add"]("inactive");
-}
-
-function restoreDefaultColours() {
-  for (const [variableName, defaultColour] of Object.entries(defaultColours)) {
-    updateElementColour(`--${variableName}`, defaultColour);
-  }
-  accentColourInput.value = defaultColours["accent-colour"];
-  backgroundColourInput.value = defaultColours["background-colour"];
-  controlsColourInput.value = defaultColours["controls-colour"];
-  headerColourInput.value = defaultColours["header-colour"];
-  menuColourInput.value = defaultColours["menu-colour"];
-  tablePrimaryColourInput.value = defaultColours["table-primary-colour"];
-  tableAlternateColourInput.value =
-    defaultColours["table-primary-alternate-colour"];
-  tableSecondaryColourInput.value = defaultColours["table-secondary-colour"];
-  textColourInput.value = defaultColours["text-colour"];
-  trackerColourInput.value = defaultColours["tracker-colour"];
-}
-
-function populateEditBookMenuInputs(selectedRow) {
-  const selectedBook = getSelectedRowData(selectedRow);
-  editBookTitleInput.value = selectedBook.bookTitleText;
-  editBookAuthorInput.value = selectedBook.bookAuthorText;
-  editBookPagesInput.value = selectedBook.bookPagesText;
-  editBookPublishDateInput.value = formatDate(selectedBook.bookPublishedText);
-  editBookAcquisitionDateInput.value = formatDate(
-    selectedBook.bookAcquiredText
-  );
-  editBookStatusSelect.value = selectedBook.bookStatusText;
-}
-
-function getSelectedRowData(selectedRow) {
-  const bookTitleText = selectedRow
-    .querySelector(".book-title")
-    .textContent.trim();
-  const bookAuthorText = selectedRow
-    .querySelector(".book-author")
-    .textContent.trim();
-  const bookPagesText = selectedRow
-    .querySelector(".book-pages")
-    .textContent.trim();
-  const bookPublishedText = selectedRow
-    .querySelector(".book-published")
-    .textContent.trim();
-  const bookAcquiredText = selectedRow
-    .querySelector(".book-acquired")
-    .textContent.trim();
-  const bookStatusText = selectedRow
-    .querySelector(".book-status")
-    .textContent.trim();
-  return {
-    bookTitleText,
-    bookAuthorText,
-    bookPagesText,
-    bookPublishedText,
-    bookAcquiredText,
-    bookStatusText,
-  };
-}
-
-function updateDeleteBookMenuContent(bookTitle, bookAuthor) {
-  bookTitleText.textContent = bookTitle.trim() + ",";
-  bookAuthorText.textContent = "by " + bookAuthor.trim() + ".";
-}
-
-function sortBooks(key) {
-  library.sort((a, b) => {
-    const valueA = a[key];
-    const valueB = b[key];
-    if (key === "publishDate" || key === "acquisitionDate") {
-      if (valueA < valueB) return -1 * sortDirection[key];
-      if (valueA > valueB) return 1 * sortDirection[key];
-      return 0;
-    } else {
-      if (valueA < valueB) return -1 * sortDirection[key];
-      if (valueA > valueB) return 1 * sortDirection[key];
-      return 0;
-    }
-  });
-  sortDirection[key] = -1 * sortDirection[key];
-}
-
-function renderSortedTable() {
-  tableBody.innerHTML = "";
-  library.forEach((book) => createBookTableRow(book));
 }
 
 function updateSelectedRow() {
@@ -516,10 +661,6 @@ function updateSelectedRow() {
   selectedRow = null;
 }
 
-function addBookToLibrary(book) {
-  library.push(book);
-}
-
 function displayBooks() {
   tableBody.innerHTML = "";
   library.forEach((book) => {
@@ -530,6 +671,7 @@ function displayBooks() {
 function createBookTableRow(book) {
   const newRow = tableBody.insertRow(0);
   newRow.classList.add("table-body-row");
+  newRow.dataset.id = book.id;
   newRow.id = "table-body-row";
   newRow.innerHTML = `
     ${createCell(
@@ -572,8 +714,8 @@ function createBookTableRow(book) {
   book.statusElement = newRow.querySelector(".book-status");
 }
 
-function createCell(content, classes, id) {
-  return `<td class="${classes}" id="${id}">${content}</td>`;
+function addBookToLibrary(book) {
+  library.push(book);
 }
 
 function updateElementColour(variableName, colour) {
@@ -596,14 +738,8 @@ function formatDisplayDate(dateString) {
   return `${day}/${month}/${year}`;
 }
 
-function initialiseColourInput(inputElement, variableName) {
-  inputElement.addEventListener("input", (event) => {
-    const newColour = event.target.value;
-    updateElementColour(variableName, newColour);
-  });
-  inputElement.value = getComputedStyle(document.documentElement)
-    .getPropertyValue(variableName)
-    .trim();
+function createCell(content, classes, id) {
+  return `<td class="${classes}" id="${id}">${content}</td>`;
 }
 
 function initialiseCheckboxListeners() {
@@ -624,210 +760,32 @@ function initialiseCheckboxListeners() {
   }
 }
 
-function updateSelectedBookCount() {
-  const selectedBookNumber = Array.from(selectCheckboxes)
-    .filter((checkbox) => checkbox !== selectAllCheckbox)
-    .reduce((acc, checkbox) => acc + checkbox.checked, 0);
-
-  deleteSelectedBooksText.textContent =
-    selectedBookNumber === 0
-      ? "You do not have any books selected."
-      : `This will erase ${selectedBookNumber} book${
-          selectedBookNumber > 1 ? "s" : ""
-        }.`;
-}
-
-function updateTracker() {
-  const totalBooks = library.length;
-  const authorSet = new Set();
-  library.forEach((book) => {
-    const authors = book.author.split(",").map((author) => author.trim());
-    authors.forEach((author) => authorSet.add(author));
+function initialiseColourInput(inputElement, variableName) {
+  inputElement.addEventListener("input", (event) => {
+    const newColour = event.target.value;
+    updateElementColour(variableName, newColour);
   });
-  const uniqueAuthors = authorSet.size;
-  const totalPages = library.reduce(
-    (sum, book) => sum + parseInt(book.pages),
-    0
-  );
-  const readBooks = library.filter((book) => book.status === "Read").length;
-  const unreadBooks = library.filter((book) => book.status === "Unread").length;
-  const deletedBooksNumber = deletedBooks.length;
-  totalBooksValue.textContent = totalBooks;
-  totalPagesValue.textContent = totalPages;
-  uniqueAuthorsValue.textContent = uniqueAuthors;
-  readBooksValue.textContent = readBooks;
-  unreadBooksValue.textContent = unreadBooks;
-  deletedBooksValue.textContent = deletedBooksNumber;
+  inputElement.value = getComputedStyle(document.documentElement)
+    .getPropertyValue(variableName)
+    .trim();
 }
 
+convertBookToOption();
+updateTracker();
+updateSelectedBookCount();
 displayBooks();
 initialiseCheckboxListeners();
-updateSelectedBookCount();
-updateTracker();
 
 initialiseColourInput(accentColourInput, "--accent-colour");
 initialiseColourInput(backgroundColourInput, "--background-colour");
 initialiseColourInput(controlsColourInput, "--controls-colour");
 initialiseColourInput(headerColourInput, "--header-colour");
 initialiseColourInput(menuColourInput, "--menu-colour");
-initialiseColourInput(tablePrimaryColourInput, "--table-primary-colour");
-initialiseColourInput(tableAlternateColourInput, "--table-alternate-colour");
-initialiseColourInput(tableSecondaryColourInput, "--table-secondary-colour");
+initialiseColourInput(tableBookendColourInput, "--table-bookend-colour");
+initialiseColourInput(tablePrimaryRowColourInput, "--table-primary-row-colour");
+initialiseColourInput(
+  tableSecondaryRowColourInput,
+  "--table-secondary-row-colour"
+);
 initialiseColourInput(textColourInput, "--text-colour");
 initialiseColourInput(trackerColourInput, "--tracker-colour");
-
-// Broken Code:
-
-// const deleteBookMenuContinueButton = document.getElementById(
-//   "delete-book-menu-continue-button"
-// );
-// const deleteSelectedBooksMenu = document.getElementById(
-//   "delete-selected-books-menu"
-// );
-// const deleteSelectedBooksMenuContinueButton = document.getElementById(
-//   "delete-selected-books-menu-continue-button"
-// );
-// const deletedBooksSelect = document.getElementById("deleted-books-select");
-// const deleteButton = document.getElementById("delete-button");
-// const restoreButton = document.getElementById("restore-books-button");
-
-// function deleteBookByIndex(bookIndex) {
-//   const deletedBook = library[bookIndex];
-//   deletedBooks.push(deletedBook);
-//   library.splice(bookIndex, 1);
-//   convertBookToOption(
-//     deletedBook.title,
-//     deletedBook.author,
-//     deletedBook.pages,
-//     deletedBook.publishDate,
-//     deletedBook.acquisitionDate,
-//     deletedBook.status
-//   );
-//   library.forEach((book, index) => {
-//     book.index = index;
-//   });
-//   updateTracker();
-// }
-
-// deleteBookMenuContinueButton.addEventListener("click", () => {
-//   if (selectedRow) {
-//     const selectedBook = getSelectedRowData(selectedRow);
-//     const bookIndex = selectedBook.bookIndex;
-//     deleteBookByIndex(bookIndex);
-//     selectedRow.remove();
-//     selectedRow = null;
-//   }
-//   if (deleteBookMenu.classList.contains("active")) {
-//     toggleMenu(deleteBookMenu);
-//   }
-// });
-
-// deletedBooks.forEach((book) => {
-//   const option = document.createElement("option");
-//   option.classList.add("deleted-books-option");
-//   option.textContent = `${book.title} - ${book.author}`;
-//   option.dataset.title = book.title;
-//   option.dataset.author = book.author;
-//   option.dataset.pages = book.pages;
-//   option.dataset.publishDate = book.publishDate;
-//   option.dataset.acquisitionDate = book.acquisitionDate;
-//   option.dataset.status = book.status;
-//   deletedBooksSelect.appendChild(option);
-// });
-
-// deleteButton.addEventListener("click", () => {
-//   const selectedOptions = Array.from(deletedBooksSelect.selectedOptions);
-//   if (selectedOptions.length) {
-//     selectedOptions.forEach((selectedOption) => {
-//       const bookId = selectedOption.dataset.bookId;
-//       const bookIndex = library.findIndex((book) => book.id === bookId);
-//       if (bookIndex !== -1) {
-//         library.splice(bookIndex, 1);
-//         selectedOption.remove();
-//       }
-//     });
-//   }
-// });
-
-// deleteSelectedBooksMenuContinueButton.addEventListener("click", () => {
-//   const allSelectedCheckboxes = document.querySelectorAll(
-//     ".select-checkbox:checked"
-//   );
-//   const selectedCheckboxes = Array.from(allSelectedCheckboxes).filter(
-//     (checkbox) => checkbox.id !== "select-all-checkbox"
-//   );
-//   const selectedIndices = [];
-//   selectedCheckboxes.forEach((checkbox) => {
-//     const selectedRow = checkbox.closest(".table-body-row");
-//     const selectedBook = getSelectedRowData(selectedRow);
-//     const bookIndex = selectedBook.bookIndex;
-//     selectedIndices.push(bookIndex);
-//   });
-//   selectedIndices.sort((a, b) => b - a);
-//   selectedIndices.forEach((bookIndex) => {
-//     deleteBookByIndex(bookIndex);
-//   });
-//   selectedCheckboxes.forEach((checkbox) => {
-//     const selectedRow = checkbox.closest(".table-body-row");
-//     selectedRow.remove();
-//   });
-//   if (deleteSelectedBooksMenu.classList.contains("active")) {
-//     toggleMenu(deleteSelectedBooksMenu);
-//   }
-// });
-
-// restoreButton.addEventListener("click", () => {
-//   const selectedOptions = Array.from(deletedBooksSelect.selectedOptions);
-//   if (selectedOptions.length) {
-//     selectedOptions.forEach((selectedOption) => {
-//       const bookId = selectedOption.dataset.bookId;
-//       const bookIndex = deletedBooks.findIndex((book) => book.id === bookId);
-//       if (bookIndex !== -1) {
-//         const restoredBook = deletedBooks[bookIndex];
-//         deletedBooks.splice(bookIndex, 1);
-//         library.push(restoredBook);
-//         restoreSelectedBook(restoredBook);
-//         selectedOption.remove();
-//       }
-//     });
-//     updateTracker();
-//   }
-// });
-
-// function convertBookToOption(
-//   title,
-//   author,
-//   pages,
-//   publishDate,
-//   acquisitionDate,
-//   status
-// ) {
-//   const option = document.createElement("option");
-//   option.textContent = `${title} - ${author}`;
-//   option.className = "deleted-books-option";
-//   option.id = "deleted-books-option";
-//   option.dataset.title = title;
-//   option.dataset.author = author;
-//   option.dataset.pages = pages;
-//   option.dataset.publishDate = publishDate;
-//   option.dataset.acquisitionDate = acquisitionDate;
-//   option.dataset.status = status;
-//   deletedBooksSelect.appendChild(option);
-// }
-
-// function restoreSelectedBook() {
-//   const selectedOption =
-//     deletedBooksSelect.options[deletedBooksSelect.selectedIndex];
-//   if (selectedOption) {
-//     const newBook = new Book(
-//       selectedOption.dataset.title,
-//       selectedOption.dataset.author,
-//       parseInt(selectedOption.dataset.pages),
-//       selectedOption.dataset.publishDate,
-//       selectedOption.dataset.acquisitionDate,
-//       selectedOption.dataset.status
-//     );
-//     createBookTableRow(newBook);
-//     selectedOption.remove();
-//   }
-// }
