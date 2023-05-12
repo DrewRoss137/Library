@@ -291,6 +291,8 @@ const sortDirection = {
 };
 
 let selectedRow;
+let currentHeader;
+let selectedBookId;
 
 menuItems.forEach(({ buttonID, menuID }) => {
   const button = document.querySelector(`#${buttonID}`);
@@ -389,14 +391,12 @@ tableBody.addEventListener("click", (event) => {
 });
 
 editBookInputs.forEach((input) => {
-  input.addEventListener("blur", checkInput);
-  input.addEventListener("input", checkInput);
+  input.addEventListener("blur", validateInput);
+  input.addEventListener("input", validateInput);
   input.addEventListener("focus", function () {
     this.hasFocus = true;
   });
 });
-
-editBookEditBookButton.addEventListener("click", updateSelectedRow);
 
 deleteButton.addEventListener("click", () => {
   const selectedOptions = Array.from(deletedBooksSelect.selectedOptions);
@@ -453,8 +453,8 @@ restoreBooksButton.addEventListener("click", () => {
 });
 
 addBookInputs.forEach((input) => {
-  input.addEventListener("blur", checkInput);
-  input.addEventListener("input", checkInput);
+  input.addEventListener("blur", validateInput);
+  input.addEventListener("input", validateInput);
   input.addEventListener("focus", function () {
     this.hasFocus = true;
   });
@@ -549,8 +549,6 @@ function updateTracker() {
   deletedBooksValue.textContent = deletedBooksNumber;
 }
 
-let currentHeader;
-
 function sortBooks(key, clickedElement) {
   sortDirection[key] *= -1;
   library.sort((a, b) => {
@@ -633,7 +631,7 @@ function updateSelectedBookCount() {
         }.`;
 }
 
-function checkInput() {
+function validateInput() {
   if (this.value.trim() === "") {
     this.classList.add("invalid");
   } else {
@@ -641,20 +639,20 @@ function checkInput() {
   }
 }
 
+editBookEditBookButton.addEventListener("click", updateSelectedRow);
+
 function updateSelectedRow() {
-  if (!selectedRow) {
+  if (!selectedBookId) {
     return;
   }
   let anyEmpty = editBookInputs.some(
     (input) => input.value.trim() === "" || input.classList.contains("invalid")
   );
+
   if (anyEmpty) {
     return;
   }
-  const selectedRowIndex = Array.from(
-    selectedRow.parentElement.children
-  ).indexOf(selectedRow);
-  const book = library[selectedRowIndex];
+  const book = library.find((b) => b.id == selectedBookId);
   book.title = editBookTitleInput.value.trim();
   book.author = editBookAuthorInput.value.trim();
   book.pages = parseInt(editBookPagesInput.value.trim(), 10);
@@ -680,13 +678,17 @@ function updateSelectedRow() {
   if (editBookMenu.classList.contains("active")) {
     toggleMenu(editBookMenu);
   }
-  selectedRow = null;
+  selectedBookId = null;
 }
 
 function displayBooks() {
   tableBody.innerHTML = "";
   library.forEach((book) => {
-    createBookTableRow(book);
+    const bookRow = createBookTableRow(book);
+    bookRow.setAttribute("data-id", book.id);
+    bookRow.addEventListener("click", function () {
+      selectedBookId = this.getAttribute("data-id");
+    });
   });
 }
 
@@ -739,6 +741,7 @@ function createBookTableRow(book) {
   bookStatusElement.textContent = book.status;
   bookStatusContainer.appendChild(bookStatusElement);
   book.statusElement = bookStatusElement;
+  return newRow;
 }
 
 function addBookToLibrary(book) {
