@@ -19,6 +19,9 @@ const tableSecondaryRowColourInput = document.getElementById(
 const textColourInput = document.getElementById("text-colour-input");
 const trackerColourInput = document.getElementById("tracker-colour-input");
 const resetButton = document.getElementById("reset-button");
+const restoreMenuCancelButton = document.getElementById(
+  "restore-menu-cancel-button"
+);
 // const saveButton = document.getElementById("save-button");
 const editBookMenu = document.getElementById("edit-book-menu");
 const editBookTitleInput = document.getElementById("edit-book-title-input");
@@ -67,48 +70,25 @@ const deleteButton = document.getElementById("delete-button");
 const restoreBooksButton = document.getElementById("restore-books-button");
 const addBookButton = document.getElementById("add-books-button");
 const addBookMenu = document.getElementById("add-book-menu");
+const addBookTitleInput = document.getElementById("add-book-title-input");
+const addBookAuthorInput = document.getElementById("add-book-author-input");
+const addBookPagesInput = document.getElementById("add-book-pages-input");
+const addBookPublishDateInput = document.getElementById(
+  "add-book-publish-date-input"
+);
 const addBookAcquisitionDateInput = document.getElementById(
   "add-book-acquisition-date-input"
 );
 const currentDate = new Date();
 const formattedDate = currentDate.toISOString().slice(0, 10);
 addBookAcquisitionDateInput.value = formattedDate;
+const addBookStatusSelect = document.getElementById("add-book-status-select");
 const totalBooksValue = document.getElementById("total-books-value");
 const totalPagesValue = document.getElementById("total-pages-value");
 const uniqueAuthorsValue = document.getElementById("authors-value");
 const readBooksValue = document.getElementById("read-books-value");
 const unreadBooksValue = document.getElementById("unread-books-value");
 const deletedBooksValue = document.getElementById("deleted-books-value");
-
-const menuItems = [
-  { buttonID: "settings-button", menuID: "settings-menu" },
-  { buttonID: "restore-button", menuID: "restore-menu" },
-  {
-    buttonID: "delete-selected-books-button",
-    menuID: "delete-selected-books-menu",
-  },
-  { buttonID: "deleted-books-button", menuID: "deleted-books-menu" },
-  { buttonID: "add-book-button", menuID: "add-book-menu" },
-];
-
-const defaultColours = {
-  "accent-colour": "#e3b464",
-  "background-colour": "#393646",
-  "controls-colour": "#393646",
-  "header-colour": "#4f4557",
-  "menu-colour": "#4f4557",
-  "table-bookend-colour": "#393646",
-  "table-primary-row-colour": "#4f4557",
-  "table-secondary-row-colour": "#3d3645",
-  "text-colour": "#ffffff",
-  "tracker-colour": "#4f4557",
-};
-
-const closeButtons = [
-  ...closeButton,
-  deleteBookMenuCancelButton,
-  deleteSelectedBooksMenuCancelButton,
-];
 
 let id = 0;
 
@@ -123,6 +103,37 @@ class Book {
     this.status = status;
   }
 }
+
+const menuItems = [
+  { buttonID: "settings-button", menuID: "settings-menu" },
+  { buttonID: "restore-button", menuID: "restore-menu" },
+  {
+    buttonID: "delete-selected-books-button",
+    menuID: "delete-selected-books-menu",
+  },
+  { buttonID: "deleted-books-button", menuID: "deleted-books-menu" },
+  { buttonID: "add-book-button", menuID: "add-book-menu" },
+];
+
+const closeButtons = [
+  ...closeButton,
+  restoreMenuCancelButton,
+  deleteBookMenuCancelButton,
+  deleteSelectedBooksMenuCancelButton,
+];
+
+const defaultColours = {
+  "accent-colour": "#e3b464",
+  "background-colour": "#393646",
+  "controls-colour": "#393646",
+  "header-colour": "#4f4557",
+  "menu-colour": "#4f4557",
+  "table-bookend-colour": "#393646",
+  "table-primary-row-colour": "#4f4557",
+  "table-secondary-row-colour": "#3d3645",
+  "text-colour": "#ffffff",
+  "tracker-colour": "#4f4557",
+};
 
 const library = [
   new Book(
@@ -254,7 +265,23 @@ const deletedBooks = [
     )
 );
 
-let sortDirection = {
+const editBookInputs = [
+  editBookTitleInput,
+  editBookAuthorInput,
+  editBookPagesInput,
+  editBookPublishDateInput,
+  editBookAcquisitionDateInput,
+];
+
+const addBookInputs = [
+  addBookTitleInput,
+  addBookAuthorInput,
+  addBookPagesInput,
+  addBookPublishDateInput,
+  addBookAcquisitionDateInput,
+];
+
+const sortDirection = {
   title: 1,
   author: 1,
   pages: 1,
@@ -361,6 +388,14 @@ tableBody.addEventListener("click", (event) => {
   }
 });
 
+editBookInputs.forEach((input) => {
+  input.addEventListener("blur", checkInput);
+  input.addEventListener("input", checkInput);
+  input.addEventListener("focus", function () {
+    this.hasFocus = true;
+  });
+});
+
 editBookEditBookButton.addEventListener("click", updateSelectedRow);
 
 deleteButton.addEventListener("click", () => {
@@ -417,28 +452,35 @@ restoreBooksButton.addEventListener("click", () => {
   updateTracker();
 });
 
-addBookButton.addEventListener("click", function () {
-  let title = document.getElementById("add-book-title-input");
-  let author = document.getElementById("add-book-author-input");
-  let pages = document.getElementById("add-book-pages-input");
-  let publishDate = document.getElementById("add-book-publish-date-input");
-  let acquisitionDate = document.getElementById(
-    "add-book-acquisition-date-input"
+addBookInputs.forEach((input) => {
+  input.addEventListener("blur", checkInput);
+  input.addEventListener("input", checkInput);
+  input.addEventListener("focus", function () {
+    this.hasFocus = true;
+  });
+});
+
+addBookButton.addEventListener("click", function (e) {
+  let anyEmpty = addBookInputs.some(
+    (input) => input.value.trim() === "" || input.classList.contains("invalid")
   );
-  let status = document.getElementById("add-book-status-select");
+  if (anyEmpty) {
+    e.preventDefault();
+    return;
+  }
   let newBook = new Book(
-    title.value,
-    author.value,
-    pages.value,
-    publishDate.value,
-    acquisitionDate.value,
-    status.value
+    addBookTitleInput.value,
+    addBookAuthorInput.value,
+    addBookPagesInput.value,
+    addBookPublishDateInput.value,
+    addBookAcquisitionDateInput.value,
+    addBookStatusSelect.value
   );
   createBookTableRow(newBook);
-  title.value = "";
-  author.value = "";
-  pages.value = "";
-  publishDate.value = "";
+  addBookTitleInput.value = "";
+  addBookAuthorInput.value = "";
+  addBookPagesInput.value = "";
+  addBookPublishDateInput.value = "";
   addBookToLibrary(newBook);
   displayBooks();
   if (addBookMenu.classList.contains("active")) {
@@ -591,8 +633,22 @@ function updateSelectedBookCount() {
         }.`;
 }
 
+function checkInput() {
+  if (this.value.trim() === "") {
+    this.classList.add("invalid");
+  } else {
+    this.classList.remove("invalid");
+  }
+}
+
 function updateSelectedRow() {
   if (!selectedRow) {
+    return;
+  }
+  let anyEmpty = editBookInputs.some(
+    (input) => input.value.trim() === "" || input.classList.contains("invalid")
+  );
+  if (anyEmpty) {
     return;
   }
   const selectedRowIndex = Array.from(
