@@ -19,10 +19,14 @@ const tableSecondaryRowColourInput = document.getElementById(
 const textColourInput = document.getElementById("text-colour-input");
 const trackerColourInput = document.getElementById("tracker-colour-input");
 const resetButton = document.getElementById("reset-button");
+// const saveButton = document.getElementById("save-button");
+const restoreMenu = document.getElementById("restore-menu");
 const restoreMenuCancelButton = document.getElementById(
   "restore-menu-cancel-button"
 );
-// const saveButton = document.getElementById("save-button");
+const restoreMenuContinueButton = document.getElementById(
+  "restore-menu-continue-button"
+);
 const editBookMenu = document.getElementById("edit-book-menu");
 const editBookTitleInput = document.getElementById("edit-book-title-input");
 const editBookAuthorInput = document.getElementById("edit-book-author-input");
@@ -34,7 +38,7 @@ const editBookAcquisitionDateInput = document.getElementById(
   "edit-book-acquisition-date-input"
 );
 const editBookStatusSelect = document.getElementById("edit-book-status-select");
-const editBookEditBookButton = document.getElementById("edit-books-button");
+const editBookEditBookButton = document.querySelectorAll("#edit-books-button");
 const deleteBookMenu = document.getElementById("delete-book-menu");
 const deleteBookMenuCancelButton = document.getElementById(
   "delete-book-menu-cancel-button"
@@ -135,7 +139,7 @@ const defaultColours = {
   "tracker-colour": "#4f4557",
 };
 
-const library = [
+const defaultLibrary = [
   new Book(
     "The Pragmatic Programmer: Your Journey to Mastery",
     "David Thomas, Andrew Hunt",
@@ -228,7 +232,9 @@ const library = [
     )
 );
 
-const deletedBooks = [
+let library = [...defaultLibrary];
+
+const defaultDeletedBooks = [
   new Book(
     "Peopleware: Productive Projects and Teams",
     "Tom DeMarco, Timothy Lister",
@@ -264,6 +270,8 @@ const deletedBooks = [
       book.status
     )
 );
+
+let deletedBooks = [...defaultDeletedBooks];
 
 const editBookInputs = [
   editBookTitleInput,
@@ -312,6 +320,16 @@ closeButtons.forEach((button) => {
 });
 
 resetButton.addEventListener("click", restoreDefaultColours);
+
+restoreMenuContinueButton.addEventListener("click", function () {
+  library = [...defaultLibrary];
+  deletedBooks = [...defaultDeletedBooks];
+  restoreDefaultColours();
+  convertBookToOption();
+  updateTracker();
+  displayBooks();
+  toggleMenu(restoreMenu);
+});
 
 deleteBookMenuContinueButton.addEventListener("click", () => {
   const bookId = parseInt(selectedRow.dataset.id, 10);
@@ -639,7 +657,9 @@ function validateInput() {
   }
 }
 
-editBookEditBookButton.addEventListener("click", updateSelectedRow);
+editBookEditBookButton.forEach((button) => {
+  button.addEventListener("click", updateSelectedRow);
+});
 
 function updateSelectedRow() {
   if (!selectedBookId) {
@@ -679,6 +699,7 @@ function updateSelectedRow() {
     toggleMenu(editBookMenu);
   }
   selectedBookId = null;
+  updateTracker();
 }
 
 function displayBooks() {
