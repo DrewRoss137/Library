@@ -232,7 +232,17 @@ const defaultLibrary = [
     )
 );
 
-let library = [...defaultLibrary];
+let library = defaultLibrary.map(
+  (book) =>
+    new Book(
+      book.title,
+      book.author,
+      book.pages,
+      book.publishDate,
+      book.acquisitionDate,
+      book.status
+    )
+);
 
 const defaultDeletedBooks = [
   new Book(
@@ -271,7 +281,17 @@ const defaultDeletedBooks = [
     )
 );
 
-let deletedBooks = [...defaultDeletedBooks];
+let deletedBooks = defaultDeletedBooks.map(
+  (book) =>
+    new Book(
+      book.title,
+      book.author,
+      book.pages,
+      book.publishDate,
+      book.acquisitionDate,
+      book.status
+    )
+);
 
 const editBookInputs = [
   editBookTitleInput,
@@ -322,8 +342,28 @@ closeButtons.forEach((button) => {
 resetButton.addEventListener("click", restoreDefaultColours);
 
 restoreMenuContinueButton.addEventListener("click", function () {
-  library = [...defaultLibrary];
-  deletedBooks = [...defaultDeletedBooks];
+  library = defaultLibrary.map(
+    (book) =>
+      new Book(
+        book.title,
+        book.author,
+        book.pages,
+        book.publishDate,
+        book.acquisitionDate,
+        book.status
+      )
+  );
+  deletedBooks = defaultDeletedBooks.map(
+    (book) =>
+      new Book(
+        book.title,
+        book.author,
+        book.pages,
+        book.publishDate,
+        book.acquisitionDate,
+        book.status
+      )
+  );
   restoreDefaultColours();
   convertBookToOption();
   updateTracker();
