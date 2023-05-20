@@ -157,10 +157,24 @@ footer {
 
 .menu {
   background-color: var(--menu-colour);
+  border-color: rgb(255, 255, 255, 0.05);
   bottom: 50%;
   left: 50%;
   position: absolute;
   transform: translate(-50%, 50%);
+}
+
+.menu,
+input:not([type="color"]):focus,
+.edit-book-input.invalid,
+.edit-book-input.invalid:focus,
+.add-book-input.invalid,
+.add-book-input.invalid:focus,
+.select-checkbox,
+.deleted-books-select,
+table,
+tr {
+  border-style: solid;
 }
 
 .menu,
@@ -207,9 +221,12 @@ td,
 }
 
 .menu,
-.deleted-books-select,
-.tracker-box {
-  border-radius: 20px;
+button,
+.edit-book-input,
+.edit-book-status-select,
+.add-book-input,
+.add-book-status-select {
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 1);
 }
 
 .menu,
@@ -220,8 +237,15 @@ td,
 }
 
 .menu,
-header {
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
+input:focus,
+select:focus {
+  border-width: 2px;
+}
+
+.menu,
+.deleted-books-select,
+.tracker-box {
+  border-radius: 20px;
 }
 
 .menu-header,
@@ -355,11 +379,6 @@ select:focus,
   box-sizing: border-box;
 }
 
-input:focus,
-select:focus {
-  border-width: 2px;
-}
-
 input:not([type="color"]):focus,
 select:focus,
 .table-body-row:hover {
@@ -445,25 +464,12 @@ button,
 .add-book-input,
 .add-book-status-select {
   border-radius: 5px;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 1);
 }
 
 button,
 table,
 .tracker-box {
   font-size: 16px;
-}
-
-input:not([type="color"]):focus,
-.edit-book-input.invalid,
-.edit-book-input.invalid:focus,
-.add-book-input.invalid,
-.add-book-input.invalid:focus,
-.select-checkbox,
-.deleted-books-select,
-table,
-tr {
-  border-style: solid;
 }
 
 .edit-book-input,
@@ -549,6 +555,7 @@ header {
   border-left: none;
   border-right: none;
   border-top: none;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
   height: 50px;
   justify-content: space-around;
 }
